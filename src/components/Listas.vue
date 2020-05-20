@@ -256,7 +256,7 @@ export default {
       console.log("this.submitEmpty");
 
       if (this.submitEmpty) {
-        alert("La cagaste");
+        console.log("this.submitEmpty: ", this.submitEmpty);
       } else {
         this.submitResult = submitResult;
         // this.submitEmpty = submitResult.length === 0;
