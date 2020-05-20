@@ -6,6 +6,10 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  created () {
+    this.$q.addressbarColor.set('#004d40')
+    // #004d40
+  }
 }
 </script>
