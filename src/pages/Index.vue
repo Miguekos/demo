@@ -1,9 +1,9 @@
 <template>
   <!-- <q-page class="flex flex-center"> -->
   <q-page>
-    <!-- <div>
-      <img alt="Quasar logo" src="~assets/sad.svg" />
-    </div> -->
+    <div class="flex flex-center">
+      <img alt="logo" src="~assets/logoEmpresa.jpeg" />
+    </div>
     <div class="full-width">
       <Listas />
     </div>

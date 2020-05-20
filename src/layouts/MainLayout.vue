@@ -1,13 +1,12 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar class="bg-red-7">
+      <q-toolbar class="bg-teal-10">
         <q-btn
           flat
           dense
           round
-          glossy
-          class="bg-green"
+          style="background-color: #211b4c; color: #f3290a"
           icon="menu"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
@@ -66,43 +65,43 @@ export default {
           title: 'Docs',
           caption: 'quasar.dev',
           icon: 'school',
-          link: 'https://quasar.dev'
+          // link: 'https://quasar.dev'
         },
         {
           title: 'Github',
           caption: 'github.com/quasarframework',
           icon: 'code',
-          link: 'https://github.com/quasarframework'
+          // link: 'https://github.com/quasarframework'
         },
         {
           title: 'Discord Chat Channel',
           caption: 'chat.quasar.dev',
           icon: 'chat',
-          link: 'https://chat.quasar.dev'
+          // link: 'https://chat.quasar.dev'
         },
         {
           title: 'Forum',
           caption: 'forum.quasar.dev',
           icon: 'record_voice_over',
-          link: 'https://forum.quasar.dev'
+          // link: 'https://forum.quasar.dev'
         },
         {
           title: 'Twitter',
           caption: '@quasarframework',
           icon: 'rss_feed',
-          link: 'https://twitter.quasar.dev'
+          // link: 'https://twitter.quasar.dev'
         },
         {
           title: 'Facebook',
           caption: '@QuasarFramework',
           icon: 'public',
-          link: 'https://facebook.quasar.dev'
+          // link: 'https://facebook.quasar.dev'
         },
         {
           title: 'Quasar Awesome',
           caption: 'Community Quasar projects',
           icon: 'favorite',
-          link: 'https://awesome.quasar.dev'
+          // link: 'https://awesome.quasar.dev'
         }
       ]
     }
