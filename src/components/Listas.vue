@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-sm">
     <q-list bordered padding>
-      <q-item-label header class="text-center text-h6 q-pb-xs"
+      <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
         >¿Como te sientes?</q-item-label
       >
       <q-separator spaced />
@@ -23,6 +23,8 @@
         </q-item-section>
       </q-item>
 
+      <q-separator inset color="red-5" />
+
       <q-item class="q-pr-xs" tag="label" v-ripple>
         <q-item-section>
           <q-item-label class="text-left"
@@ -40,6 +42,8 @@
         </q-item-section>
       </q-item>
 
+      <q-separator inset color="red-5" />
+
       <q-item class="q-pr-xs" tag="label" v-ripple>
         <q-item-section>
           <q-item-label class="text-left"
@@ -56,6 +60,8 @@
           />
         </q-item-section>
       </q-item>
+
+      <q-separator inset color="red-5" />
 
       <q-item class="q-pr-xs" tag="label" v-ripple>
         <q-item-section>
@@ -75,6 +81,8 @@
         </q-item-section>
       </q-item>
 
+      <q-separator inset color="red-5" />
+
       <q-item class="q-pr-xs" tag="label" v-ripple>
         <q-item-section>
           <q-item-label class="text-left"
@@ -92,6 +100,8 @@
           />
         </q-item-section>
       </q-item>
+
+      <q-separator inset color="red-5" />
 
       <q-item class="q-pr-xs" tag="label" v-ripple>
         <q-item-section>
@@ -112,18 +122,18 @@
       </q-item>
 
       <q-separator spaced />
-      <q-item-label header class="text-center text-h6 q-pb-xs"
+      <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
         >Datos Personales</q-item-label
       >
       <q-separator spaced />
       <q-item>
         <q-item-section>
-          <q-input filled dense outlined v-model="text" label="Nombre" />
+          <q-input filled dense outlined v-model="nombre" label="Nombre" />
         </q-item-section>
       </q-item>
       <q-item>
         <q-item-section>
-          <q-input filled dense outlined v-model="text" label="DNI / C.E" />
+          <q-input filled dense outlined v-model="dni" label="DNI / C.E" />
         </q-item-section>
       </q-item>
       <q-item>
@@ -139,7 +149,7 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <q-btn color="amber-7" label="Cancelar" />
+          <q-btn color="amber-8" label="Cancelar" />
         </q-item-section>
         <q-item-section>
           <q-btn color="green-6" @click="showLoading" label="Confirmar" />
@@ -172,7 +182,8 @@ const alerts = [
 export default {
   data() {
     return {
-      text: "",
+      nombre: "",
+      dni: "",
       terminos: false,
       check1: true,
       check2: false,
