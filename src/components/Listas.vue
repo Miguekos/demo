@@ -1,161 +1,187 @@
 <template>
   <div class="q-pa-sm">
-    <q-list bordered padding>
-      <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
-        >¿Como te sientes?</q-item-label
-      >
-      <q-separator spaced />
+    <q-form @submit="onSubmit" class="q-gutter-md">
+      <q-list bordered padding>
+        <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
+          >¿Como te sientes?</q-item-label
+        >
+        <q-separator spaced />
 
-      <q-item class="q-pr-xs" tag="label" v-ripple>
-        <q-item-section>
-          <q-item-label class="text-left"
-            >¿Sensación de alza térmica o fiebre?</q-item-label
-          >
-        </q-item-section>
-        <q-item-section side>
-          <q-toggle
-            size="50px"
-            color="blue-6"
-            v-model="notif1"
-            checked-icon="check"
-            unchecked-icon="clear"
-          />
-        </q-item-section>
-      </q-item>
+        <q-item class="q-pr-xs" tag="label" v-ripple>
+          <q-item-section>
+            <q-item-label class="text-left"
+              >¿Sensación de alza térmica o fiebre?</q-item-label
+            >
+          </q-item-section>
+          <q-item-section side>
+            <q-toggle
+              size="50px"
+              color="blue-6"
+              v-model="notif1"
+              checked-icon="check"
+              unchecked-icon="clear"
+            />
+          </q-item-section>
+        </q-item>
 
-      <q-separator inset color="red-5" />
+        <q-separator inset color="red-5" />
 
-      <q-item class="q-pr-xs" tag="label" v-ripple>
-        <q-item-section>
-          <q-item-label class="text-left"
-            >¿Tos, estornudos o dificultad para respirar?</q-item-label
-          >
-        </q-item-section>
-        <q-item-section side>
-          <q-toggle
-            size="50px"
-            color="blue-6"
-            v-model="notif2"
-            checked-icon="check"
-            unchecked-icon="clear"
-          />
-        </q-item-section>
-      </q-item>
+        <q-item class="q-pr-xs" tag="label" v-ripple>
+          <q-item-section>
+            <q-item-label class="text-left"
+              >¿Tos, estornudos o dificultad para respirar?</q-item-label
+            >
+          </q-item-section>
+          <q-item-section side>
+            <q-toggle
+              size="50px"
+              color="blue-6"
+              v-model="notif2"
+              checked-icon="check"
+              unchecked-icon="clear"
+            />
+          </q-item-section>
+        </q-item>
 
-      <q-separator inset color="red-5" />
+        <q-separator inset color="red-5" />
 
-      <q-item class="q-pr-xs" tag="label" v-ripple>
-        <q-item-section>
-          <q-item-label class="text-left"
-            >¿Expectoración o flema amarilla o verdosa?</q-item-label
-          >
-        </q-item-section>
-        <q-item-section side>
-          <q-toggle
-            size="50px"
-            color="blue-6"
-            v-model="notif3"
-            checked-icon="check"
-            unchecked-icon="clear"
-          />
-        </q-item-section>
-      </q-item>
+        <q-item class="q-pr-xs" tag="label" v-ripple>
+          <q-item-section>
+            <q-item-label class="text-left"
+              >¿Expectoración o flema amarilla o verdosa?</q-item-label
+            >
+          </q-item-section>
+          <q-item-section side>
+            <q-toggle
+              size="50px"
+              color="blue-6"
+              v-model="notif3"
+              checked-icon="check"
+              unchecked-icon="clear"
+            />
+          </q-item-section>
+        </q-item>
 
-      <q-separator inset color="red-5" />
+        <q-separator inset color="red-5" />
 
-      <q-item class="q-pr-xs" tag="label" v-ripple>
-        <q-item-section>
-          <q-item-label class="text-left"
-            >¿Contacto con persona(s) con un caso confirmado de
-            COVID-19?</q-item-label
-          >
-        </q-item-section>
-        <q-item-section side>
-          <q-toggle
-            size="50px"
-            color="blue-6"
-            v-model="notif4"
-            checked-icon="check"
-            unchecked-icon="clear"
-          />
-        </q-item-section>
-      </q-item>
+        <q-item class="q-pr-xs" tag="label" v-ripple>
+          <q-item-section>
+            <q-item-label class="text-left"
+              >¿Contacto con persona(s) con un caso confirmado de
+              COVID-19?</q-item-label
+            >
+          </q-item-section>
+          <q-item-section side>
+            <q-toggle
+              size="50px"
+              color="blue-6"
+              v-model="notif4"
+              checked-icon="check"
+              unchecked-icon="clear"
+            />
+          </q-item-section>
+        </q-item>
 
-      <q-separator inset color="red-5" />
+        <q-separator inset color="red-5" />
 
-      <q-item class="q-pr-xs" tag="label" v-ripple>
-        <q-item-section>
-          <q-item-label class="text-left"
-            >¿Estás tomando alguna medicación?</q-item-label
-          >
-          <!-- <q-item-label caption>Allow notification</q-item-label> -->
-        </q-item-section>
-        <q-item-section side top>
-          <q-toggle
-            size="50px"
-            v-model="notif5"
-            color="blue-6"
-            checked-icon="check"
-            unchecked-icon="clear"
-          />
-        </q-item-section>
-      </q-item>
+        <q-item class="q-pr-xs" tag="label" v-ripple>
+          <q-item-section>
+            <q-item-label class="text-left"
+              >¿Estás tomando alguna medicación?</q-item-label
+            >
+            <!-- <q-item-label caption>Allow notification</q-item-label> -->
+          </q-item-section>
+          <q-item-section side>
+            <q-toggle
+              size="50px"
+              v-model="notif5"
+              color="blue-6"
+              checked-icon="check"
+              unchecked-icon="clear"
+            />
+          </q-item-section>
+        </q-item>
 
-      <q-separator inset color="red-5" />
+        <q-separator inset color="red-5" />
 
-      <q-item class="q-pr-xs" tag="label" v-ripple>
-        <q-item-section>
-          <q-item-label class="text-center"
-            >Todos los datos expresados en esta ficha constituyen declaración
-            murada de mi parte. He sido informado(a) que de omitir o falsear
-            información puedo perjudicar la salud de mis compañeros(as), y la
-            mía propia, lo cual, de constituir una falta grave a la salud
-            pública, asumo sus consecuencias
-          </q-item-label>
-          <!-- <q-item-label caption
+        <q-item class="q-pr-xs" tag="label" v-ripple>
+          <q-item-section>
+            <q-item-label class="text-left"
+              >Todos los datos expresados en esta ficha constituyen declaración
+              jurada de mi parte. He sido informado(a) que de omitir o falsear
+              información puedo perjudicar la salud de mis compañeros(as), y la
+              mía propia, lo cual, de constituir una falta grave a la salud
+              pública, asumo sus consecuencias.
+            </q-item-label>
+            <!-- <q-item-label caption
             >Allow notification when uploading images</q-item-label
           > -->
-        </q-item-section>
-        <q-item-section side top>
-          <q-checkbox v-model="terminos" val="blue" color="teal" />
-        </q-item-section>
-      </q-item>
+          </q-item-section>
+          <q-item-section side center>
+            <q-checkbox v-model="terminos" val="blue" color="teal" />
+          </q-item-section>
+        </q-item>
 
-      <q-separator spaced />
-      <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
-        >Datos Personales</q-item-label
-      >
-      <q-separator spaced />
-      <q-item>
-        <q-item-section>
-          <q-input filled dense outlined v-model="nombre" label="Nombre" />
-        </q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-section>
-          <q-input filled dense outlined v-model="dni" label="DNI / C.E" />
-        </q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-section>
-          <q-select
-            filled
-            dense
-            v-model="model"
-            :options="options"
-            label="Area"
-          />
-        </q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-section>
-          <q-btn color="amber-8" label="Cancelar" />
-        </q-item-section>
-        <q-item-section>
-          <q-btn color="green-6" @click="showLoading" label="Confirmar" />
-        </q-item-section>
-      </q-item>
-    </q-list>
+        <q-separator spaced />
+        <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
+          >Datos Personales</q-item-label
+        >
+        <q-separator spaced />
+        <q-item>
+          <q-item-section>
+            <q-input
+              name="name"
+              filled
+              dense
+              outlined
+              v-model="nombre"
+              label="Nombre"
+            />
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-input
+              name="dni"
+              filled
+              dense
+              outlined
+              v-model="dni"
+              label="DNI / C.E"
+            />
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-select
+              filled
+              dense
+              v-model="model"
+              :options="options"
+              label="Area"
+            />
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-btn color="amber-8" @click="reset()" label="Cancelar" />
+          </q-item-section>
+          <q-item-section>
+            <q-btn color="green-6" type="submit" label="Confirmar" />
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-form>
+    <q-card
+      v-if="submitEmpty"
+      flat
+      bordered
+      class="text-center q-mt-md bg-grey-2"
+    >
+      <q-card-section>
+        Debe llenar / Seleccionar todas las opciones.!
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 <script>
@@ -182,6 +208,7 @@ const alerts = [
 export default {
   data() {
     return {
+      submitResult: [],
       nombre: "",
       dni: "",
       terminos: false,
@@ -198,10 +225,45 @@ export default {
       brightness: 3,
       mic: 8,
       model: null,
-      options: ["Producción", "Ventas", "Administración", "Gerencia"]
+      options: ["Producción", "Ventas", "Administración", "Gerencia"],
+      submitEmpty: false
     };
   },
   methods: {
+    reset() {
+      this.nombre = "";
+      this.dni = "";
+    },
+    onSubmit(evt) {
+      this.submitEmpty = false;
+      const formData = new FormData(evt.target);
+      const submitResult = [];
+
+      for (const [name, value] of formData.entries()) {
+        console.log(value.length);
+        if (value.length > 0) {
+          submitResult.push({
+            name,
+            value
+          });
+        } else {
+          this.submitEmpty = true;
+        }
+      }
+
+      console.log("this.submitEmpty");
+      console.log(this.submitEmpty);
+      console.log("this.submitEmpty");
+
+      if (this.submitEmpty) {
+        alert("La cagaste");
+      } else {
+        this.submitResult = submitResult;
+        // this.submitEmpty = submitResult.length === 0;
+        console.log(this.submitResult);
+      }
+      // this.showLoading();
+    },
     showLoading() {
       this.$q.loading.show();
 
