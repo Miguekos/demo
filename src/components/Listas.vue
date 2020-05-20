@@ -154,6 +154,7 @@
         <q-item>
           <q-item-section>
             <q-select
+              name="model"
               filled
               dense
               v-model="model"
@@ -172,7 +173,7 @@
         </q-item>
       </q-list>
     </q-form>
-    <q-card
+    <!-- <q-card
       v-if="submitEmpty"
       flat
       bordered
@@ -181,7 +182,7 @@
       <q-card-section>
         Debe llenar / Seleccionar todas las opciones.!
       </q-card-section>
-    </q-card>
+    </q-card> -->
   </div>
 </template>
 <script>
@@ -224,7 +225,7 @@ export default {
       volume: 6,
       brightness: 3,
       mic: 8,
-      model: null,
+      model: "",
       options: ["Producción", "Ventas", "Administración", "Gerencia"],
       submitEmpty: false
     };
@@ -233,6 +234,7 @@ export default {
     reset() {
       this.nombre = "";
       this.dni = "";
+      this.model = "";
     },
     onSubmit(evt) {
       this.submitEmpty = false;
@@ -257,12 +259,17 @@ export default {
 
       if (this.submitEmpty) {
         console.log("this.submitEmpty: ", this.submitEmpty);
+        this.$q.notify({
+          message: "Existen campos vacios",
+          color: "red-6",
+          position: "top"
+        });
       } else {
         this.submitResult = submitResult;
         // this.submitEmpty = submitResult.length === 0;
         console.log(this.submitResult);
+        this.showLoading();
       }
-      // this.showLoading();
     },
     showLoading() {
       this.$q.loading.show();

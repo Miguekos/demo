@@ -2,7 +2,7 @@
   "name": "formq",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "productName": "Demo App",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "Miguekos <miguel.rodriguez@acceso.com.pe>",
