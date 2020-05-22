@@ -13,7 +13,7 @@
         />
 
         <q-toolbar-title class="text-black">
-          Evaluate
+          <b class="text-green">C</b>uid<b class="text-red">APP</b>te
         </q-toolbar-title>
 
         <div class="text-black">v{{ $q.version }}</div>
@@ -29,9 +29,25 @@
       <q-list>
         <q-item-label header class="text-grey-8">
           <q-item-label header class="text-center text-h6 q-pa-xs"
-            >Menu</q-item-label
+            >Perfil</q-item-label
           >
           <q-separator spaced />
+          <q-list>
+            <q-item clickable v-ripple class="justify-center">
+              <q-avatar
+                size="100px"
+                font-size="52px"
+              >
+                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+              </q-avatar>
+            </q-item>
+            <q-item clickable v-ripple class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-item-label>Miguel Rodriguez</q-item-label>
+                <q-item-label caption>miguekos1233@gmail.com</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
@@ -62,46 +78,46 @@ export default {
       leftDrawerOpen: false,
       essentialLinks: [
         {
-          title: "Docs",
-          caption: "quasar.dev",
-          icon: "school"
-          // link: 'https://quasar.dev'
+          title: "Inicio",
+          caption: "Inicio",
+          icon: "dashboard",
+          link: "/#/"
         },
         {
-          title: "Github",
-          caption: "github.com/quasarframework",
-          icon: "code"
-          // link: 'https://github.com/quasarframework'
+          title: "Reportes",
+          caption: "Estadisticas",
+          icon: "assessment",
+          link: "/#/dashboard"
         },
         {
-          title: "Discord Chat Channel",
-          caption: "chat.quasar.dev",
-          icon: "chat"
+          title: "Registro",
+          caption: "Evaluacion",
+          icon: "assignment",
+          link: "/#/registro"
+        },
+        {
+          title: "Listas Sanos",
+          caption: "Detalle",
+          icon: "group",
+          link: "/#/detalles"
+        },
+        {
+          title: "Listas Con Sintomas",
+          caption: "Detalle",
+          icon: "group",
+          link: "/#/detallecs"
+        },
+        {
+          title: "Login",
+          caption: "Iniciar Sesion",
+          icon: "face",
+          link: "/#/login"
+        },
+        {
+          title: "Salir",
+          caption: "Cerrar Session",
+          icon: "logout"
           // link: 'https://chat.quasar.dev'
-        },
-        {
-          title: "Forum",
-          caption: "forum.quasar.dev",
-          icon: "record_voice_over"
-          // link: 'https://forum.quasar.dev'
-        },
-        {
-          title: "Twitter",
-          caption: "@quasarframework",
-          icon: "rss_feed"
-          // link: 'https://twitter.quasar.dev'
-        },
-        {
-          title: "Facebook",
-          caption: "@QuasarFramework",
-          icon: "public"
-          // link: 'https://facebook.quasar.dev'
-        },
-        {
-          title: "Quasar Awesome",
-          caption: "Community Quasar projects",
-          icon: "favorite"
-          // link: 'https://awesome.quasar.dev'
         }
       ]
     };

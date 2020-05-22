@@ -51,23 +51,23 @@
           </q-circular-progress>
         </q-item-section>
       </q-item>
-
-      <q-item>
-        <q-item-section>Reportes por áreas</q-item-section>
-      </q-item>
-      <q-separator />
-      <q-list style="height: 240px;">
-        <Graficas />
-      </q-list>
     </q-list>
 
     <q-item>
-      <q-item-section
-        >Reportes por colaboradores en el ultimos mes</q-item-section
-      >
+      <q-item-section>Reportes por áreas</q-item-section>
     </q-item>
     <q-separator />
+    <q-list style="height: 240px;">
+      <Graficas />
+    </q-list>
+
     <q-list separator>
+      <q-item>
+        <q-item-section
+          >Reportes por colaboradores en el ultimos mes</q-item-section
+        >
+      </q-item>
+      <q-separator />
       <q-slide-item @left="onLeft" @right="onRight">
         <template v-slot:left>
           <div class="row items-center"><q-icon left name="done" /> Left</div>

@@ -3,6 +3,11 @@
   <q-page>
     <div class="flex flex-center">
       <img alt="logo" src="~assets/logoEmpresa.jpeg" />
+      <!-- <q-img
+        src="~assets/logoEmpresa.jpeg"
+        spinner-color="white"
+        style="height: 80%; max-width: 80%"
+      /> -->
     </div>
     <div class="full-width">
       <Listas />

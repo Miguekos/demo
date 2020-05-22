@@ -3,6 +3,54 @@
     <q-form @submit="onSubmit" class="q-gutter-md">
       <q-list bordered padding>
         <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
+          >Datos Personales</q-item-label
+        >
+        <q-separator spaced />
+        <q-item>
+          <q-item-section>
+            <q-input
+              name="name"
+              dense
+              v-model="nombre"
+              label="Nombre"
+            />
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-input
+              name="dni"
+              dense
+              v-model="dni"
+              label="DNI / C.E"
+            />
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-input
+              name="telf"
+              dense
+              v-model="dni"
+              label="Telefono"
+            />
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-select
+              name="model"
+              dense
+              v-model="model"
+              :options="options"
+              label="Area"
+            />
+          </q-item-section>
+        </q-item>
+
+        <q-separator spaced />
+
+        <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
           >¿Como te sientes?</q-item-label
         >
         <q-separator spaced />
@@ -123,46 +171,7 @@
         </q-item>
 
         <q-separator spaced />
-        <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
-          >Datos Personales</q-item-label
-        >
-        <q-separator spaced />
-        <q-item>
-          <q-item-section>
-            <q-input
-              name="name"
-              filled
-              dense
-              outlined
-              v-model="nombre"
-              label="Nombre"
-            />
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <q-input
-              name="dni"
-              filled
-              dense
-              outlined
-              v-model="dni"
-              label="DNI / C.E"
-            />
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <q-select
-              name="model"
-              filled
-              dense
-              v-model="model"
-              :options="options"
-              label="Area"
-            />
-          </q-item-section>
-        </q-item>
+
         <q-item>
           <q-item-section>
             <q-btn color="amber-8" @click="reset()" label="Cancelar" />
