@@ -9,7 +9,7 @@ const routes = [
       { path: '/detallecs', component: () => import('pages/Admin/DetallesConSintomas.vue') },
       { path: '/detalles', component: () => import('pages/Admin/DetallesSanos.vue') },
       { path: '/login', component: () => import('pages/Login/Index.vue') },
-      { path: '/dashboard', component: () => import('pages/Admin/Index.vue') }
+      { path: '/dashboard', component: () => import('pages/Index.vue') }
     ]
   }
 ]
