@@ -13,17 +13,18 @@
 <script type="text/babel">
 import IEcharts from "vue-echarts-v3/src/full.js";
 export default {
-  name: "view",
+  props: ['info'],
+  name: "charts",
   components: {
     IEcharts
   },
   props: {},
   data: () => ({
-    loading: true,
+    loading: false,
     option: {
       legend: { right: "auto" },
       tooltip: {},
-      color: ['#3f51b5','#f44336', '#61a0a8'],
+      color: ["#3f51b5", "#f44336", "#61a0a8"],
       dataset: {
         source: [
           ["product", "Abril", "Mayo", "2017"],
@@ -37,19 +38,10 @@ export default {
       yAxis: {},
       // Declare several bar series, each will be mapped
       // to a column of dataset.source by default.
-      series: [{ type: "bar", animation: true}, { type: "bar" }]
+      series: [{ type: "bar", animation: true }, { type: "bar" }]
     }
   }),
   methods: {
-    doRandom() {
-      const that = this;
-      let data = [];
-      for (let i = 0, min = 5, max = 99; i < 6; i++) {
-        data.push(Math.floor(Math.random() * (max + 1 - min) + min));
-      }
-      that.loading = !that.loading;
-      that.bar.series[0].data = data;
-    },
     onReady(instance, ECharts) {
       console.log(instance, ECharts);
     },
@@ -57,9 +49,7 @@ export default {
       console.log(arguments);
     }
   },
-  created() {
-    this.doRandom();
-  }
+  created() {}
 };
 </script>
 

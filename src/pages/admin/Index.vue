@@ -3,7 +3,7 @@
     <q-list>
       <q-item bordered>
         <q-item-label class="text-left text-h6 q-pa-xs text-bold text-black"
-          >Reportes</q-item-label
+          >Reportes {{ getClienteReport }} </q-item-label
         >
       </q-item>
       <q-separator />
@@ -139,6 +139,7 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
@@ -148,13 +149,19 @@ export default {
       consintomas: 90
     };
   },
+  computed: {
+    ...mapGetters("client", ["getClienteReport"])
+  },
   methods: {
+    ...mapActions("client", ["callClienteReport"]),
     onLeft() {},
     onRight() {}
   },
-
   components: {
     Graficas: () => import("components/Charts")
+  },
+  created () {
+    this.callClienteReport()
   }
 };
 </script>

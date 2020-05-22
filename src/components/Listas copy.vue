@@ -181,7 +181,6 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
 const alerts = [
   {
     color: "negative",
@@ -206,11 +205,11 @@ export default {
   data() {
     return {
       submitResult: [],
-      nombre: "",
-      dni: "",
-      telf: "",
-      area: "",
-      terminos: false,
+      nombre: "Miguel Rodriguez",
+      dni: "001811517",
+      telf: "965778450",
+      area: null,
+      terminos: true,
       check1: true,
       check2: false,
       check3: false,
@@ -231,18 +230,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions("client", ["addCliente"]),
     reset() {
       this.nombre = "";
       this.dni = "";
       this.telf = "";
       this.area = "";
-      this.terminos = false;
-      this.estados.notif1 = false;
-      this.estados.notif2 = false;
-      this.estados.notif3 = false;
-      this.estados.notif4 = false;
-      this.estados.notif5 = false;
     },
     valdairEstados() {
       if (
@@ -257,70 +249,68 @@ export default {
         return "00";
       }
     },
-    async onSubmit() {
-      // console.log(this.nombre.length);
-      // console.log(this.dni.length);
-      // console.log(this.telf.length);
-      // console.log(this.area.length);
-      // console.log(typeof(this.area));
-      if (
-        this.nombre.length > 0 &&
-        this.dni.length > 0 &&
-        this.telf.length > 0 &&
-        this.area.length > 0
-      ) {
-        this.$q.loading.show();
-        let validacion = this.valdairEstados();
-        if (this.terminos) {
-          console.log(validacion);
-          const JsonEnviar = {
-            ...this.estados,
-            estados: validacion,
-            nombre: this.nombre,
-            dni: this.dni,
-            telf: this.telf,
-            area: this.area
-          };
-          console.log(JsonEnviar);
-          const respAddClient = await this.addCliente(JsonEnviar);
-          console.log(respAddClient);
-          if (validacion == "00") {
-            this.$q.notify({
-              message: "Sigue Cuidandote..! Que tengas lindo dia",
-              color: "green-6",
-              position: "top"
-            });
-          } else if (validacion == "01") {
-            this.$q.notify({
-              message: "Debes visitar un medico",
-              color: "red-6",
-              position: "top"
-            });
+    onSubmit(evt) {
+      let validacion = this.valdairEstados();
+      if (this.terminos) {
+        console.log(validacion);
+        this.submitEmpty = false;
+        const formData = new FormData(evt.target);
+        const submitResult = [];
+        submitResult.push({
+          ...this.estados
+        });
+        submitResult.push(
+          validacion
+        );
+        for (const [name, value] of formData.entries()) {
+          console.log(value);
+          if (value.length > 0) {
+            // submitResult.push(`${name} : ${value}`);
+            submitResult.push({ name, value });
+          } else {
+            this.submitEmpty = true;
           }
+        }
+
+        console.log("this.submitEmpty");
+        console.log(this.submitEmpty);
+        console.log("this.submitEmpty");
+
+        if (this.submitEmpty) {
+          console.log("this.submitEmpty: ", this.submitEmpty);
         } else {
+          this.submitResult = submitResult;
+          // this.submitEmpty = submitResult.length === 0;
+          console.log(this.submitResult);
+        }
+        this.showLoading();
+        if (validacion == "00") {
           this.$q.notify({
-            message: "Debe aceptar los terminos y condiciones",
-            color: "blue-6",
+            message: "Siguee Cuidandote..! Que tengas lindo dia",
+            color: "green-6",
+            position: "top"
+          });
+        } else if (validacion == "01") {
+          this.$q.notify({
+            message: "Debes visitar un medico",
+            color: "red-6",
             position: "top"
           });
         }
-        this.reset();
-        this.$q.loading.hide();
       } else {
         this.$q.notify({
-          message: "No dejear campos vacios",
-          color: "red-6",
+          message: "Debe aceptar los terminos y condiciones",
+          color: "blue-6",
           position: "top"
         });
       }
     },
     showLoading() {
-      // this.$q.loading.show();
+      this.$q.loading.show();
 
       // hiding in 2s
       this.timer = setTimeout(() => {
-        this.$q.loading.show();
-        // this.$q.loading.hide();
+        this.$q.loading.hide();
         this.timer = void 0;
         this.showNotif("center");
       }, 2000);

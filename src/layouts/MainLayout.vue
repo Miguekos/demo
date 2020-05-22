@@ -34,17 +34,14 @@
           <q-separator spaced />
           <q-list>
             <q-item clickable v-ripple class="justify-center">
-              <q-avatar
-                size="100px"
-                font-size="52px"
-              >
+              <q-avatar size="100px" font-size="52px">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
               </q-avatar>
             </q-item>
             <q-item clickable v-ripple class="justify-center">
               <q-item-section class="text-center text-bold">
-                <q-item-label>Miguel Rodriguez</q-item-label>
-                <q-item-label caption>miguekos1233@gmail.com</q-item-label>
+                <q-item-label>{{ userdatil.name }}</q-item-label>
+                <q-item-label caption>{{ userdatil.email }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -54,6 +51,18 @@
           :key="link.title"
           v-bind="link"
         />
+        <q-item clickable tag="a" @click="Logout()">
+          <q-item-section avatar>
+            <q-icon name="logout" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Salir</q-item-label>
+            <q-item-label caption>
+              Cerar Session
+            </q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -65,6 +74,7 @@
 
 <script>
 import EssentialLink from "components/EssentialLink";
+import { LocalStorage } from "quasar";
 
 export default {
   name: "MainLayout",
@@ -75,6 +85,7 @@ export default {
 
   data() {
     return {
+      userdatil: {},
       leftDrawerOpen: false,
       essentialLinks: [
         {
@@ -90,37 +101,47 @@ export default {
           link: "/#/dashboard"
         },
         {
-          title: "Registro",
+          title: "Evaluate",
           caption: "Evaluacion",
           icon: "assignment",
           link: "/#/registro"
         },
         {
-          title: "Listas Sanos",
+          title: "Listar Sanos",
           caption: "Detalle",
-          icon: "group",
+          icon: "face",
           link: "/#/detalles"
         },
         {
-          title: "Listas Con Sintomas",
+          title: "Listar Con Sintomas",
           caption: "Detalle",
           icon: "group",
           link: "/#/detallecs"
-        },
-        {
-          title: "Login",
-          caption: "Iniciar Sesion",
-          icon: "face",
-          link: "/#/login"
-        },
-        {
-          title: "Salir",
-          caption: "Cerrar Session",
-          icon: "logout"
-          // link: 'https://chat.quasar.dev'
         }
       ]
     };
+  },
+  methods: {
+    Logout() {
+      this.$q.loading.show();
+      LocalStorage.clear();
+      // setTimeout(() => {
+      this.$router.push("/auth");
+      this.$q.notify({
+        // progress: true,
+        message: "Regresa proto",
+        // icon: "favorite_border",
+        icon: "favorite",
+        color: "white",
+        textColor: "red-5",
+        position: "top"
+      });
+      this.$q.loading.hide();
+      // }, 2000);
+    }
+  },
+  created() {
+    this.userdatil = LocalStorage.getAll().UserDetalle;
   }
 };
 </script>
