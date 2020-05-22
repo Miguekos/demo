@@ -8,8 +8,8 @@ const routes = [
       { path: '/registro', component: () => import('pages/Registro/Index.vue') },
       { path: '/detallecs', component: () => import('pages/Admin/DetallesConSintomas.vue') },
       { path: '/detalles', component: () => import('pages/Admin/DetallesSanos.vue') },
-      { path: '/dashboard', component: () => import('pages/Admin/Index.vue') },
-      { path: '/login', component: () => import('pages/Login/Index.vue') }
+      { path: '/login', component: () => import('pages/Login/Index.vue') },
+      { path: '/dashboard', component: () => import('pages/Admin/Index.vue') }
     ]
   }
 ]
