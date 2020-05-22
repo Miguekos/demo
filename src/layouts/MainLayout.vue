@@ -1,21 +1,22 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar class="bg-teal-10">
+    <q-header>
+      <q-toolbar class="bg-white">
         <q-btn
           flat
           dense
           round
+          color="black"
           icon="menu"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
-        <q-toolbar-title>
+        <q-toolbar-title class="text-black">
           Evaluate
         </q-toolbar-title>
 
-        <div>v{{ $q.version }}</div>
+        <div class="text-black">v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
