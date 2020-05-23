@@ -5,7 +5,9 @@ const state = {
   ClientesS: [],
   ClienteReport: [],
   ClienteOne: "",
-  search: ""
+  search: "",
+  searchCS: "",
+  searchS: ""
 };
 
 const mutations = {
@@ -23,6 +25,13 @@ const mutations = {
   },
   setSearch(state, payload) {
     state.search = payload;
+  },
+  setSearchCS(state, payload) {
+    console.log("MutasetSearchCS", payload);
+    state.searchCS = payload;
+  },
+  setSearchS(state, payload) {
+    state.searchS = payload;
   },
   setClienteReport(state, payload) {
     state.ClienteReport = payload;
@@ -74,6 +83,13 @@ const actions = {
   },
   setSearch({ commit }, payload) {
     commit("setSearch", payload);
+  },
+  setSearchCS({ commit }, payload) {
+    console.log("setSearchCS", payload);
+    commit("setSearchCS", payload);
+  },
+  setSearchS({ commit }, payload) {
+    commit("setSearchS", payload);
   }
 };
 
@@ -95,11 +111,13 @@ const getters = {
   },
   taskFilteredCS: state => {
     let taskFiltered = {};
-    if (state.search) {
+    if (state.searchCS) {
+      console.log("state.searchCS", state.searchCS);
       Object.keys(state.ClientesCS).forEach(function(key) {
         let task = state.ClientesCS[key],
-          taskNameLowerCase = task.name.toLowerCase(),
-          searchLowerCase = state.search.toLowerCase();
+          taskNameLowerCase = task.nombre.toLowerCase(),
+          searchLowerCase = state.searchCS.toLowerCase();
+        console.log("task.nombre.toLowerCase", task.nombre.toLowerCase);
         if (taskNameLowerCase.includes(searchLowerCase)) {
           taskFiltered[key] = task;
         }
@@ -110,11 +128,11 @@ const getters = {
   },
   taskFilteredS: state => {
     let taskFiltered = {};
-    if (state.search) {
+    if (state.searchS) {
       Object.keys(state.ClientesS).forEach(function(key) {
         let task = state.ClientesS[key],
-          taskNameLowerCase = task.name.toLowerCase(),
-          searchLowerCase = state.search.toLowerCase();
+          taskNameLowerCase = task.nombre.toLowerCase(),
+          searchLowerCase = state.searchS.toLowerCase();
         if (taskNameLowerCase.includes(searchLowerCase)) {
           taskFiltered[key] = task;
         }
@@ -143,8 +161,8 @@ const getters = {
   getClientesCS(state, getters) {
     let taskFiltered = getters.taskFilteredCS;
     let tasks = [];
-    console.log("taskFiltered", taskFiltered);
-    console.log("state.Clientes", state.ClientesCS);
+    console.log("taskFilteredCS", taskFiltered);
+    console.log("state.ClientesCS", state.ClientesCS);
     // return state.Clientes;
     // let tasks = {};
     Object.keys(taskFiltered).forEach(function(key) {

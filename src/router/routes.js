@@ -16,7 +16,7 @@ const routes = [
         path: "/detalles",
         component: () => import("pages/Admin/DetallesSanos.vue")
       },
-      // { path: '/login', component: () => import('pages/Login/Index.vue') },
+      { path: '/usuarios', component: () => import('pages/Users/Index.vue') },
       { path: "/dashboard", component: () => import("pages/Index.vue") }
     ]
   },

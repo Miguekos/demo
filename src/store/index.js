@@ -4,6 +4,7 @@ import Vuex from "vuex";
 // import example from './module-example'
 import auth from "./store-auth";
 import client from "./store-cliente";
+import users from "./store-users";
 
 Vue.use(Vuex);
 
@@ -20,6 +21,7 @@ export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       client,
+      users,
       auth
     },
 

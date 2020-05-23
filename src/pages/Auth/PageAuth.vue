@@ -8,10 +8,10 @@
               color="grey"
               style="height: 110px; max-width: 120px;"
               alt="Roseline logo"
-              src="~assets/icloudgrey.svg"
+              src="~assets/lococorazon.png"
             />
             <q-item-label header class="q-pt-xs text-grey text-bold">
-              Roseline
+              <b class="text-green">C</b>uid<b class="text-red">APP</b>te
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -21,7 +21,7 @@
         <q-item>
           <q-item-section>
             <q-item-label class="q-pb-xs text-h6 text-black text-bold">
-              Iniciar Sesión
+              Iniciar sesión
             </q-item-label>
             <q-item-label class="q-pt-xs text-grey text-bold">
               Hola, puedes reliazar tu registro
@@ -122,8 +122,8 @@ export default {
       dense: false,
       loading: false,
       form: {
-        email: "",
-        password: ""
+        email: "admin@admin.com",
+        password: "secret"
       }
     };
   },

@@ -19,7 +19,7 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <q-input
+          <!-- <q-input
             v-model="search"
             dense
             standout="bg-green-4 text-white"
@@ -29,7 +29,8 @@
             <template v-slot:append>
               <q-icon name="search" />
             </template>
-          </q-input>
+          </q-input> -->
+          <Search />
         </q-item-section>
       </q-item>
     </q-list>
@@ -43,7 +44,7 @@
         <q-item-section>
           <q-item-label>{{ item.nombre }}</q-item-label>
           <q-item-label caption>
-            <b class="text-green-5">Telf:</b> {{ item.telf }}</q-item-label
+            <b class="text-green-5">Cel:</b> {{ item.telf }}</q-item-label
           >
         </q-item-section>
         <q-item-section side right>
@@ -64,6 +65,9 @@ export default {
     ...mapGetters("client", ["getClientesS"])
     // ...mapState("general", ["formatearFecha"])
   },
+  components: {
+    Search: () => import("./SearchS")
+  },
   data() {
     return {
       text: "",
@@ -75,7 +79,7 @@ export default {
     ...mapActions("client", ["callClienteS"]),
     formatDate(arg) {
       console.log("Formateando Fecha");
-      return Fechas.Corta(arg);
+      return Fechas.larga(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
     }
   },

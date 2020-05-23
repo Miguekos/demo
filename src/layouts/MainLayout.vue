@@ -59,7 +59,7 @@
           <q-item-section>
             <q-item-label>Salir</q-item-label>
             <q-item-label caption>
-              Cerar Session
+              Cerar sesíon
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -71,7 +71,6 @@
     </q-page-container>
   </q-layout>
 </template>
-
 <script>
 import EssentialLink from "components/EssentialLink";
 import { LocalStorage } from "quasar";
@@ -96,27 +95,33 @@ export default {
         },
         {
           title: "Reportes",
-          caption: "Estadisticas",
+          caption: "Estadísticas",
           icon: "assessment",
           link: "/#/dashboard"
         },
         {
-          title: "Evaluate",
-          caption: "Evaluacion",
-          icon: "assignment",
+          title: "Evalúate",
+          caption: "Evaluación",
+          icon: "local_hospital",
           link: "/#/registro"
         },
         {
           title: "Listar Sanos",
           caption: "Detalle",
-          icon: "face",
+          icon: "sentiment_satisfied_alt",
           link: "/#/detalles"
         },
         {
           title: "Listar Con Sintomas",
           caption: "Detalle",
-          icon: "group",
+          icon: "sentiment_very_dissatisfied",
           link: "/#/detallecs"
+        },
+        {
+          title: "Usuarios",
+          caption: "Administrar",
+          icon: "group",
+          link: "/#/usuarios"
         }
       ]
     };
@@ -129,7 +134,7 @@ export default {
       this.$router.push("/auth");
       this.$q.notify({
         // progress: true,
-        message: "Regresa proto",
+        message: "Regresa pronto",
         // icon: "favorite_border",
         icon: "favorite",
         color: "white",

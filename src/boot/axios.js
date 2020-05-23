@@ -23,8 +23,8 @@ const axiosInstance = axios.create({
   // baseURL: "http://172.105.17.123:4100"
   // baseURL: "http://192.168.0.32:9876"
   // baseURL: "http://192.168.0.21:9876"
-  baseURL: "https://api.apps.com.pe"
-  // baseURL: "http://192.168.0.33:9876"
+  // baseURL: "https://api.apps.com.pe"
+  baseURL: "http://192.168.0.33:9876"
 });
 
 export default ({ Vue }) => {

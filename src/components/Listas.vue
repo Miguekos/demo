@@ -3,32 +3,62 @@
     <q-form @submit="onSubmit" class="q-gutter-md">
       <q-list bordered padding>
         <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
-          >Datos Personales</q-item-label
+          >Datos personales</q-item-label
         >
         <q-separator spaced />
         <q-item>
           <q-item-section>
-            <q-input name="name" dense v-model="nombre" label="Nombre" />
+            <q-input
+              color="red-5"
+              name="name"
+              dense
+              v-model="nombre"
+              label="Nombres y apellidos"
+            />
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
-            <q-input name="dni" dense v-model="dni" label="DNI / C.E" />
+            <q-input
+              color="red-5"
+              name="dni"
+              dense
+              v-model="dni"
+              label="DNI / C.E"
+            />
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
-            <q-input name="telf" dense v-model="telf" label="Telefono" />
+            <q-input
+              color="red-5"
+              name="telf"
+              dense
+              v-model="telf"
+              label="Celular"
+            />
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-input
+              color="red-5"
+              name="correo"
+              dense
+              v-model="correo"
+              label="Correo (opcional)"
+            />
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
             <q-select
+              color="red-5"
               name="area"
               dense
               v-model="area"
               :options="options"
-              label="Area"
+              label="Área"
             />
           </q-item-section>
         </q-item>
@@ -36,7 +66,7 @@
         <q-separator spaced />
 
         <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
-          >¿Como te sientes?</q-item-label
+          >¿Cómo te sientes?</q-item-label
         >
         <q-separator spaced />
 
@@ -160,7 +190,7 @@
 
         <q-item>
           <q-item-section>
-            <q-btn color="amber-8" @click="reset()" label="Cancelar" />
+            <q-btn color="red-5" @click="reset()" label="Limpiar" />
           </q-item-section>
           <q-item-section>
             <q-btn color="green-6" type="submit" label="Confirmar" />
@@ -205,6 +235,7 @@ const alerts = [
 export default {
   data() {
     return {
+      correo: "",
       submitResult: [],
       nombre: "",
       dni: "",
@@ -279,20 +310,21 @@ export default {
             nombre: this.nombre,
             dni: this.dni,
             telf: this.telf,
-            area: this.area
+            area: this.area,
+            correo: this.correo
           };
           console.log(JsonEnviar);
           const respAddClient = await this.addCliente(JsonEnviar);
           console.log(respAddClient);
           if (validacion == "00") {
             this.$q.notify({
-              message: "Sigue Cuidandote..! Que tengas lindo dia",
+              message: "!Sigue cuidándote! Que tengas buen día.",
               color: "green-6",
               position: "top"
             });
           } else if (validacion == "01") {
             this.$q.notify({
-              message: "Debes visitar un medico",
+              message: "Quédate en casa. Llama a tu jefe.",
               color: "red-6",
               position: "top"
             });
@@ -308,7 +340,7 @@ export default {
         this.$q.loading.hide();
       } else {
         this.$q.notify({
-          message: "No dejear campos vacios",
+          message: "No dejear campos vacíos",
           color: "red-6",
           position: "top"
         });
