@@ -19,29 +19,41 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <q-input
-            v-model="search"
-            dense
-            standout="bg-grey-4 text-white"
-            type="search"
-            placeholder="Buscar"
-          >
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
+          <Search />
         </q-item-section>
       </q-item>
     </q-list>
-    <q-list separator>
+    <q-table
+      hide-bottom
+      hide-header
+      flat
+      :data="getUsers"
+      :columns="columns"
+      row-key="created_at.$date"
+    >
+      <template v-slot:body="props">
+        <q-tr :props="props" clickable @click="detalleCliente(props.row)">
+          <q-td key="name" :props="props">
+            <q-item-section>
+              <q-item-label>{{ props.row.name }}</q-item-label>
+              <q-item-label caption> {{ props.row.email }}</q-item-label>
+            </q-item-section>
+          </q-td>
+          <q-td key="created_at.$date" :props="props">
+            {{ formatDate(props.row.created_at.$date) }}
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
+    <!-- <q-list separator>
       <q-item
-        v-for="(item, index) in getClientes"
+        v-for="(item, index) in getUsers"
         :key="index"
         clickable
         v-ripple
       >
         <q-item-section>
-          <q-item-label>{{ item.nombre }}</q-item-label>
+          <q-item-label>{{ item.name }}</q-item-label>
           <q-item-label caption>
             <b class="text-grey-5">Cel:</b> {{ item.telf }}</q-item-label
           >
@@ -50,7 +62,13 @@
           <q-item-label>{{ item.email }}</q-item-label>
         </q-item-section>
       </q-item>
-    </q-list>
+    </q-list> -->
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn @click="registro()" fab icon="add" color="green" />
+    </q-page-sticky>
+    <q-dialog persistent v-model="dialogRegistro">
+      <Registro @cerrarDialog="dialogRegistro = false" />
+    </q-dialog>
   </q-page>
 </template>
 
@@ -61,18 +79,54 @@ import { mapGetters, mapActions, mapState } from "vuex";
 import { date } from "quasar";
 export default {
   computed: {
-    ...mapGetters("client", ["getClientes"])
+    ...mapGetters("users", ["getUsers"])
     // ...mapState("general", ["formatearFecha"])
+  },
+  components: {
+    Search: () => import("./Search"),
+    Registro: () => import("src/components/dielogRegistro")
   },
   data() {
     return {
+      dialogRegistro: false,
+      fabLeft: true,
+      fabCenter: true,
+      fabRight: true,
+      columns: [
+        {
+          name: "name",
+          required: true,
+          label: "Nombre",
+          align: "left",
+          field: row => row.name,
+          format: val => `${val}`,
+          sortable: true
+        },
+        {
+          name: "created_at.$date",
+          align: "right",
+          label: "fecha",
+          field: "created_at.$date",
+          sortable: true
+        }
+      ],
       text: "",
       loading: false,
       search: ""
     };
   },
   methods: {
-    ...mapActions("client", ["callCliente"]),
+    ...mapActions("users", ["callUser"]),
+    registro() {
+      this.dialogRegistro = true;
+    },
+    onClick() {
+      console.log("Clicked on a fab action");
+    },
+    detalleCliente(arg) {
+      console.log(arg);
+      alert(arg);
+    },
     formatDate(arg) {
       console.log("Formateando Fecha");
       return Fechas.larga(arg);
@@ -88,7 +142,7 @@ export default {
     //   spinnerSize: 100,
     //   backgroundColor: "grey-4"
     // });
-    await this.callCliente();
+    await this.callUser();
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");

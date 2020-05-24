@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <q-list>
-      <q-item dense clickable v-ripple>
+      <q-item @click="exportTable()" dense clickable v-ripple>
         <q-item-section
           class="text-red text-bold"
           side
@@ -15,6 +15,7 @@
           <q-separator color="green-4" inset />
         </q-item-section>
         <q-item-section class="text-green text-bold" side top right>
+          <q-icon name="archive" />
         </q-item-section>
       </q-item>
       <q-item>
@@ -44,6 +45,15 @@
       :columns="columns"
       row-key="created_at.$date"
     >
+      <!-- <template v-slot:top-right>
+        <q-btn
+          color="primary"
+          icon-right="archive"
+          label="Export to csv"
+          no-caps
+          @click="exportTable"
+        />
+      </template> -->
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="nombre" :props="props">
@@ -87,7 +97,25 @@
 import { Fechas } from "src/directives/formatFecha";
 import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
-import { date } from "quasar";
+import { date, exportFile } from "quasar";
+
+function wrapCsvValue(val, formatFn) {
+  let formatted = formatFn !== void 0 ? formatFn(val) : val;
+
+  formatted =
+    formatted === void 0 || formatted === null ? "" : String(formatted);
+
+  formatted = formatted.split('"').join('""');
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+
+  return `"${formatted}"`;
+}
+
 export default {
   computed: {
     ...mapGetters("client", ["getClientesS"])
@@ -98,6 +126,23 @@ export default {
   },
   data() {
     return {
+      columnsexport: [
+        {
+          name: "nombre",
+          label: "Nombre",
+          field: row => row.nombre
+        },
+        {
+          name: "correo",
+          label: "Correo",
+          field: "correo"
+        },
+        {
+          name: "created_at.$date",
+          label: "fecha",
+          field: "created_at.$date"
+        }
+      ],
       columns: [
         {
           name: "nombre",
@@ -123,6 +168,35 @@ export default {
   },
   methods: {
     ...mapActions("client", ["callClienteS"]),
+    exportTable() {
+      // naive encoding to csv format
+      const content = [this.columnsexport.map(col => wrapCsvValue(col.label))]
+        .concat(
+          this.getClientesS.map(row =>
+            this.columnsexport
+              .map(col =>
+                wrapCsvValue(
+                  typeof col.field === "function"
+                    ? col.field(row)
+                    : row[col.field === void 0 ? col.name : col.field],
+                  col.format
+                )
+              )
+              .join(",")
+          )
+        )
+        .join("\r\n");
+
+      const status = exportFile("table-sanos.csv", content, "text/csv");
+
+      if (status !== true) {
+        this.$q.notify({
+          message: "Tu navegador no permite descargar...",
+          color: "negative",
+          icon: "warning"
+        });
+      }
+    },
     formatDate(arg) {
       console.log("Formateando Fecha");
       return Fechas.larga(arg);
@@ -140,6 +214,7 @@ export default {
     //   backgroundColor: "grey-4"
     // });
     await this.callClienteS();
+    // this.dataexport = this.getClientesS();
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");
