@@ -3,8 +3,8 @@
     <q-list>
       <q-item bordered>
         <q-item-label class="text-left text-h6 q-pa-xs text-bold text-black"
-          >Reportes {{ getClienteReport }} </q-item-label
-        >
+          >Reportes {{ getClienteReport }}
+        </q-item-label>
       </q-item>
       <q-separator />
       <q-item class="justify-around" style="height: 150px;">
@@ -140,6 +140,7 @@
 </template>
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
+import { Loading, QSpinnerGears } from "quasar";
 export default {
   data() {
     return {
@@ -154,14 +155,33 @@ export default {
   },
   methods: {
     ...mapActions("client", ["callClienteReport"]),
+    showLoading() {
+      this.$q.loading.show();
+
+      // hiding in 3s
+      this.timer = setTimeout(() => {
+        this.$q.loading.hide();
+        this.timer = void 0;
+      }, 3000);
+    },
     onLeft() {},
     onRight() {}
+  },
+  beforeDestroy() {
+    if (this.timer !== void 0) {
+      clearTimeout(this.timer);
+      this.$q.loading.hide();
+    }
   },
   components: {
     Graficas: () => import("components/Charts")
   },
-  created () {
-    this.callClienteReport()
+  created() {
+    console.log("########################################");
+    Loading.show();
+    this.showLoading();
+    this.callClienteReport();
+    // this.$q.loading.hide();
   }
 };
 </script>

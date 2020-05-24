@@ -10,7 +10,7 @@
               alt="Roseline logo"
               src="~assets/lococorazon.png"
             />
-            <q-item-label header class="q-pt-xs text-grey text-bold">
+            <q-item-label header class="q-pt-xs text-grey text-h6 text-bold">
               <b class="text-green">C</b>uid<b class="text-red">APP</b>te
             </q-item-label>
           </q-item-section>
@@ -85,6 +85,7 @@
         <q-item>
           <q-item-section>
             <q-btn
+              :loading="loadlogin"
               color="red-6"
               type="submit"
               text-color="white"
@@ -114,6 +115,7 @@ export default {
   // },
   data() {
     return {
+      loadlogin: false,
       val: false,
       text: "",
       ph: "",
@@ -130,6 +132,7 @@ export default {
   methods: {
     ...mapActions("auth", ["login"]),
     submitForm() {
+      this.loadlogin = true;
       this.$refs.email.validate();
       this.$refs.password.validate();
       if (!this.$refs.email.hasError && !this.$refs.password.hasError) {
@@ -145,15 +148,31 @@ export default {
                 name: resp.name,
                 email: resp.email
               };
+              this.$q.notify({
+                // progress: true,
+                message: "¡Bienvenido!",
+                // icon: "favorite_border",
+                icon: "insert_emoticon",
+                color: "white",
+                textColor: "red-5",
+                position: "top"
+              });
               LocalStorage.set("UserDetalle", userDetalle);
               console.log("loguerado Correctamente");
+              this.loadlogin = false;
               this.$router.push("/");
             } else if (resp.codRes == "01") {
               console.log("Email o Contraseña incorrecta");
+              this.$q.notify({
+                message: "Email o Contraseña incorrecta",
+                color: "red-5"
+              });
+              this.loadlogin = false;
             }
           })
           .catch(err => {
             console.log(err);
+            this.loadlogin = false;
           });
         console.log("login the user");
       }

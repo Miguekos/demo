@@ -20,31 +20,33 @@ export default {
   name: "PageIndex",
   components: {
     Listas: () => import("components/Listas")
+  },
+  created() {
+    this.$q.loading.show();
+    this.$q.loading.hide();
   }
 };
 </script>
 <style>
 #corazon {
   animation-name: marcos;
-  animation-duration:5s;
+  animation-duration: 5s;
   animation-iteration-count: infinite;
   animation-timing-function: ease;
 }
 
-@keyframes marcos{
-  0%{
-    transform: scale(1,1);
+@keyframes marcos {
+  0% {
+    transform: scale(1, 1);
   }
-  25%{
-
-    transform: scale(0.9,0.9);
+  25% {
+    transform: scale(0.9, 0.9);
   }
-  50%{
-
-    transform: scale(1,1);
+  50% {
+    transform: scale(1, 1);
   }
-  75%{
-    transform: scale(0.9,0.9);
+  75% {
+    transform: scale(0.9, 0.9);
   }
 }
 </style>

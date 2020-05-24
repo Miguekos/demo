@@ -74,7 +74,7 @@
             <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
           </q-avatar>
         </q-item-section>
-        <q-item-section>{{item.nombre}}</q-item-section>
+        <q-item-section>{{ item.nombre }}</q-item-section>
         <q-item-section side center>
           <q-item-label>
             {{ item.dni }}
@@ -101,14 +101,32 @@ export default {
   methods: {
     ...mapActions("client", ["callClienteReport", "callCliente"]),
     onLeft() {},
-    onRight() {}
+    onRight() {},
+    showLoading() {
+      this.$q.loading.show();
+
+      // hiding in 3s
+      this.timer = setTimeout(() => {
+        this.$q.loading.hide();
+        this.timer = void 0;
+      }, 3000);
+    }
   },
   components: {
     Graficas: () => import("components/Charts")
   },
+  beforeDestroy() {
+    if (this.timer !== void 0) {
+      clearTimeout(this.timer);
+      this.$q.loading.hide();
+    }
+  },
   created() {
+    // this.$q.loading.show();
+    this.showLoading();
     this.callClienteReport();
     this.callCliente();
+    // this.$q.loading.hide()
   }
 };
 </script>

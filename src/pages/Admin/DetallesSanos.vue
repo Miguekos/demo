@@ -34,7 +34,35 @@
         </q-item-section>
       </q-item>
     </q-list>
-    <q-list separator>
+
+    <!-- {{ getClientesS }} -->
+    <q-table
+      hide-bottom
+      hide-header
+      flat
+      :data="getClientesS"
+      :columns="columns"
+      row-key="created_at.$date"
+    >
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td key="nombre" :props="props">
+            <q-item-section>
+              <q-item-label>{{ props.row.nombre }}</q-item-label>
+              <q-item-label caption>
+                <b class="text-green-5">Cel:</b>
+                {{ props.row.telf }}</q-item-label
+              >
+            </q-item-section>
+          </q-td>
+          <q-td key="created_at.$date" :props="props">
+            {{ formatDate(props.row.created_at.$date) }}
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
+
+    <!-- <q-list separator>
       <q-item
         v-for="(item, index) in getClientesS"
         :key="index"
@@ -51,7 +79,7 @@
           <q-item-label>{{ formatDate(item.created_at.$date) }}</q-item-label>
         </q-item-section>
       </q-item>
-    </q-list>
+    </q-list> -->
   </q-page>
 </template>
 
@@ -70,6 +98,24 @@ export default {
   },
   data() {
     return {
+      columns: [
+        {
+          name: "nombre",
+          required: true,
+          label: "Nombre",
+          align: "left",
+          field: row => row.nombre,
+          format: val => `${val}`,
+          sortable: true
+        },
+        {
+          name: "created_at.$date",
+          align: "right",
+          label: "fecha",
+          field: "created_at.$date",
+          sortable: true
+        }
+      ],
       text: "",
       loading: false,
       search: ""
@@ -84,6 +130,7 @@ export default {
     }
   },
   async created() {
+    this.$q.loading.show();
     this.loading = true;
     console.log("created - Cliente");
     // this.$q.loading.show({
@@ -96,7 +143,7 @@ export default {
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");
-    // this.$q.loading.hide();
+    this.$q.loading.hide();
     this.loading = false;
   }
 };
