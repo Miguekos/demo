@@ -143,7 +143,11 @@ export default {
         })
           .then(resp => {
             if (resp.codRes == "00") {
+              console.log("resp", resp);
               LocalStorage.set("loggin", true);
+              LocalStorage.set("role", resp.role);
+              this.$store.commit('auth/setAuth', true)
+              this.$store.commit('auth/setRole', resp.role)
               const userDetalle = {
                 name: resp.name,
                 email: resp.email
@@ -157,7 +161,7 @@ export default {
                 textColor: "red-5",
                 position: "top"
               });
-              LocalStorage.set("UserDetalle", userDetalle);
+              LocalStorage.set("UserDetalle", resp);
               console.log("loguerado Correctamente");
               this.loadlogin = false;
               this.$router.push("/");

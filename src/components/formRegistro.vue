@@ -101,7 +101,8 @@ export default {
         name: this.name,
         dni: this.dni,
         email: this.email,
-        telefono: this.telefono
+        telefono: this.telefono,
+        role: 2
       })
         .then(resp => {
           if (resp.codRes == "02") {

@@ -144,6 +144,14 @@
 import { mapGetters, mapActions, mapState } from "vuex";
 import { Loading, QSpinnerGears } from "quasar";
 export default {
+  preFetch({ store, redirect }) {
+    if (!store.state.authenticated) {
+      // IMPORTANT! Always use the String form of a
+      // route if also building for SSR. The Object form
+      // won't work on SSR builds.
+      redirect("/login");
+    }
+  },
   data() {
     return {
       value: 81,

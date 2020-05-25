@@ -88,7 +88,17 @@
 </template>
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
+import { LocalStorage } from "quasar";
 export default {
+  preFetch({ store, redirect }) {
+    let logginIn = LocalStorage.getAll().loggin;
+    let role = LocalStorage.getAll().role;
+    if (logginIn && role == 1) {
+      console.log("WELCOME");
+    } else {
+      redirect("/");
+    }
+  },
   data() {
     return {
       value: 81,

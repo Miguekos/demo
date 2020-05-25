@@ -1,7 +1,17 @@
 import { axiosInstance } from "boot/axios";
-const state = {};
+const state = {
+  authenticated: false,
+  role: 1
+};
 
-const mutations = {};
+const mutations = {
+  setAuth(state, payload) {
+    state.authenticated = payload;
+  },
+  setRole(state, payload) {
+    state.role = payload;
+  }
+};
 
 const actions = {
   async login({ commit }, payload) {

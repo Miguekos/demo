@@ -76,8 +76,17 @@
 import { Fechas } from "src/directives/formatFecha";
 import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
-import { date } from "quasar";
+import { date, LocalStorage } from "quasar";
 export default {
+  preFetch({ store, redirect }) {
+    let logginIn = LocalStorage.getAll().loggin;
+    let role = LocalStorage.getAll().role;
+    if (logginIn && role == 1) {
+      console.log("WELCOME");
+    } else {
+      redirect("/");
+    }
+  },
   computed: {
     ...mapGetters("users", ["getUsers"])
     // ...mapState("general", ["formatearFecha"])

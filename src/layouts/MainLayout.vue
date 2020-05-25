@@ -35,7 +35,7 @@
           <q-list>
             <q-item clickable v-ripple class="justify-center">
               <q-avatar size="100px" font-size="52px">
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+                <img :src="`${userdatil.url}${userdatil.profile}`" />
               </q-avatar>
             </q-item>
             <q-item clickable v-ripple class="justify-center">
@@ -47,7 +47,14 @@
           </q-list>
         </q-item-label>
         <EssentialLink
+          v-if="role == 1"
           v-for="link in essentialLinks"
+          :key="link.title"
+          v-bind="link"
+        />
+        <EssentialLink
+          v-if="role == 2"
+          v-for="link in essentialLinksUser"
           :key="link.title"
           v-bind="link"
         />
@@ -84,6 +91,7 @@ export default {
 
   data() {
     return {
+      role: null,
       userdatil: {},
       leftDrawerOpen: false,
       essentialLinks: [
@@ -106,13 +114,13 @@ export default {
           link: "/registro"
         },
         {
-          title: "Listar Sanos",
+          title: "Personal Sanos",
           caption: "Detalle",
           icon: "sentiment_satisfied_alt",
           link: "/detalles"
         },
         {
-          title: "Listar Con Sintomas",
+          title: "Personal Con Sintomas",
           caption: "Detalle",
           icon: "sentiment_very_dissatisfied",
           link: "/detallecs"
@@ -122,6 +130,20 @@ export default {
           caption: "Administrar",
           icon: "group",
           link: "/usuarios"
+        }
+      ],
+      essentialLinksUser: [
+        {
+          title: "Inicio",
+          caption: "Inicio",
+          icon: "dashboard",
+          link: "/"
+        },
+        {
+          title: "Evalúate",
+          caption: "Evaluación",
+          icon: "local_hospital",
+          link: "/registro"
         }
       ]
     };
@@ -147,6 +169,7 @@ export default {
   },
   created() {
     this.userdatil = LocalStorage.getAll().UserDetalle;
+    this.role = LocalStorage.getAll().role;
   }
 };
 </script>

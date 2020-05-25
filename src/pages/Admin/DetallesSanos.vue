@@ -97,7 +97,7 @@
 import { Fechas } from "src/directives/formatFecha";
 import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
-import { date, exportFile } from "quasar";
+import { date, exportFile, LocalStorage } from "quasar";
 
 function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0 ? formatFn(val) : val;
@@ -117,6 +117,15 @@ function wrapCsvValue(val, formatFn) {
 }
 
 export default {
+  preFetch({ store, redirect }) {
+    let logginIn = LocalStorage.getAll().loggin;
+    let role = LocalStorage.getAll().role;
+    if (logginIn && role == 1) {
+      console.log("WELCOME");
+    } else {
+      redirect("/");
+    }
+  },
   computed: {
     ...mapGetters("client", ["getClientesS"])
     // ...mapState("general", ["formatearFecha"])

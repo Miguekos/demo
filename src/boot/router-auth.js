@@ -6,8 +6,8 @@ import { LocalStorage } from "quasar";
 
 export default ({ app, router, Vue }) => {
   router.beforeEach((to, from, next) => {
-    console.log(to, to);
-    console.log(from, from);
+    // console.log(to, to);
+    // console.log(from, from);
     // LocalStorage.set("loggin", false);
     // let logginIn = false;
     let logginIn = LocalStorage.getAll().loggin;
