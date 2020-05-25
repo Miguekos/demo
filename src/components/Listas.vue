@@ -2,68 +2,69 @@
   <div class="q-pa-sm">
     <q-form @submit="onSubmit" class="q-gutter-md">
       <q-list bordered padding>
-        <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
-          >Datos personales</q-item-label
-        >
-        <q-separator spaced />
-        <q-item>
-          <q-item-section>
-            <q-input
-              color="red-5"
-              name="name"
-              dense
-              v-model="nombre"
-              label="Nombres y apellidos"
-            />
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <q-input
-              color="red-5"
-              name="dni"
-              dense
-              v-model="dni"
-              label="DNI / C.E"
-            />
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <q-input
-              color="red-5"
-              name="telf"
-              dense
-              v-model="telf"
-              label="Celular"
-            />
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <q-input
-              color="red-5"
-              name="correo"
-              dense
-              v-model="correo"
-              label="Correo (opcional)"
-            />
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <q-select
-              color="red-5"
-              name="area"
-              dense
-              v-model="area"
-              :options="options"
-              label="Área"
-            />
-          </q-item-section>
-        </q-item>
-
-        <q-separator spaced />
+        <div v-if="datosPersonales">
+          <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
+            >Datos personales</q-item-label
+          >
+          <q-separator spaced />
+          <q-item>
+            <q-item-section>
+              <q-input
+                color="red-5"
+                name="name"
+                dense
+                v-model="nombre"
+                label="Nombres y apellidos"
+              />
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section>
+              <q-input
+                color="red-5"
+                name="dni"
+                dense
+                v-model="dni"
+                label="DNI / C.E"
+              />
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section>
+              <q-input
+                color="red-5"
+                name="telf"
+                dense
+                v-model="telf"
+                label="Celular"
+              />
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section>
+              <q-input
+                color="red-5"
+                name="correo"
+                dense
+                v-model="correo"
+                label="Correo (opcional)"
+              />
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section>
+              <q-select
+                color="red-5"
+                name="area"
+                dense
+                v-model="area"
+                :options="options"
+                label="Área"
+              />
+            </q-item-section>
+          </q-item>
+          <q-separator spaced />
+        </div>
 
         <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
           >¿Cómo te sientes?</q-item-label
@@ -212,6 +213,7 @@
 </template>
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
+import { LocalStorage } from "quasar";
 const alerts = [
   {
     color: "negative",
@@ -235,6 +237,7 @@ const alerts = [
 export default {
   data() {
     return {
+      datosPersonales: false,
       correo: "",
       submitResult: [],
       nombre: "",
@@ -411,6 +414,15 @@ export default {
     if (this.timer !== void 0) {
       clearTimeout(this.timer);
       this.$q.loading.hide();
+    }
+  },
+  created() {
+    const role = LocalStorage.getAll().role
+    console.log(role);
+    if (role == 1) {
+      this.datosPersonales = true
+    } else {
+      this.datosPersonales = false
     }
   }
 };
