@@ -33,15 +33,20 @@
     >
       <template v-slot:body="props">
         <q-tr :props="props" clickable @click="detalleCliente(props.row)">
-          <q-td key="name" :props="props">
-            <q-item-section>
-              <q-item-label>{{ props.row.name }}</q-item-label>
-              <q-item-label caption> {{ props.row.email }}</q-item-label>
-            </q-item-section>
-          </q-td>
-          <q-td key="created_at.$date" :props="props">
-            {{ formatDate(props.row.created_at.$date) }}
-          </q-td>
+          <q-slide-item @right="onRight(props.row)">
+            <template v-slot:right>
+              <q-icon name="delete" />
+            </template>
+            <q-td key="name" :props="props">
+              <q-item-section>
+                <q-item-label>{{ props.row.name }}</q-item-label>
+                <q-item-label caption> {{ props.row.email }}</q-item-label>
+              </q-item-section>
+            </q-td>
+            <q-td key="created_at.$date" :props="props">
+              {{ formatDate(props.row.created_at.$date) }}
+            </q-td>
+          </q-slide-item>
         </q-tr>
       </template>
     </q-table>
@@ -116,7 +121,37 @@ export default {
     };
   },
   methods: {
-    ...mapActions("users", ["callUser"]),
+    ...mapActions("users", ["callUser", "s"]),
+    onRight({ reset }, arg) {
+      console.log("arg", arg);
+      this.$q
+        .dialog({
+          title: "Confirmar",
+          message: "¿Lo quieres eliminar?",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(() => {
+          // console.log('>>>> OK')
+          // this.deleteUser();
+          this.finalize(reset);
+          // reset();
+        })
+        .onOk(() => {
+          // console.log('>>>> second OK catcher')
+        })
+        .onCancel(() => {
+          // console.log('>>>> Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
+    },
+    finalize(reset) {
+      // this.timer = setTimeout(() => {
+      reset();
+      // }, 1000);
+    },
     registro() {
       this.dialogRegistro = true;
     },
@@ -124,8 +159,8 @@ export default {
       console.log("Clicked on a fab action");
     },
     detalleCliente(arg) {
-      console.log(arg);
-      alert(arg);
+      console.log(arg._id.$oid);
+      this.$router.push(`/profile/${arg._id.$oid}`);
     },
     formatDate(arg) {
       console.log("Formateando Fecha");

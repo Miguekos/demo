@@ -1,6 +1,7 @@
 import { axiosInstance } from "boot/axios";
 const state = {
   Users: [],
+  UsersOne: "",
   search: ""
 };
 
@@ -10,6 +11,9 @@ const mutations = {
   },
   setSearch(state, payload) {
     state.search = payload;
+  },
+  setUsersOne(state, payload) {
+    state.UsersOne = payload;
   }
 };
 
@@ -21,10 +25,25 @@ const actions = {
     commit("setUsers", response.data);
     // return response.data;
   },
+  async callUserOne({ commit }, payload) {
+    console.log("callUserOne");
+    const response = await axiosInstance.get(`/user/${payload}`);
+    // console.log(response.data);
+    commit("setUsersOne", response.data);
+    // return response.data;
+  },
   async addUser({ commit }, payload) {
     console.log("addUser");
     console.log(payload);
     const response = await axiosInstance.post(`/user/add`, payload);
+    console.log(response);
+    // commit("setUsers", response.data);
+    return response.data;
+  },
+  async updateUser({ commit }, payload) {
+    console.log("updateUser");
+    console.log(payload);
+    const response = await axiosInstance.put(`/user/update`, payload);
     console.log(response);
     // commit("setUsers", response.data);
     return response.data;
@@ -68,8 +87,8 @@ const getters = {
     return tasks;
   },
   getUserOne(state) {
-    console.log(state.UserOne);
-    return state.UserOne;
+    console.log(state.UsersOne);
+    return state.UsersOne;
   }
 };
 

@@ -25,6 +25,7 @@
         <q-item-section style="align-items: center;" class="text-grey" side>
           <q-item-label class="q-pb-md">Sanos</q-item-label>
           <q-circular-progress
+            @click="URL('/detalles')"
             show-value
             :value="sanos"
             size="80px"
@@ -39,6 +40,7 @@
         <q-item-section style="align-items: center;" class="text-grey" side>
           <q-item-label class="q-pb-md">Con Sintomas</q-item-label>
           <q-circular-progress
+            @click="URL('/detallecs')"
             show-value
             :value="consintomas"
             size="80px"
@@ -155,6 +157,9 @@ export default {
   },
   methods: {
     ...mapActions("client", ["callClienteReport"]),
+    async URL(arg) {
+      await this.$router.push(arg);
+    },
     showLoading() {
       this.$q.loading.show();
 

@@ -91,37 +91,37 @@ export default {
           title: "Inicio",
           caption: "Inicio",
           icon: "dashboard",
-          link: "/#/"
+          link: "/"
         },
         {
           title: "Reportes",
           caption: "Estadísticas",
           icon: "assessment",
-          link: "/#/dashboard"
+          link: "/dashboard"
         },
         {
           title: "Evalúate",
           caption: "Evaluación",
           icon: "local_hospital",
-          link: "/#/registro"
+          link: "/registro"
         },
         {
           title: "Listar Sanos",
           caption: "Detalle",
           icon: "sentiment_satisfied_alt",
-          link: "/#/detalles"
+          link: "/detalles"
         },
         {
           title: "Listar Con Sintomas",
           caption: "Detalle",
           icon: "sentiment_very_dissatisfied",
-          link: "/#/detallecs"
+          link: "/detallecs"
         },
         {
           title: "Usuarios",
           caption: "Administrar",
           icon: "group",
-          link: "/#/usuarios"
+          link: "/usuarios"
         }
       ]
     };

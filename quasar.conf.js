@@ -54,7 +54,7 @@ module.exports = function(/* ctx */) {
           // Loading defaults
           // spinner: QSpinnerGears,
           // message: "<div class='my-class-new'><b class='text-green'>C</b>uid<b class='text-red'>APP</b>te</div>",
-          message: "<div id='corazon'><img color='grey' style='height: 110px; max-width: 120px;' src='/img/lococorazon.cd99e9a1.png'></img><div class='text-center text-bold text-h6 text-red-5'>Cargando..</div></div>",
+          message: "<div id='corazon'><img color='grey' style='height: 110px; max-width: 120px;' id='corazonimg'></img><div class='text-center text-bold text-h6 text-red-5'>Cargando..</div></div>",
           // messageColor: "white",
           spinnerSize: 1, // in pixels
           spinnerColor: "red-5",
@@ -63,7 +63,7 @@ module.exports = function(/* ctx */) {
         }
       },
       components: [],
-      directives: [],
+      directives: ['TouchHold'],
 
       // Quasar plugins
       plugins: [
@@ -71,7 +71,8 @@ module.exports = function(/* ctx */) {
         "Notify",
         "AddressbarColor",
         "LocalStorage",
-        "SessionStorage"
+        "SessionStorage",
+        'Dialog'
       ]
     },
 
