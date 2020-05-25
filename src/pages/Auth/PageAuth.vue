@@ -124,8 +124,8 @@ export default {
       dense: false,
       loading: false,
       form: {
-        email: "admin@admin.com",
-        password: "secret"
+        email: "",
+        password: ""
       }
     };
   },
@@ -146,6 +146,7 @@ export default {
               console.log("resp", resp);
               LocalStorage.set("loggin", true);
               LocalStorage.set("role", resp.role);
+              LocalStorage.set("idUser", resp.id.$oid);
               this.$store.commit('auth/setAuth', true)
               this.$store.commit('auth/setRole', resp.role)
               const userDetalle = {

@@ -165,9 +165,10 @@ export default {
         });
     },
     async updateFoto(arg) {
+      let idUser = LocalStorage.getAll().idUser;
       let jsonUpdate = {
         profile: arg,
-        _id: this.usersDetalle._id
+        _id: idUser
       };
       console.log(jsonUpdate);
       this.updateImage(jsonUpdate)
@@ -180,7 +181,7 @@ export default {
             color: "green-5"
           });
           LocalStorage.remove("UserDetalle");
-          this.callUserOne(this._id);
+          this.callUserOne(idUser);
           setTimeout(() => {
             LocalStorage.set("UserDetalle", this.getUserOne);
           }, 1000);

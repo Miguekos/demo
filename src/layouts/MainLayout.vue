@@ -160,9 +160,9 @@ export default {
       this.role = LocalStorage.getAll().role;
     },
     detalleCliente(arg) {
-      const id = this.userdatil.id.$oid;
-      console.log(id);
-      this.$router.push(`/profile/${id}`);
+      const idUser = LocalStorage.getAll().idUser;
+      console.log(idUser);
+      this.$router.push(`/profile/${idUser}`);
     },
     Logout() {
       this.$q.loading.show();
