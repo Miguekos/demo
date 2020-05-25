@@ -8,9 +8,15 @@
           >
           <q-separator spaced />
           <q-list>
-            <q-item clickable v-ripple class="justify-center">
+            <q-item
+              @click="alert = true"
+              clickable
+              v-ripple
+              class="justify-center"
+            >
               <q-avatar size="100px" font-size="52px">
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+                <!-- <img src="https://cdn.quasar.dev/img/boy-avatar.png" /> -->
+                <img :src="`${getUserOne.url}${getUserOne.profile}`" />
               </q-avatar>
             </q-item>
             <q-item clickable v-ripple class="justify-center">
@@ -92,6 +98,15 @@
         </q-item-label>
       </q-form>
     </q-list>
+    <q-dialog v-model="alert">
+      <q-card bordered>
+        <q-uploader :factory="factoryFn" style="max-width: 300px" />
+
+        <!-- <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions> -->
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 <script>
@@ -104,6 +119,8 @@ export default {
   },
   data() {
     return {
+      alert: false,
+      file: [],
       usersDetalle: [],
       text: "",
       _id: null,
@@ -119,7 +136,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("users", ["callUserOne", "updateUser"]),
+    ...mapActions("users", ["callUserOne", "updateUser", "updateImage"]),
     Salir() {
       this.$router.push("/");
     },
@@ -136,6 +153,34 @@ export default {
             position: "top",
             color: "green-5"
           });
+        })
+        .catch(err => {
+          console.log(err);
+          this.$q.notify({
+            message: "¡Oh oh, no pudimos actualizar",
+            position: "top",
+            color: "red-5"
+          });
+        });
+    },
+    async updateFoto(arg) {
+      let jsonUpdate = {
+        profile: arg,
+        _id: this.usersDetalle._id
+      };
+      console.log(jsonUpdate);
+      this.updateImage(jsonUpdate)
+        .then(async resp => {
+          console.log("antes de actualizar");
+          this.alert = false;
+          this.$q.notify({
+            message: "¡Se actualizo tu foto de perfil!",
+            position: "top",
+            color: "green-5"
+          });
+          setTimeout(() => {
+            this.callUserOne(this._id);
+          }, 500)
         })
         .catch(err => {
           console.log(err);
@@ -167,6 +212,7 @@ export default {
         .then(resp => {
           console.log(resp.data);
           total = resp.data;
+          this.updateFoto(total);
         })
         .catch(err => {
           console.log(err);
@@ -200,7 +246,7 @@ export default {
     }
   },
   async created() {
-    this._id = this.$route.params;
+    this._id = this.$route.params.id;
     console.log(this.$route.params.id);
     await this.callUserOne(this.$route.params.id);
     await this.ordenarCampos();

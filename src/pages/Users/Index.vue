@@ -33,20 +33,15 @@
     >
       <template v-slot:body="props">
         <q-tr :props="props" clickable @click="detalleCliente(props.row)">
-          <q-slide-item @right="onRight(props.row)">
-            <template v-slot:right>
-              <q-icon name="delete" />
-            </template>
-            <q-td key="name" :props="props">
-              <q-item-section>
-                <q-item-label>{{ props.row.name }}</q-item-label>
-                <q-item-label caption> {{ props.row.email }}</q-item-label>
-              </q-item-section>
-            </q-td>
-            <q-td key="created_at.$date" :props="props">
-              {{ formatDate(props.row.created_at.$date) }}
-            </q-td>
-          </q-slide-item>
+          <q-td key="name" :props="props">
+            <q-item-section>
+              <q-item-label>{{ props.row.name }}</q-item-label>
+              <q-item-label caption> {{ props.row.email }}</q-item-label>
+            </q-item-section>
+          </q-td>
+          <q-td key="created_at.$date" :props="props">
+            {{ formatDate(props.row.created_at.$date) }}
+          </q-td>
         </q-tr>
       </template>
     </q-table>

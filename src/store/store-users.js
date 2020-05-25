@@ -48,6 +48,14 @@ const actions = {
     // commit("setUsers", response.data);
     return response.data;
   },
+  async updateImage({ commit }, payload) {
+    console.log("updateUser");
+    console.log(payload);
+    const response = await axiosInstance.put(`/user/updateImage`, payload);
+    console.log(response);
+    // commit("setUsers", response.data);
+    return response.data;
+  },
   setSearch({ commit }, payload) {
     commit("setSearch", payload);
   }
