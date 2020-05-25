@@ -71,15 +71,21 @@
       </q-item>
       <q-separator />
       <q-item v-for="(item, index) in getClientes" :key="index">
-        <q-item-section avatar>
+        <!-- <q-item-section avatar>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
+            <img :src="`${item.url}${item.profile}`" />
           </q-avatar>
+        </q-item-section> -->
+        <q-item-section>
+          <q-item-label>{{ item.nombre }}</q-item-label>
+          <q-item-label caption>
+            <b class="text-grey-5">Area:</b>
+            {{ item.area }}</q-item-label
+          >
         </q-item-section>
-        <q-item-section>{{ item.nombre }}</q-item-section>
         <q-item-section side center>
           <q-item-label>
-            {{ item.dni }}
+            {{ formatDate(item.created_at.$date) }}
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -87,6 +93,7 @@
   </div>
 </template>
 <script>
+import { Fechas } from "src/directives/formatFecha";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { LocalStorage } from "quasar";
 export default {
@@ -114,6 +121,11 @@ export default {
     ...mapActions("client", ["callClienteReport", "callCliente"]),
     async URL(arg) {
       await this.$router.push(arg);
+    },
+    formatDate(arg) {
+      console.log("Formateando Fecha");
+      return Fechas.larga(arg);
+      // return date.formatDate(arg, "DD-MM-YYYY");
     },
     onLeft() {},
     onRight() {},

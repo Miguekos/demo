@@ -9,7 +9,7 @@
           color="black"
           icon="menu"
           aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
+          @click="(leftDrawerOpen = !leftDrawerOpen), actualizar()"
         />
 
         <q-toolbar-title class="text-black">
@@ -33,7 +33,12 @@
           >
           <q-separator spaced />
           <q-list>
-            <q-item clickable v-ripple class="justify-center">
+            <q-item
+              @click="detalleCliente()"
+              clickable
+              v-ripple
+              class="justify-center"
+            >
               <q-avatar size="100px" font-size="52px">
                 <img :src="`${userdatil.url}${userdatil.profile}`" />
               </q-avatar>
@@ -149,6 +154,16 @@ export default {
     };
   },
   methods: {
+    actualizar() {
+      this.userdatil = LocalStorage.getAll().UserDetalle;
+      console.log(this.userdatil);
+      this.role = LocalStorage.getAll().role;
+    },
+    detalleCliente(arg) {
+      const id = this.userdatil.id.$oid;
+      console.log(id);
+      this.$router.push(`/profile/${id}`);
+    },
     Logout() {
       this.$q.loading.show();
       LocalStorage.clear();

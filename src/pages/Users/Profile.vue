@@ -112,6 +112,7 @@
 <script>
 import { axiosInstance } from "boot/axios";
 import { mapState, mapActions, mapGetters } from "vuex";
+import { LocalStorage } from "quasar";
 export default {
   props: ["info"],
   computed: {
@@ -178,9 +179,11 @@ export default {
             position: "top",
             color: "green-5"
           });
+          LocalStorage.remove("UserDetalle");
+          this.callUserOne(this._id);
           setTimeout(() => {
-            this.callUserOne(this._id);
-          }, 500)
+            LocalStorage.set("UserDetalle", this.getUserOne);
+          }, 1000);
         })
         .catch(err => {
           console.log(err);
