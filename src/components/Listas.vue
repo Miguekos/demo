@@ -314,6 +314,8 @@ export default {
             dni: this.dni,
             telf: this.telf,
             area: this.area,
+            url: this.url,
+            profile: this.profile,
             correo: this.correo
           };
           console.log(JsonEnviar);
@@ -416,13 +418,23 @@ export default {
       this.$q.loading.hide();
     }
   },
-  created() {
-    const role = LocalStorage.getAll().role
+  async created() {
+    const infoUser = await LocalStorage.getAll().UserDetalle;
+    console.log(infoUser.name);
+    this.nombre = infoUser.name;
+    this.dni = infoUser.dni;
+    this.telf = infoUser.telefono;
+    this.area = infoUser.area;
+    this.correo = infoUser.email;
+    this.url = infoUser.url;
+    this.profile = infoUser.profile;
+    console.log("infoUser", infoUser);
+    const role = LocalStorage.getAll().role;
     console.log(role);
     if (role == 1) {
-      this.datosPersonales = true
+      this.datosPersonales = true;
     } else {
-      this.datosPersonales = false
+      this.datosPersonales = false;
     }
   }
 };

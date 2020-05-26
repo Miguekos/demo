@@ -32,15 +32,29 @@
       row-key="created_at.$date"
     >
       <template v-slot:body="props">
-        <q-tr :props="props" clickable @click="detalleCliente(props.row)">
+        <q-tr :props="props" clickable>
           <q-td key="name" :props="props">
-            <q-item-section>
+            <q-item-section clickable @click="detalleCliente(props.row)">
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption> {{ props.row.email }}</q-item-label>
             </q-item-section>
           </q-td>
           <q-td key="created_at.$date" :props="props">
             {{ formatDate(props.row.created_at.$date) }}
+          </q-td>
+          <q-td
+            key="email"
+            :props="props"
+            clickable
+            @click="eliminarUser(props.row)"
+          >
+            <q-btn
+              size="xs"
+              round
+              color="red-5"
+              text-color="white"
+              icon="delete"
+            />
           </q-td>
         </q-tr>
       </template>
@@ -114,8 +128,15 @@ export default {
         {
           name: "created_at.$date",
           align: "right",
-          label: "fecha",
+          label: "Fecha",
           field: "created_at.$date",
+          sortable: true
+        },
+        {
+          name: "email",
+          align: "right",
+          label: "Email",
+          field: "email",
           sortable: true
         }
       ],
@@ -125,9 +146,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions("users", ["callUser", "s"]),
-    onRight({ reset }, arg) {
-      console.log("arg", arg);
+    ...mapActions("users", ["callUser", "deleteUser"]),
+    eliminarUser(arg) {
+      console.log(arg._id.$oid);
       this.$q
         .dialog({
           title: "Confirmar",
@@ -138,7 +159,22 @@ export default {
         .onOk(() => {
           // console.log('>>>> OK')
           // this.deleteUser();
-          this.finalize(reset);
+          this.deleteUser(arg._id.$oid)
+            .then(async resp => {
+              console.log(resp);
+              await this.callUser();
+              this.$q.notify({
+                message: "!Usuario Eliminado¡",
+                position: "top"
+              });
+            })
+            .catch(err => {
+              console.log(err);
+              this.$q.notify({
+                message: "!Oh oh, algo salido mal¡",
+                position: "top"
+              });
+            });
           // reset();
         })
         .onOk(() => {
@@ -168,12 +204,12 @@ export default {
     },
     formatDate(arg) {
       console.log("Formateando Fecha");
-      return Fechas.larga(arg);
+      return Fechas.Corta(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
     }
   },
   async created() {
-    this.loading = true;
+    this.$q.loading.show();
     console.log("created - Cliente");
     // this.$q.loading.show({
     //   spinner: QSpinnerGears,
@@ -186,7 +222,7 @@ export default {
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");
     // this.$q.loading.hide();
-    this.loading = false;
+    this.$q.loading.hide();
   }
 };
 </script>

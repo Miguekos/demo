@@ -48,6 +48,22 @@ const actions = {
     // commit("setUsers", response.data);
     return response.data;
   },
+  async deleteUser({ commit }, payload) {
+    console.log("deleteUser");
+    console.log(payload);
+    const response = await axiosInstance.delete(`/user/delete/${payload}`);
+    console.log(response);
+    // commit("setUsers", response.data);
+    return response.data;
+  },
+  async updateTemp({ commit }, payload) {
+    console.log("updateUser");
+    console.log(payload);
+    const response = await axiosInstance.put(`/user/temp`, payload);
+    console.log(response);
+    // commit("setUsers", response.data);
+    return response.data;
+  },
   async updateImage({ commit }, payload) {
     console.log("updateUser");
     console.log(payload);

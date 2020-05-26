@@ -55,7 +55,7 @@
         />
       </template> -->
       <template v-slot:body="props">
-        <q-tr :props="props">
+        <q-tr :props="props" clickable @click="detalleCliente(props.row)">
           <q-td key="nombre" :props="props">
             <q-item-section>
               <q-item-label>{{ props.row.nombre }}</q-item-label>
@@ -205,6 +205,15 @@ export default {
           icon: "warning"
         });
       }
+    },
+    detalleCliente(arg) {
+      this.$q.loading.show();
+      console.log(arg);
+      this.$store.commit("client/setDialogDetalleData", arg);
+      setTimeout(() => {
+        this.$store.commit("client/setDialogDetalle", true);
+        this.$q.loading.hide();
+      }, 500);
     },
     formatDate(arg) {
       console.log("Formateando Fecha");

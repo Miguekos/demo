@@ -63,7 +63,7 @@ module.exports = function(/* ctx */) {
         }
       },
       components: [],
-      directives: ['TouchHold'],
+      directives: ['TouchHold', 'ClosePopup'],
 
       // Quasar plugins
       plugins: [

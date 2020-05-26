@@ -194,8 +194,13 @@ export default {
       }
     },
     detalleCliente(arg) {
+      this.$q.loading.show();
       console.log(arg);
-      alert(arg);
+      this.$store.commit("client/setDialogDetalleData", arg);
+      setTimeout(() => {
+        this.$store.commit("client/setDialogDetalle", true);
+        this.$q.loading.hide();
+      }, 500);
     },
     formatDate(arg) {
       console.log("Formateando Fecha");

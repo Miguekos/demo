@@ -24,7 +24,7 @@
               Iniciar sesión
             </q-item-label>
             <q-item-label class="q-pt-xs text-grey text-bold">
-              Hola, puedes reliazar tu registro
+              Hola, puedes puedes iniciar sesión
             </q-item-label>
           </q-item-section>
         </q-item>

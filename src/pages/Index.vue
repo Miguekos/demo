@@ -22,8 +22,15 @@
             {{ getClienteReport.clientes }}%
           </q-circular-progress>
         </q-item-section>
-        <q-item-section style="align-items: center;" class="text-grey" side>
-          <q-item-label class="q-pb-md">Sanos</q-item-label>
+        <q-item-section
+          style="align-items: center; font-size: 10px; text-align: center"
+          class="text-grey"
+          side
+        >
+          <q-item-label class="q-pb-md"
+            >Personal <br />
+            sanos</q-item-label
+          >
           <q-circular-progress
             @click="URL('/detalles')"
             show-value
@@ -37,8 +44,15 @@
             {{ getClienteReport.clientesCS }} %
           </q-circular-progress>
         </q-item-section>
-        <q-item-section style="align-items: center;" class="text-grey" side>
-          <q-item-label class="q-pb-md">Con Sintomas</q-item-label>
+        <q-item-section
+          style="align-items: center; font-size: 10px; text-align: center"
+          class="text-grey"
+          side
+        >
+          <q-item-label class="q-pb-md"
+            >Personal <br />
+            con síntomas</q-item-label
+          >
           <q-circular-progress
             @click="URL('/detallecs')"
             show-value
@@ -70,25 +84,31 @@
         >
       </q-item>
       <q-separator />
-      <q-item v-for="(item, index) in getClientes" :key="index">
-        <!-- <q-item-section avatar>
-          <q-avatar>
-            <img :src="`${item.url}${item.profile}`" />
-          </q-avatar>
-        </q-item-section> -->
-        <q-item-section>
-          <q-item-label>{{ item.nombre }}</q-item-label>
-          <q-item-label caption>
-            <b class="text-grey-5">Area:</b>
-            {{ item.area }}</q-item-label
-          >
-        </q-item-section>
-        <q-item-section side center>
-          <q-item-label>
-            {{ formatDate(item.created_at.$date) }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
+      <q-table
+        :data="getClientes"
+        :columns="columns"
+        hide-bottom
+        hide-header
+        row-key="created_at.$date"
+        :pagination.sync="pagination"
+      >
+        <template v-slot:body="props">
+          <q-tr :props="props" clickable @click="detalleCliente(props.row)">
+            <q-td key="nombre" :props="props">
+              <q-item-section>
+                <q-item-label>{{ props.row.nombre }}</q-item-label>
+                <q-item-label caption>
+                  <b class="text-grey-5">Area:</b>
+                  {{ props.row.area }}</q-item-label
+                >
+              </q-item-section>
+            </q-td>
+            <q-td key="created_at.$date" :props="props">
+              {{ formatDate(props.row.created_at.$date) }}
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
     </q-list>
   </div>
 </template>
@@ -111,7 +131,32 @@ export default {
       value: 81,
       total: 64,
       sanos: 40,
-      consintomas: 90
+      consintomas: 90,
+      pagination: {
+        sortBy: "nombre",
+        descending: false,
+        page: 1,
+        rowsPerPage: 0
+        // rowsNumber: 10
+      },
+      columns: [
+        {
+          name: "nombre",
+          required: true,
+          label: "Nombre",
+          align: "left",
+          field: row => row.nombre,
+          format: val => `${val}`,
+          sortable: true
+        },
+        {
+          name: "created_at.$date",
+          align: "right",
+          label: "fecha",
+          field: "created_at.$date",
+          sortable: true
+        }
+      ]
     };
   },
   computed: {
@@ -119,6 +164,15 @@ export default {
   },
   methods: {
     ...mapActions("client", ["callClienteReport", "callCliente"]),
+    detalleCliente(arg) {
+      this.$q.loading.show();
+      console.log(arg);
+      this.$store.commit("client/setDialogDetalleData", arg);
+      setTimeout(() => {
+        this.$store.commit("client/setDialogDetalle", true);
+        this.$q.loading.hide();
+      }, 500);
+    },
     async URL(arg) {
       await this.$router.push(arg);
     },

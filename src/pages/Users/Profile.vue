@@ -99,8 +99,8 @@
       </q-form>
     </q-list>
     <q-dialog v-model="alert">
-      <q-card bordered>
-        <q-uploader :factory="factoryFn" style="max-width: 300px" />
+      <q-card>
+        <q-uploader color="red-5" bordered :factory="factoryFn" style="max-width: 300px" />
 
         <!-- <q-card-actions align="right">
           <q-btn flat label="OK" color="primary" v-close-popup />

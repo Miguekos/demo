@@ -52,6 +52,15 @@
         ]"
       />
 
+      <q-select
+        color="red-5"
+        name="area"
+        dense
+        v-model="area"
+        :options="options"
+        label="Área"
+      />
+
       <q-separator />
 
       <div class="row" align="right">
@@ -88,7 +97,9 @@ export default {
       name: null,
       dni: null,
       email: null,
-      telefono: null
+      telefono: null,
+      area: "",
+      options: ["Producción", "Ventas", "Administración", "Gerencia"]
     };
   },
   methods: {
@@ -102,6 +113,8 @@ export default {
         dni: this.dni,
         email: this.email,
         telefono: this.telefono,
+        area: this.area,
+        temp: "00",
         role: 2
       })
         .then(resp => {

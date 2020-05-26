@@ -7,7 +7,9 @@ const state = {
   ClienteOne: "",
   search: "",
   searchCS: "",
-  searchS: ""
+  searchS: "",
+  dialogDetalle: false,
+  dialogDetalleData: ""
 };
 
 const mutations = {
@@ -35,6 +37,12 @@ const mutations = {
   },
   setClienteReport(state, payload) {
     state.ClienteReport = payload;
+  },
+  setDialogDetalle(state, payload) {
+    state.dialogDetalle = payload;
+  },
+  setDialogDetalleData(state, payload) {
+    state.dialogDetalleData = payload;
   }
 };
 
@@ -199,6 +207,10 @@ const getters = {
   getClienteReport(state) {
     console.log(state.ClienteReport);
     return state.ClienteReport;
+  },
+  getDialogDetalleData(state) {
+    console.log(state.dialogDetalleData);
+    return state.dialogDetalleData;
   }
 };
 

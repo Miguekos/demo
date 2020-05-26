@@ -81,19 +81,28 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-dialog v-model="dialogDetalle">
+      <detalleDeLosUsuarios />
+    </q-dialog>
   </q-layout>
 </template>
 <script>
+import { mapGetters, mapActions, mapState } from "vuex";
 import EssentialLink from "components/EssentialLink";
+import detalleDeLosUsuarios from "components/DetalleGeneral";
 import { LocalStorage } from "quasar";
 
 export default {
   name: "MainLayout",
 
   components: {
-    EssentialLink
+    EssentialLink,
+    detalleDeLosUsuarios
   },
-
+  computed: {
+    // ...mapGetters('client',["dialogDetalle"]),
+    ...mapState("client", ["dialogDetalle"])
+  },
   data() {
     return {
       role: null,
@@ -119,13 +128,13 @@ export default {
           link: "/registro"
         },
         {
-          title: "Personal Sanos",
+          title: "Personal sanos",
           caption: "Detalle",
           icon: "sentiment_satisfied_alt",
           link: "/detalles"
         },
         {
-          title: "Personal Con Sintomas",
+          title: "Personal con sintomas",
           caption: "Detalle",
           icon: "sentiment_very_dissatisfied",
           link: "/detallecs"
