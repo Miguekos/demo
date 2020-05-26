@@ -164,14 +164,19 @@ export default {
               console.log(resp);
               await this.callUser();
               this.$q.notify({
-                message: "!Usuario Eliminado¡",
+                // progress: true,
+                message: "¡Usuario Eliminado!",
+                // icon: "favorite_border",
+                icon: "delete",
+                color: "white",
+                textColor: "red-5",
                 position: "top"
               });
             })
             .catch(err => {
               console.log(err);
               this.$q.notify({
-                message: "!Oh oh, algo salido mal¡",
+                message: "¡Oh oh, algo salido mal!",
                 position: "top"
               });
             });

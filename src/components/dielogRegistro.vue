@@ -7,7 +7,7 @@
 
       <q-separator />
 
-      <q-card-section style="max-height: 60vh" class="scroll">
+      <q-card-section style="max-height: 70vh" class="scroll">
         <!--      <q-card-section>-->
         <Formulario @cerrarDialogo="cerrando()" />
       </q-card-section>

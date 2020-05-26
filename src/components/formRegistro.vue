@@ -14,17 +14,14 @@
 
       <q-input
         dense
-        maxlength="9"
-        type="number"
         v-model="dni"
         label="DNI/CE *"
+        mask="#########"
+        unmasked-value
+        hint="Mask: #########"
         lazy-rules
         counter
-        :rules="[
-          val =>
-            (val && val.length > 0 && val.length < 10) ||
-            'Por favor escribe el DNI'
-        ]"
+        :rules="[val => (val && val.length > 7 && val.length < 10) || 'Por favor escribe el DNI de 8/9']"
       />
 
       <q-input
@@ -41,15 +38,14 @@
 
       <q-input
         dense
-        maxlength="9"
-        type="number"
         counter
         v-model="telefono"
-        label="Telefono *"
+        label="Celular *"
+        mask="### - ### - ###"
+        unmasked-value
+        hint="Mask: ### - ### - ###"
         lazy-rules
-        :rules="[
-          val => (val && val.length > 0) || 'Por favor escribe el Telefono'
-        ]"
+        :rules="[val => (val && val.length == 9) || 'Por favor escribe el Celular']"
       />
 
       <q-select
@@ -59,6 +55,7 @@
         v-model="area"
         :options="options"
         label="Área"
+        :rules="[val => !!val || 'Compo obligatorio']"
       />
 
       <q-separator />
@@ -123,7 +120,7 @@ export default {
               color: "blue-4",
               textColor: "white",
               icon: "cloud_done",
-              message: `DNI ya resgistrado ${resp.message}`
+              message: `DNI ya resgistrado`
             });
           } else {
             this.$q.notify({
