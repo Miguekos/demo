@@ -315,6 +315,7 @@ export default {
             telf: this.telf,
             area: this.area,
             url: this.url,
+            temp: "00",
             profile: this.profile,
             correo: this.correo
           };
@@ -334,6 +335,7 @@ export default {
               position: "top"
             });
           }
+          this.$router.push("/misregistros");
         } else {
           this.$q.notify({
             message: "Debe aceptar los terminos y condiciones",

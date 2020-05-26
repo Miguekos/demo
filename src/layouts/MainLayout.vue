@@ -12,7 +12,7 @@
           @click="(leftDrawerOpen = !leftDrawerOpen), actualizar()"
         />
 
-        <q-toolbar-title class="text-black">
+        <q-toolbar-title @click="home()" class="text-black">
           <b class="text-green">C</b>uid<b class="text-red">APP</b>te
         </q-toolbar-title>
 
@@ -110,16 +110,16 @@ export default {
       leftDrawerOpen: false,
       essentialLinks: [
         {
-          title: "Inicio",
-          caption: "Inicio",
-          icon: "dashboard",
-          link: "/"
-        },
-        {
           title: "Reportes",
           caption: "Estadísticas",
           icon: "assessment",
           link: "/dashboard"
+        },
+        {
+          title: "Mis Registros",
+          caption: "Evaluaciones",
+          icon: "scatter_plot",
+          link: "/misregistros"
         },
         {
           title: "Evalúate",
@@ -154,6 +154,12 @@ export default {
           link: "/"
         },
         {
+          title: "Mis Registros",
+          caption: "Evaluaciones",
+          icon: "scatter_plot",
+          link: "/misregistros"
+        },
+        {
           title: "Evalúate",
           caption: "Evaluación",
           icon: "local_hospital",
@@ -172,6 +178,9 @@ export default {
       const idUser = LocalStorage.getAll().idUser;
       console.log(idUser);
       this.$router.push(`/profile/${idUser}`);
+    },
+    home() {
+      this.$router.push(`/`);
     },
     Logout() {
       this.$q.loading.show();

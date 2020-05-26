@@ -16,7 +16,7 @@
           </q-item-label>
         </q-item-section>
         <q-item-section side right>
-          <q-icon color="red-5" name="whatshot" /> 33°
+          <q-icon color="red-5" name="whatshot" /> {{ getDialogDetalleData.temp }}°
         </q-item-section>
       </q-item>
       <!-- {{getDialogDetalleData}} -->

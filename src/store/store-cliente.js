@@ -1,10 +1,11 @@
 import { axiosInstance } from "boot/axios";
+import { LocalStorage } from "quasar";
 const state = {
   Clientes: [],
   ClientesCS: [],
   ClientesS: [],
   ClienteReport: [],
-  ClienteOne: "",
+  ClienteOne: [],
   search: "",
   searchCS: "",
   searchS: "",
@@ -85,6 +86,17 @@ const actions = {
     console.log("addCliente");
     console.log(payload);
     const response = await axiosInstance.post(`/cliente/add`, payload);
+    console.log(response);
+    // commit("setClientes", response.data);
+    return response.data;
+  },
+  async updateCliente({ commit }, payload) {
+    console.log("updateCliente");
+    console.log(payload);
+    const response = await axiosInstance.post(
+      `/cliente/update`,
+      payload
+    );
     console.log(response);
     // commit("setClientes", response.data);
     return response.data;

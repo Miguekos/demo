@@ -16,6 +16,10 @@ const routes = [
         path: "/detalles",
         component: () => import("pages/Admin/DetallesSanos.vue")
       },
+      {
+        path: "/misregistros",
+        component: () => import("pages/Admin/MisRegistros.vue")
+      },
       { path: '/usuarios', component: () => import('pages/Users/Index.vue') },
       { path: "/profile/:id", component: () => import("pages/Users/Profile.vue") },
       { path: "/dashboard", component: () => import("pages/Index.vue") }
