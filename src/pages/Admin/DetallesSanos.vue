@@ -10,7 +10,7 @@
         ></q-item-section>
         <q-item-section>
           <q-item-label class="text-center text-h6">
-            Sanos
+            Personal sanos
           </q-item-label>
           <q-separator color="green-4" inset />
         </q-item-section>

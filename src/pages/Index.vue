@@ -73,7 +73,7 @@
       <q-item-section>Reportes por áreas</q-item-section>
     </q-item>
     <q-separator />
-    <q-list style="height: 240px;">
+    <q-list style="height: 260px;">
       <Graficas :info="getClienteReport" />
     </q-list>
 
@@ -194,7 +194,7 @@ export default {
     }
   },
   components: {
-    Graficas: () => import("components/Charts")
+    Graficas: () => import("components/ApexCharts")
   },
   beforeDestroy() {
     if (this.timer !== void 0) {
@@ -204,7 +204,7 @@ export default {
   },
   created() {
     // this.$q.loading.show();
-    this.showLoading();
+    // this.showLoading();
     this.callClienteReport();
     this.callCliente();
     // this.$q.loading.hide()

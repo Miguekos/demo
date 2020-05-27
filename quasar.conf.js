@@ -15,6 +15,7 @@ module.exports = function(/* ctx */) {
       "i18n",
       "axios",
       "router-auth",
+      "vueApexCharts",
       "addressbar-color" // optional, you are not bound to it
     ],
 

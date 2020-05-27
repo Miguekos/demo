@@ -116,7 +116,7 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Mis Registros",
+          title: "Mis registros",
           caption: "Evaluaciones",
           icon: "scatter_plot",
           link: "/misregistros"

@@ -13,14 +13,21 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "animejs": "^3.2.0",
+    "apexcharts": "^3.19.2",
     "axios": "^0.18.1",
     "echarts": "^4.7.0",
+    "moment": "^2.26.0",
+    "moment-range": "^4.0.2",
     "quasar": "^1.0.0",
+    "vue-apexcharts": "^1.5.3",
     "vue-echarts-v3": "^2.0.1",
-    "vue-i18n": "^8.0.0"
+    "vue-i18n": "^8.0.0",
+    "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
-    "@quasar/app": "^1.0.0"
+    "@quasar/app": "^1.0.0",
+    "@quasar/quasar-app-extension-dotenv": "^1.0.1",
+    "quasar-app-extension-ide-helper": "^1.0.0"
   },
   "engines": {
     "node": ">= 10.18.1",

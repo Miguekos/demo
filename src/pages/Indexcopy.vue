@@ -5,12 +5,18 @@
       src="~assets/lococorazon.png"
       style="width: 350px; height: 350px"
     />
+    {{ info }}
   </q-page>
 </template>
 
 <script>
 export default {
   name: "PageIndex",
+  data () {
+    return {
+      info: ""
+    }
+  },
   methods: {
     showLoading() {
       this.$q.loading.show();
@@ -32,6 +38,7 @@ export default {
 
   created() {
     // this.showLoading();
+    this.info = process.env.API_URL
   }
 };
 </script>

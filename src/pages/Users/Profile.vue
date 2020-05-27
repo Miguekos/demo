@@ -30,6 +30,7 @@
             <q-item class="justify-center">
               <q-item-section class="text-center text-bold">
                 <q-input
+                  disable
                   dense
                   color="red-5"
                   filled
@@ -41,6 +42,7 @@
             <q-item class="justify-center">
               <q-item-section class="text-center text-bold">
                 <q-input
+                  disable
                   dense
                   color="red-5"
                   disabled

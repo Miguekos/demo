@@ -10,7 +10,7 @@
         ></q-item-section>
         <q-item-section>
           <q-item-label class="text-center text-h6">
-            Con Sintomas
+            Personal con sintomas
           </q-item-label>
           <q-separator color="red-5" inset />
         </q-item-section>
