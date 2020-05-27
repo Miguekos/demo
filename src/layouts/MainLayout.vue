@@ -144,6 +144,12 @@ export default {
           caption: "Administrar",
           icon: "group",
           link: "/usuarios"
+        },
+        {
+          title: "Test",
+          caption: "Test",
+          icon: "local_hospital",
+          link: "/test"
         }
       ],
       essentialLinksUser: [

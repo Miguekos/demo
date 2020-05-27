@@ -6,10 +6,12 @@
 
 <script>
 export default {
-  name: 'App',
-  created () {
-    this.$q.addressbarColor.set('#FFFFFF')
+  name: "App",
+  data() {},
+  methods: {},
+  created() {
+    this.$q.addressbarColor.set("#FFFFFF");
     // #004d40
   }
-}
+};
 </script>

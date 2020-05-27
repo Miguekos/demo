@@ -18,3 +18,10 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+.quasar-ide-helper
+
+webpack.config.js
+
+.env.development
+.env.production
