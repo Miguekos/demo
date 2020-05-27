@@ -237,7 +237,6 @@ export default {
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");
     this.$q.loading.hide();
-    this.loading = false;
   }
 };
 </script>

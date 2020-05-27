@@ -190,7 +190,7 @@ export default {
       this.timer = setTimeout(() => {
         this.$q.loading.hide();
         this.timer = void 0;
-      }, 3000);
+      }, 2000);
     }
   },
   components: {
@@ -203,7 +203,7 @@ export default {
     }
   },
   created() {
-    // this.$q.loading.show();
+    this.$q.loading.show();
     // this.showLoading();
     this.callClienteReport();
     this.callCliente();

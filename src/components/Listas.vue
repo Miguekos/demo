@@ -421,6 +421,7 @@ export default {
     }
   },
   async created() {
+    this.$q.loading.show();
     const infoUser = await LocalStorage.getAll().UserDetalle;
     console.log(infoUser.name);
     this.nombre = infoUser.name;
@@ -438,6 +439,7 @@ export default {
     } else {
       this.datosPersonales = false;
     }
+    this.$q.loading.hide();
   }
 };
 </script>

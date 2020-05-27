@@ -209,7 +209,7 @@ export default {
     }
   },
   async created() {
-    this.loading = true;
+    this.$q.loading.show();
     console.log("created - Cliente");
     // this.$q.loading.show({
     //   spinner: QSpinnerGears,
@@ -222,7 +222,7 @@ export default {
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");
     // this.$q.loading.hide();
-    this.loading = false;
+    this.$q.loading.hide();
   }
 };
 </script>
