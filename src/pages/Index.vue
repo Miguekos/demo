@@ -203,8 +203,8 @@ export default {
     }
   },
   created() {
-    this.$q.loading.show();
-    // this.showLoading();
+    // this.$q.loading.show();
+    this.showLoading();
     this.callClienteReport();
     this.callCliente();
     // this.$q.loading.hide()

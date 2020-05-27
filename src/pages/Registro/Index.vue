@@ -22,8 +22,8 @@ export default {
     Listas: () => import("components/Listas")
   },
   created() {
-    this.$q.loading.show();
-    this.$q.loading.hide();
+    // this.$q.loading.show();
+    // this.$q.loading.hide();
   }
 };
 </script>

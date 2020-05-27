@@ -5,7 +5,7 @@
       src="~assets/lococorazon.png"
       style="width: 350px; height: 350px"
     />
-    {{ info }}
+    <!-- {{ info }} -->
   </q-page>
 </template>
 
