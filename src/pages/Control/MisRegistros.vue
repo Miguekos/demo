@@ -17,9 +17,7 @@
           <q-item-label class="text-center text-h6">Mis Registros</q-item-label>
           <q-separator color="amber-4" inset />
         </q-item-section>
-        <q-item-section class="text-amber text-bold" side top right>
-          <q-icon name="archive" />
-        </q-item-section>
+        <q-item-section class="text-amber text-bold" side top right></q-item-section>
       </q-item>
       <q-item>
         <q-item-section>

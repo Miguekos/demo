@@ -18,7 +18,6 @@
           <q-separator color="green-4" inset />
         </q-item-section>
         <q-item-section class="text-green text-bold" side top right>
-          <q-icon name="archive" />
         </q-item-section>
       </q-item>
       <q-item>

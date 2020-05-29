@@ -11,10 +11,10 @@
           <q-icon name="archive" />
         </q-item-section>
       </q-item>
-      <q-item dense v-else class="native-mobile-only" clickable v-ripple>
+      <q-item dense v-else clickable v-ripple>
         <q-item-section class="text-red text-bold" side top left></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6">Personal con sintomas</q-item-label>
+          <q-item-label class="text-center text-h6">Personal con sintomasss</q-item-label>
           <q-separator color="red-5" inset />
         </q-item-section>
         <q-item-section class="text-red-5 text-bold" side top right></q-item-section>
