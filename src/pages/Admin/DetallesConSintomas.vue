@@ -1,22 +1,23 @@
 <template>
   <q-page padding>
     <q-list>
-      <q-item @click="exportTable()" dense clickable v-ripple>
-        <q-item-section
-          class="text-red text-bold"
-          side
-          top
-          left
-        ></q-item-section>
+      <q-item @click="exportTable()" v-if="!$q.platform.is.cordova" dense clickable v-ripple>
+        <q-item-section class="text-red text-bold" side top left></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6">
-            Personal con sintomas
-          </q-item-label>
+          <q-item-label class="text-center text-h6">Personal con sintomas</q-item-label>
           <q-separator color="red-5" inset />
         </q-item-section>
         <q-item-section class="text-red-5 text-bold" side top right>
           <q-icon name="archive" />
         </q-item-section>
+      </q-item>
+      <q-item dense v-else class="native-mobile-only" clickable v-ripple>
+        <q-item-section class="text-red text-bold" side top left></q-item-section>
+        <q-item-section>
+          <q-item-label class="text-center text-h6">Personal con sintomas</q-item-label>
+          <q-separator color="red-5" inset />
+        </q-item-section>
+        <q-item-section class="text-red-5 text-bold" side top right></q-item-section>
       </q-item>
       <q-item>
         <q-item-section>
@@ -30,7 +31,7 @@
             <template v-slot:append>
               <q-icon name="search" />
             </template>
-          </q-input> -->
+          </q-input>-->
           <Search />
         </q-item-section>
       </q-item>
@@ -50,13 +51,11 @@
               <q-item-label>{{ props.row.nombre }}</q-item-label>
               <q-item-label caption>
                 <b class="text-green-5">Cel:</b>
-                {{ props.row.telf }}</q-item-label
-              >
+                {{ props.row.telf }}
+              </q-item-label>
             </q-item-section>
           </q-td>
-          <q-td key="created_at.$date" :props="props">
-            {{ formatDate(props.row.created_at.$date) }}
-          </q-td>
+          <q-td key="created_at.$date" :props="props">{{ formatDate(props.row.created_at.$date) }}</q-td>
         </q-tr>
       </template>
     </q-table>
@@ -77,7 +76,7 @@
           <q-item-label>{{ formatDate(item.created_at.$date) }}</q-item-label>
         </q-item-section>
       </q-item>
-    </q-list> -->
+    </q-list>-->
   </q-page>
 </template>
 

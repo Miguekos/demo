@@ -1,7 +1,13 @@
 <template>
   <!-- <div class="echarts"> -->
   <div id="chart" class="q-pt-md">
+    {{info}}
     <apex-chart type="bar" height="240" :options="chartOptions" :series="series"></apex-chart>
+    <!-- {{getClienteReport.graficDate}} -->
+    <!-- {{getClienteReport}} -->
+    <!-- {{ getClienteReport.graficDate }} -->
+    <!-- {{series}}
+    {{chartOptions.xaxis.categories}} -->
   </div>
 </template>
 <script type="text/babel">
@@ -11,16 +17,7 @@ export default {
   props: ["info"],
   data() {
     return {
-      series: [
-        {
-          name: "Personas sanas",
-          data: this.$store.state.client.ClienteReport.graficSeriaS
-        },
-        {
-          name: "Personas con síntomas",
-          data: this.$store.state.client.ClienteReport.graficSeriaCS
-        }
-      ],
+      series: [],
       chartOptions: {
         chart: {
           type: "bar",
@@ -52,8 +49,7 @@ export default {
         },
         colors: ["#3f51b5", "#f44336"],
         xaxis: {
-          type: "String",
-          categories: this.$store.state.client.ClienteReport.graficDate
+          type: 'String'
         },
         legend: {
           position: "top",
@@ -71,22 +67,28 @@ export default {
   methods: {
     ...mapActions("client", ["callClienteReport", "callCliente"])
   },
-  async mounted() {
+  async created() {
+    await this.callClienteReport();
     // setTimeout(() => {
-    // this.callClienteReport();
     // this.$q.loading.show();
-    // this.series = [
-    //   {
-    //     name: "Personas sanas",
-    //     data: this.getClienteReport.graficSeriaS
-    //   },
-    //   {
-    //     name: "Personas con síntomas",
-    //     data: this.getClienteReport.graficSeriaCS
-    //   }
-    // ];
+    this.series = [
+      {
+        name: "Personas sanas",
+        data: this.getClienteReport.graficSeriaS
+      },
+      {
+        name: "Personas con síntomas",
+        data: this.getClienteReport.graficSeriaCS
+      }
+    ];
     // this.series[0].data = this.getClienteReport.graficSeriaS;
     // this.series[1].data = this.getClienteReport.graficSeriaCS;
+
+
+    this.chartOptions.xaxis = {
+      type: "String",
+      categories: this.getClienteReport.graficDate
+    };
     // this.$q.loading.hide();
     // }, 3000);
   }

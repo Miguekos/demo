@@ -2,9 +2,7 @@
   <div class="q-pa-xs">
     <q-list>
       <q-item bordered>
-        <q-item-label class="text-left text-h6 q-pa-xs text-bold text-black"
-          >Reportes
-        </q-item-label>
+        <q-item-label class="text-left text-h6 q-pa-xs text-bold text-black">Reportes</q-item-label>
       </q-item>
       <q-separator />
       <q-item class="justify-around" style="height: 150px;">
@@ -18,19 +16,17 @@
             color="green"
             track-color="grey-3"
             class="q-ma-xs"
-          >
-            {{ getClienteReport.clientes }}%
-          </q-circular-progress>
+          >{{ getClienteReport.clientes }}%</q-circular-progress>
         </q-item-section>
         <q-item-section
           style="align-items: center; font-size: 10px; text-align: center"
           class="text-grey"
           side
         >
-          <q-item-label class="q-pb-md"
-            >Personal <br />
-            sanos</q-item-label
-          >
+          <q-item-label class="q-pb-md">
+            Personal
+            <br />sanos
+          </q-item-label>
           <q-circular-progress
             @click="URL('/detalles')"
             show-value
@@ -40,19 +36,17 @@
             color="indigo"
             track-color="grey-3"
             class="q-ma-xs"
-          >
-            {{ getClienteReport.clientesCS }} %
-          </q-circular-progress>
+          >{{ getClienteReport.clientesCS }} %</q-circular-progress>
         </q-item-section>
         <q-item-section
           style="align-items: center; font-size: 10px; text-align: center"
           class="text-grey"
           side
         >
-          <q-item-label class="q-pb-md"
-            >Personal <br />
-            con síntomas</q-item-label
-          >
+          <q-item-label class="q-pb-md">
+            Personal
+            <br />con síntomas
+          </q-item-label>
           <q-circular-progress
             @click="URL('/detallecs')"
             show-value
@@ -62,9 +56,7 @@
             color="red"
             track-color="grey-3"
             class="q-ma-xs"
-          >
-            {{ getClienteReport.clientesS }} %
-          </q-circular-progress>
+          >{{ getClienteReport.clientesS }} %</q-circular-progress>
         </q-item-section>
       </q-item>
     </q-list>
@@ -73,15 +65,13 @@
       <q-item-section>Reportes por áreas</q-item-section>
     </q-item>
     <q-separator />
-    <q-list style="height: 260px;">
+    <q-list style="height: 240px;">
       <Graficas :info="getClienteReport" />
     </q-list>
 
     <q-list separator>
       <q-item>
-        <q-item-section
-          >Reportes por colaboradores en el ultimos mes</q-item-section
-        >
+        <q-item-section>Reportes por colaboradores en el ultimos mes</q-item-section>
       </q-item>
       <q-separator />
       <q-table
@@ -99,13 +89,11 @@
                 <q-item-label>{{ props.row.nombre }}</q-item-label>
                 <q-item-label caption>
                   <b class="text-grey-5">Area:</b>
-                  {{ props.row.area }}</q-item-label
-                >
+                  {{ props.row.area }}
+                </q-item-label>
               </q-item-section>
             </q-td>
-            <q-td key="created_at.$date" :props="props">
-              {{ formatDate(props.row.created_at.$date) }}
-            </q-td>
+            <q-td key="created_at.$date" :props="props">{{ formatDate(props.row.created_at.$date) }}</q-td>
           </q-tr>
         </template>
       </q-table>
@@ -128,12 +116,13 @@ export default {
   },
   data() {
     return {
+      dataDeGrafica: [],
       value: 81,
       total: 64,
       sanos: 40,
       consintomas: 90,
       pagination: {
-        sortBy: "nombre",
+        sortBy: "created_at.$date",
         descending: false,
         page: 1,
         rowsPerPage: 0
@@ -202,12 +191,12 @@ export default {
       this.$q.loading.hide();
     }
   },
-  created() {
-    // this.$q.loading.show();
-    this.showLoading();
-    this.callClienteReport();
-    this.callCliente();
-    // this.$q.loading.hide()
+  async mounted() {
+    this.$q.loading.show();
+    // this.showLoading();
+    await this.callClienteReport();
+    await this.callCliente();
+    this.$q.loading.hide();
   }
 };
 </script>
