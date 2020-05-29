@@ -10,19 +10,19 @@ const routes = [
       },
       {
         path: "/detallecs",
-        component: () => import("pages/Admin/DetallesConSintomas.vue")
+        component: () => import("pages/Control/DetallesConSintomas.vue")
       },
       {
         path: "/detalles",
-        component: () => import("pages/Admin/DetallesSanos.vue")
+        component: () => import("pages/Control/DetallesSanos.vue")
       },
       {
         path: "/misregistros",
-        component: () => import("pages/Admin/MisRegistros.vue")
+        component: () => import("pages/Control/MisRegistros.vue")
       },
       { path: '/usuarios', component: () => import('pages/Users/Index.vue') },
       { path: "/profile/:id", component: () => import("pages/Users/Profile.vue") },
-      { path: "/dashboard", component: () => import("pages/Admin/Index.vue") },
+      { path: "/dashboard", component: () => import("pages/Control/Index.vue") },
       { path: "/grafica", component: () => import("components/ApexCharts") }
     ]
   },
