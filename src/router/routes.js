@@ -22,7 +22,7 @@ const routes = [
       },
       { path: '/usuarios', component: () => import('pages/Users/Index.vue') },
       { path: "/profile/:id", component: () => import("pages/Users/Profile.vue") },
-      { path: "/dashboard", component: () => import("pages/Index.vue") },
+      { path: "/dashboard", component: () => import("pages/Admin/Index.vue") },
       { path: "/grafica", component: () => import("components/ApexCharts") }
     ]
   },

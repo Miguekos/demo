@@ -1,17 +1,20 @@
 <template>
   <q-page padding>
     <q-list>
-      <q-item @click="exportTable()" dense clickable v-ripple>
-        <q-item-section
-          class="text-red text-bold"
-          side
-          top
-          left
-        ></q-item-section>
+      <q-item @click="exportTable()" v-if="!$q.platform.is.cordova" dense clickable v-ripple>
+        <q-item-section class="text-red text-bold" side top left></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6">
-            Mis Registros
-          </q-item-label>
+          <q-item-label class="text-center text-h6">Mis Registros</q-item-label>
+          <q-separator color="amber-4" inset />
+        </q-item-section>
+        <q-item-section class="text-amber text-bold" side top right>
+          <q-icon name="archive" />
+        </q-item-section>
+      </q-item>
+      <q-item dense v-else clickable v-ripple>
+        <q-item-section class="text-red text-bold" side top left></q-item-section>
+        <q-item-section>
+          <q-item-label class="text-center text-h6">Mis Registros</q-item-label>
           <q-separator color="amber-4" inset />
         </q-item-section>
         <q-item-section class="text-amber text-bold" side top right>
@@ -30,7 +33,7 @@
             <template v-slot:append>
               <q-icon name="search" />
             </template>
-          </q-input> -->
+          </q-input>-->
           <Search />
         </q-item-section>
       </q-item>
@@ -54,7 +57,7 @@
           no-caps
           @click="exportTable"
         />
-      </template> -->
+      </template>-->
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="nombre" :props="props">
@@ -62,26 +65,13 @@
               <q-item-label>{{ props.row.nombre }}</q-item-label>
               <q-item-label caption>
                 <b class="text-red-5">temp:</b>
-                {{ props.row.temp }}°</q-item-label
-              >
+                {{ props.row.temp }}°
+              </q-item-label>
             </q-item-section>
           </q-td>
-          <q-td key="created_at.$date" :props="props">
-            {{ formatDate(props.row.created_at.$date) }}
-          </q-td>
-          <q-td
-            key="email"
-            :props="props"
-            clickable
-            @click="funcUpdateTemp(props.row)"
-          >
-            <q-btn
-              size="xs"
-              round
-              color="blue-5"
-              text-color="white"
-              icon="whatshot"
-            />
+          <q-td key="created_at.$date" :props="props">{{ formatDate(props.row.created_at.$date) }}</q-td>
+          <q-td key="email" :props="props" clickable @click="funcUpdateTemp(props.row)">
+            <q-btn size="xs" round color="blue-5" text-color="white" icon="whatshot" />
           </q-td>
         </q-tr>
       </template>
@@ -104,7 +94,7 @@
           <q-item-label>{{ formatDate(item.created_at.$date) }}</q-item-label>
         </q-item-section>
       </q-item>
-    </q-list> -->
+    </q-list>-->
   </q-page>
 </template>
 
