@@ -11,10 +11,10 @@ export default ({ app, router, Vue }) => {
     // LocalStorage.set("loggin", false);
     // let logginIn = false;
     let logginIn = LocalStorage.getAll().loggin;
-    console.log(logginIn);
+    // console.log(logginIn);
     if (!logginIn && to.path !== "/auth") {
-      console.log(logginIn);
-      console.log("to.path", to.path);
+      // console.log(logginIn);
+      // console.log("to.path", to.path);
       next("/auth");
     } else {
       next();

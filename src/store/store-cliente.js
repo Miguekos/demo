@@ -30,7 +30,7 @@ const mutations = {
     state.search = payload;
   },
   setSearchCS(state, payload) {
-    console.log("MutasetSearchCS", payload);
+    // console.log("MutasetSearchCS", payload);
     state.searchCS = payload;
   },
   setSearchS(state, payload) {
@@ -49,55 +49,55 @@ const mutations = {
 
 const actions = {
   async callCliente({ commit }) {
-    console.log("callCliente");
+    // console.log("callCliente");
     const response = await axiosInstance.get(`/clientes`);
     // console.log(response.data);
     commit("setClientes", response.data);
     // return response.data;
   },
   async callClienteCS({ commit }) {
-    console.log("callCliente");
+    // console.log("callCliente");
     const response = await axiosInstance.get(`/clientesCS`);
     // console.log(response.data);
     commit("setClientesCS", response.data);
     // return response.data;
   },
   async callClienteS({ commit }) {
-    console.log("callCliente");
+    // console.log("callCliente");
     const response = await axiosInstance.get(`/clientesS`);
     // console.log(response.data);
     commit("setClientesS", response.data);
     // return response.data;
   },
   async callClienteOne({ commit }, payload) {
-    console.log("callClienteOne");
+    // console.log("callClienteOne");
     const response = await axiosInstance.get(`/cliente/${payload}`);
     commit("setClienteOne", response.data);
     // return response.data;
   },
   async callClienteReport({ commit }, payload) {
-    console.log("callClienteOne");
+    // console.log("callClienteOne");
     const response = await axiosInstance.get(`/clientes/reporte`);
-    console.log(response.data);
+    // console.log(response.data);
     commit("setClienteReport", response.data);
     // return response.data;
   },
   async addCliente({ commit }, payload) {
-    console.log("addCliente");
-    console.log(payload);
+    // console.log("addCliente");
+    // console.log(payload);
     const response = await axiosInstance.post(`/cliente/add`, payload);
-    console.log(response);
+    // console.log(response);
     // commit("setClientes", response.data);
     return response.data;
   },
   async updateCliente({ commit }, payload) {
-    console.log("updateCliente");
-    console.log(payload);
+    // console.log("updateCliente");
+    // console.log(payload);
     const response = await axiosInstance.post(
       `/cliente/update`,
       payload
     );
-    console.log(response);
+    // console.log(response);
     // commit("setClientes", response.data);
     return response.data;
   },
@@ -105,7 +105,7 @@ const actions = {
     commit("setSearch", payload);
   },
   setSearchCS({ commit }, payload) {
-    console.log("setSearchCS", payload);
+    // console.log("setSearchCS", payload);
     commit("setSearchCS", payload);
   },
   setSearchS({ commit }, payload) {
@@ -132,12 +132,12 @@ const getters = {
   taskFilteredCS: state => {
     let taskFiltered = {};
     if (state.searchCS) {
-      console.log("state.searchCS", state.searchCS);
+      // console.log("state.searchCS", state.searchCS);
       Object.keys(state.ClientesCS).forEach(function(key) {
         let task = state.ClientesCS[key],
           taskNameLowerCase = task.nombre.toLowerCase(),
           searchLowerCase = state.searchCS.toLowerCase();
-        console.log("task.nombre.toLowerCase", task.nombre.toLowerCase);
+        // console.log("task.nombre.toLowerCase", task.nombre.toLowerCase);
         if (taskNameLowerCase.includes(searchLowerCase)) {
           taskFiltered[key] = task;
         }
@@ -164,8 +164,8 @@ const getters = {
   getClientes(state, getters) {
     let taskFiltered = getters.taskFiltered;
     let tasks = [];
-    console.log("taskFiltered", taskFiltered);
-    console.log("state.Clientes", state.Clientes);
+    // console.log("taskFiltered", taskFiltered);
+    // console.log("state.Clientes", state.Clientes);
     // return state.Clientes;
     // let tasks = {};
     Object.keys(taskFiltered).forEach(function(key) {
@@ -181,8 +181,8 @@ const getters = {
   getClientesCS(state, getters) {
     let taskFiltered = getters.taskFilteredCS;
     let tasks = [];
-    console.log("taskFilteredCS", taskFiltered);
-    console.log("state.ClientesCS", state.ClientesCS);
+    // console.log("taskFilteredCS", taskFiltered);
+    // console.log("state.ClientesCS", state.ClientesCS);
     // return state.Clientes;
     // let tasks = {};
     Object.keys(taskFiltered).forEach(function(key) {
@@ -198,8 +198,8 @@ const getters = {
   getClientesS(state, getters) {
     let taskFiltered = getters.taskFilteredS;
     let tasks = [];
-    console.log("taskFiltered", taskFiltered);
-    console.log("state.Clientes", state.ClientesS);
+    // console.log("taskFiltered", taskFiltered);
+    // console.log("state.Clientes", state.ClientesS);
     // return state.Clientes;
     // let tasks = {};
     Object.keys(taskFiltered).forEach(function(key) {
@@ -213,15 +213,15 @@ const getters = {
     return tasks;
   },
   getClienteOne(state) {
-    console.log(state.ClienteOne);
+    // console.log(state.ClienteOne);
     return state.ClienteOne;
   },
   getClienteReport(state) {
-    console.log(state.ClienteReport);
+    // console.log(state.ClienteReport);
     return state.ClienteReport;
   },
   getDialogDetalleData(state) {
-    console.log(state.dialogDetalleData);
+    // console.log(state.dialogDetalleData);
     return state.dialogDetalleData;
   }
 };

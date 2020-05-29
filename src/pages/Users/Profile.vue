@@ -3,28 +3,21 @@
     <q-list>
       <q-form @submit="onSubmit">
         <q-item-label header class="text-grey-8">
-          <q-item-label header class="text-center text-h6 q-pa-xs"
-            >Editar Perfil</q-item-label
-          >
+          <q-item-label header class="text-center text-h6 q-pa-xs">Editar Perfil</q-item-label>
           <q-separator spaced />
           <q-list>
-            <q-item
-              @click="alert = true"
-              clickable
-              v-ripple
-              class="justify-center"
-            >
+            <q-item @click="alert = true" clickable v-ripple class="justify-center">
               <q-avatar size="100px" font-size="52px">
                 <!-- <img src="https://cdn.quasar.dev/img/boy-avatar.png" /> -->
-                <img :src="`${getUserOne.url}${getUserOne.profile}`" />
+                <img :src="urlImagen" />
               </q-avatar>
             </q-item>
             <q-item clickable v-ripple class="justify-center">
               <q-item-section class="text-center text-bold">
                 <!-- <q-item-label>{{ userdatil.name }}</q-item-label>
-              <q-item-label caption>{{ userdatil.email }}</q-item-label> -->
+                <q-item-label caption>{{ userdatil.email }}</q-item-label>-->
                 <q-item-label>{{ getUserOne.name }}</q-item-label>
-                <q-item-label caption> {{ getUserOne.email }} </q-item-label>
+                <q-item-label caption>{{ getUserOne.email }}</q-item-label>
               </q-item-section>
             </q-item>
             <q-item class="justify-center">
@@ -79,13 +72,7 @@
             </q-item>
             <q-item class="justify-center">
               <q-item-section class="text-center text-bold">
-                <q-input
-                  dense
-                  color="red-5"
-                  filled
-                  v-model="pwd"
-                  label="Nuevo Password"
-                />
+                <q-input dense color="red-5" filled v-model="pwd" label="Nuevo Password" />
               </q-item-section>
             </q-item>
             <q-item class="justify-center">
@@ -106,7 +93,7 @@
 
         <!-- <q-card-actions align="right">
           <q-btn flat label="OK" color="primary" v-close-popup />
-        </q-card-actions> -->
+        </q-card-actions>-->
       </q-card>
     </q-dialog>
   </q-page>
@@ -116,12 +103,15 @@ import { axiosInstance } from "boot/axios";
 import { mapState, mapActions, mapGetters } from "vuex";
 import { LocalStorage } from "quasar";
 export default {
-  props: ["info"],
   computed: {
-    ...mapGetters("users", ["getUserOne"])
+    ...mapGetters("users", ["getUserOne"]),
+    urlImagen() {
+      return `${this.infoUrl}/uploads/${this.getUserOne.profile}`;
+    }
   },
   data() {
     return {
+      infoUrl: "",
       alert: false,
       file: [],
       usersDetalle: [],
@@ -148,7 +138,7 @@ export default {
         ...this.usersDetalle,
         pwd: this.pwd ? this.pwd : ""
       };
-      console.log(jsonUpdate);
+      // console.log(jsonUpdate);
       await this.updateUser(jsonUpdate)
         .then(resp => {
           this.$q.notify({
@@ -158,7 +148,7 @@ export default {
           });
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
           this.$q.notify({
             message: "¡Oh oh, no pudimos actualizar",
             position: "top",
@@ -170,26 +160,30 @@ export default {
       let idUser = LocalStorage.getAll().idUser;
       let jsonUpdate = {
         profile: arg,
-        _id: idUser
+        _id: this.$route.params.id
       };
-      console.log(jsonUpdate);
+      // console.log(jsonUpdate);
       this.updateImage(jsonUpdate)
         .then(async resp => {
-          console.log("antes de actualizar");
+          // console.log("antes de actualizar");
           this.alert = false;
           this.$q.notify({
             message: "¡Se actualizo tu foto de perfil!",
             position: "top",
             color: "green-5"
           });
-          LocalStorage.remove("UserDetalle");
-          this.callUserOne(idUser);
-          setTimeout(() => {
-            LocalStorage.set("UserDetalle", this.getUserOne);
-          }, 1000);
+          this.callUserOne(this.$route.params.id);
+          if (idUser == this.$route.params.id) {
+            LocalStorage.remove("UserDetalle");
+            setTimeout(() => {
+              LocalStorage.set("UserDetalle", this.getUserOne);
+            }, 1000);
+          } else {
+            console.log("Se actualizo");
+          }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
           this.$q.notify({
             message: "¡Oh oh, no pudimos actualizar",
             position: "top",
@@ -203,12 +197,12 @@ export default {
       };
     },
     factoryFn(file) {
-      console.log(file);
+      // console.log(file);
       let total;
       var formData = new FormData();
       // var imagefile = document.querySelector("#file");
       formData.append("file", file[0]);
-      console.log(formData);
+      // console.log(formData);
       axiosInstance
         .post("/fileupload", formData, {
           headers: {
@@ -216,46 +210,23 @@ export default {
           }
         })
         .then(resp => {
-          console.log(resp.data);
+          // console.log(resp.data);
           total = resp.data;
           this.updateFoto(total);
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
           total = err;
         });
       return total;
-    },
-    factoryFnNew(files) {
-      // returning a Promise
-      console.log(files);
-      let formData = new FormData();
-      // var imagefile = document.querySelector("#file");
-      formData.append("file", files[0]);
-      return new Promise(resolve => {
-        // simulating a delay of 2 seconds
-        setTimeout(() => {
-          resolve({
-            url: "http://localhost:9876/fileupload",
-            methods: "POST",
-            headers: [
-              {
-                "Content-Type": "multipart/form-data"
-              }
-            ],
-            data: {
-              formData
-            }
-          });
-        }, 100);
-      });
     }
   },
   async created() {
     this._id = this.$route.params.id;
-    console.log(this.$route.params.id);
+    // console.log(this.$route.params.id);
     await this.callUserOne(this.$route.params.id);
     await this.ordenarCampos();
+    this.infoUrl = process.env.API_URL;
   }
 };
 </script>

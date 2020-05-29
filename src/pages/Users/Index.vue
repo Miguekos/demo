@@ -96,7 +96,7 @@ export default {
     let logginIn = LocalStorage.getAll().loggin;
     let role = LocalStorage.getAll().role;
     if (logginIn && role == 1) {
-      console.log("WELCOME");
+      // console.log("WELCOME");
     } else {
       redirect("/");
     }
@@ -148,7 +148,7 @@ export default {
   methods: {
     ...mapActions("users", ["callUser", "deleteUser"]),
     eliminarUser(arg) {
-      console.log(arg._id.$oid);
+      // console.log(arg._id.$oid);
       this.$q
         .dialog({
           title: "Confirmar",
@@ -161,7 +161,7 @@ export default {
           // this.deleteUser();
           this.deleteUser(arg._id.$oid)
             .then(async resp => {
-              console.log(resp);
+              // console.log(resp);
               await this.callUser();
               this.$q.notify({
                 // progress: true,
@@ -174,7 +174,7 @@ export default {
               });
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
               this.$q.notify({
                 message: "¡Oh oh, algo salido mal!",
                 position: "top"
@@ -201,21 +201,21 @@ export default {
       this.dialogRegistro = true;
     },
     onClick() {
-      console.log("Clicked on a fab action");
+      // console.log("Clicked on a fab action");
     },
     detalleCliente(arg) {
-      console.log(arg._id.$oid);
+      // console.log(arg._id.$oid);
       this.$router.push(`/profile/${arg._id.$oid}`);
     },
     formatDate(arg) {
-      console.log("Formateando Fecha");
+      // console.log("Formateando Fecha");
       return Fechas.Corta(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
     }
   },
   async created() {
     this.$q.loading.show();
-    console.log("created - Cliente");
+    // console.log("created - Cliente");
     // this.$q.loading.show({
     //   spinner: QSpinnerGears,
     //   spinnerColor: "blue",

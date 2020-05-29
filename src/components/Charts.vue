@@ -43,10 +43,10 @@ export default {
   }),
   methods: {
     onReady(instance, ECharts) {
-      console.log(instance, ECharts);
+      // console.log(instance, ECharts);
     },
     onClick(event, instance, ECharts) {
-      console.log(arguments);
+      // console.log(arguments);
     }
   },
   created() {}

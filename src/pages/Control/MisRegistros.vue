@@ -11,7 +11,7 @@
           <q-icon name="archive" />
         </q-item-section>
       </q-item>
-      <q-item dense v-else clickable v-ripple>
+      <q-item dense v-else class="native-mobile-only" clickable v-ripple>
         <q-item-section class="text-red text-bold" side top left></q-item-section>
         <q-item-section>
           <q-item-label class="text-center text-h6">Mis Registros</q-item-label>
@@ -126,7 +126,7 @@ export default {
   //   let logginIn = LocalStorage.getAll().loggin;
   //   let role = LocalStorage.getAll().role;
   //   if (logginIn && role == 1) {
-  //     console.log("WELCOME");
+  //     // console.log("WELCOME");
   //   } else {
   //     redirect("/");
   //   }
@@ -199,7 +199,7 @@ export default {
   methods: {
     ...mapActions("client", ["callClienteOne", "updateCliente"]),
     funcUpdateTemp(arg) {
-      console.log(arg);
+      // console.log(arg);
       this.$q
         .dialog({
           title: "Temperatura",
@@ -213,12 +213,12 @@ export default {
         })
         .onOk(data => {
           this.$q.loading.show();
-          console.log(">>>> OK, received", data);
+          // console.log(">>>> OK, received", data);
           let jsonUpdate = {
             temp: data,
             _id: arg._id.$oid
           };
-          console.log(jsonUpdate);
+          // console.log(jsonUpdate);
           this.updateCliente(jsonUpdate)
             .then(async resp => {
               this.$q.notify({
@@ -278,7 +278,7 @@ export default {
     },
     detalleCliente(arg) {
       this.$q.loading.show();
-      console.log(arg);
+      // console.log(arg);
       this.$store.commit("client/setDialogDetalleData", arg);
       setTimeout(() => {
         this.$store.commit("client/setDialogDetalle", true);
@@ -286,21 +286,21 @@ export default {
       }, 500);
     },
     formatDate(arg) {
-      console.log("Formateando Fecha");
+      // console.log("Formateando Fecha");
       return Fechas.Custom(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
     }
   },
   async created() {
     this.$q.loading.show();
-    console.log("created - Cliente");
+    // console.log("created - Cliente");
     // this.$q.loading.show({
     //   spinner: QSpinnerGears,
     //   spinnerColor: "blue",
     //   spinnerSize: 100,
     //   backgroundColor: "grey-4"
     // });
-    console.log(LocalStorage.getAll().UserDetalle.dni);
+    // console.log(LocalStorage.getAll().UserDetalle.dni);
     await this.callClienteOne(LocalStorage.getAll().UserDetalle.dni);
     // this.dataexport = this.getClientesS();
     // this.$store.commit("general/setAtras", false);

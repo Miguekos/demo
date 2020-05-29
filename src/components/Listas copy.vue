@@ -252,7 +252,7 @@ export default {
     onSubmit(evt) {
       let validacion = this.valdairEstados();
       if (this.terminos) {
-        console.log(validacion);
+        // console.log(validacion);
         this.submitEmpty = false;
         const formData = new FormData(evt.target);
         const submitResult = [];
@@ -263,7 +263,7 @@ export default {
           validacion
         );
         for (const [name, value] of formData.entries()) {
-          console.log(value);
+          // console.log(value);
           if (value.length > 0) {
             // submitResult.push(`${name} : ${value}`);
             submitResult.push({ name, value });
@@ -272,16 +272,16 @@ export default {
           }
         }
 
-        console.log("this.submitEmpty");
-        console.log(this.submitEmpty);
-        console.log("this.submitEmpty");
+        // console.log("this.submitEmpty");
+        // console.log(this.submitEmpty);
+        // console.log("this.submitEmpty");
 
         if (this.submitEmpty) {
-          console.log("this.submitEmpty: ", this.submitEmpty);
+          // console.log("this.submitEmpty: ", this.submitEmpty);
         } else {
           this.submitResult = submitResult;
           // this.submitEmpty = submitResult.length === 0;
-          console.log(this.submitResult);
+          // console.log(this.submitResult);
         }
         this.showLoading();
         if (validacion == "00") {
@@ -338,14 +338,14 @@ export default {
                 label: "Responder",
                 color: buttonColor,
                 handler: () => {
-                  /* console.log('wooow') */
+                  /* // console.log('wooow') */
                 }
               },
               {
                 label: "Omitir",
                 color: "yellow",
                 handler: () => {
-                  /* console.log('wooow') */
+                  /* // console.log('wooow') */
                 }
               }
             ]
@@ -355,7 +355,7 @@ export default {
                 label: "Responder",
                 color: buttonColor,
                 handler: () => {
-                  /* console.log('wooow') */
+                  /* // console.log('wooow') */
                 }
               }
             ]

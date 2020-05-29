@@ -17,12 +17,12 @@ export default {
   },
   methods: {
     factoryFn(file) {
-      console.log(file);
+      // console.log(file);
       let total;
       var formData = new FormData();
       // var imagefile = document.querySelector("#file");
       formData.append("file", file[0]);
-      console.log(formData);
+      // console.log(formData);
       axiosInstance
         .post("/fileupload", formData, {
           headers: {
@@ -30,18 +30,18 @@ export default {
           }
         })
         .then(resp => {
-          console.log(resp.data);
+          // console.log(resp.data);
           total = resp.data;
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
           total = err;
         });
       return total;
     },
     factoryFnNew(files) {
       // returning a Promise
-      console.log(files)
+      // console.log(files)
       let formData = new FormData();
       // var imagefile = document.querySelector("#file");
       formData.append("file", files[0]);

@@ -130,7 +130,7 @@ export default {
       this.$store.commit("client/setDialogDetalle", false);
     },
     formatearResult(arg) {
-      console.log(arg);
+      // console.log(arg);
       let result;
       if (arg) {
         result = "SI";

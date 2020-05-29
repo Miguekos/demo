@@ -102,7 +102,7 @@ export default {
   methods: {
     ...mapActions("users", ["addUser", "callUser"]),
     cerrar() {
-      console.log("Se preciono Cerrar");
+      // console.log("Se preciono Cerrar");
     },
     onSubmit() {
       this.addUser({

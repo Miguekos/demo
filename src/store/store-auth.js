@@ -15,10 +15,10 @@ const mutations = {
 
 const actions = {
   async login({ commit }, payload) {
-    console.log("Login");
-    console.log(payload);
+    // console.log("Login");
+    // console.log(payload);
     const response = await axiosInstance.post(`/login`, payload);
-    console.log(response.data);
+    // console.log(response.data);
     // commit("setClientes", response.data);
     return response.data;
   }

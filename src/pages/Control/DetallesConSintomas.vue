@@ -107,7 +107,7 @@ export default {
     let logginIn = LocalStorage.getAll().loggin;
     let role = LocalStorage.getAll().role;
     if (logginIn && role == 1) {
-      console.log("WELCOME");
+      // console.log("WELCOME");
     } else {
       redirect("/");
     }
@@ -194,7 +194,7 @@ export default {
     },
     detalleCliente(arg) {
       this.$q.loading.show();
-      console.log(arg);
+      // console.log(arg);
       this.$store.commit("client/setDialogDetalleData", arg);
       setTimeout(() => {
         this.$store.commit("client/setDialogDetalle", true);
@@ -202,14 +202,14 @@ export default {
       }, 500);
     },
     formatDate(arg) {
-      console.log("Formateando Fecha");
+      // console.log("Formateando Fecha");
       return Fechas.larga(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
     }
   },
   async created() {
     this.$q.loading.show();
-    console.log("created - Cliente");
+    // console.log("created - Cliente");
     // this.$q.loading.show({
     //   spinner: QSpinnerGears,
     //   spinnerColor: "blue",

@@ -282,7 +282,7 @@ export default {
         this.$q.loading.show();
         let validacion = this.valdairEstados();
         if (this.terminos) {
-          console.log(validacion);
+          // console.log(validacion);
           const JsonEnviar = {
             ...this.estados,
             estados: validacion,
@@ -295,9 +295,9 @@ export default {
             profile: this.profile,
             correo: this.correo
           };
-          console.log(JsonEnviar);
+          // console.log(JsonEnviar);
           const respAddClient = await this.addCliente(JsonEnviar);
-          console.log(respAddClient);
+          // console.log(respAddClient);
           if (validacion == "00") {
             this.$q.notify({
               message: "!Sigue cuidándote! Que tengas buen día.",
@@ -363,14 +363,14 @@ export default {
                 label: "Responder",
                 color: buttonColor,
                 handler: () => {
-                  /* console.log('wooow') */
+                  /* // console.log('wooow') */
                 }
               },
               {
                 label: "Omitir",
                 color: "yellow",
                 handler: () => {
-                  /* console.log('wooow') */
+                  /* // console.log('wooow') */
                 }
               }
             ]
@@ -380,7 +380,7 @@ export default {
                 label: "Responder",
                 color: buttonColor,
                 handler: () => {
-                  /* console.log('wooow') */
+                  /* // console.log('wooow') */
                 }
               }
             ]
@@ -399,7 +399,7 @@ export default {
   async created() {
     this.$q.loading.show();
     const infoUser = await LocalStorage.getAll().UserDetalle;
-    console.log(infoUser.name);
+    // console.log(infoUser.name);
     this.nombre = infoUser.name;
     this.dni = infoUser.dni;
     this.telf = infoUser.telefono;
@@ -407,9 +407,9 @@ export default {
     this.correo = infoUser.email;
     this.url = infoUser.url;
     this.profile = infoUser.profile;
-    console.log("infoUser", infoUser);
+    // console.log("infoUser", infoUser);
     const role = LocalStorage.getAll().role;
-    console.log(role);
+    // console.log(role);
     if (role == 1) {
       this.datosPersonales = true;
     } else {

@@ -13,34 +13,23 @@
         />
 
         <q-toolbar-title @click="home()" class="text-black">
-          <b class="text-green">C</b>uid<b class="text-red">APP</b>te
+          <b class="text-green">C</b>uid
+          <b class="text-red">APP</b>te
         </q-toolbar-title>
 
         <div class="text-black">v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-1"
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
       <q-list>
         <q-item-label header class="text-grey-8">
-          <q-item-label header class="text-center text-h6 q-pa-xs"
-            >Perfil</q-item-label
-          >
+          <q-item-label header class="text-center text-h6 q-pa-xs">Perfil</q-item-label>
           <q-separator spaced />
           <q-list>
-            <q-item
-              @click="detalleCliente()"
-              clickable
-              v-ripple
-              class="justify-center"
-            >
+            <q-item @click="detalleCliente()" clickable v-ripple class="justify-center">
               <q-avatar size="100px" font-size="52px">
-                <img :src="`${userdatil.url}${userdatil.profile}`" />
+                <img :src="urlImagen" />
               </q-avatar>
             </q-item>
             <q-item clickable v-ripple class="justify-center">
@@ -70,9 +59,7 @@
 
           <q-item-section>
             <q-item-label>Salir</q-item-label>
-            <q-item-label caption>
-              Cerar sesíon
-            </q-item-label>
+            <q-item-label caption>Cerar sesíon</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -94,17 +81,20 @@ import { LocalStorage } from "quasar";
 
 export default {
   name: "MainLayout",
-
   components: {
     EssentialLink,
     detalleDeLosUsuarios
   },
   computed: {
     // ...mapGetters('client',["dialogDetalle"]),
-    ...mapState("client", ["dialogDetalle"])
+    ...mapState("client", ["dialogDetalle"]),
+    urlImagen() {
+      return `${this.infoUrl}/uploads/${this.userdatil.profile}`;
+    }
   },
   data() {
     return {
+      infoUrl: "",
       role: null,
       userdatil: {},
       leftDrawerOpen: false,
@@ -171,12 +161,12 @@ export default {
   methods: {
     actualizar() {
       this.userdatil = LocalStorage.getAll().UserDetalle;
-      console.log(this.userdatil);
+      // console.log(this.userdatil);
       this.role = LocalStorage.getAll().role;
     },
     detalleCliente(arg) {
       const idUser = LocalStorage.getAll().idUser;
-      console.log(idUser);
+      // console.log(idUser);
       this.$router.push(`/profile/${idUser}`);
     },
     home() {
@@ -203,6 +193,7 @@ export default {
   created() {
     this.userdatil = LocalStorage.getAll().UserDetalle;
     this.role = LocalStorage.getAll().role;
+    this.infoUrl = process.env.API_URL;
   }
 };
 </script>

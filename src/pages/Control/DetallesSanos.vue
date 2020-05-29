@@ -11,7 +11,7 @@
           <q-icon name="archive" />
         </q-item-section>
       </q-item>
-      <q-item dense v-else clickable v-ripple>
+      <q-item dense v-else class="native-mobile-only" clickable v-ripple>
         <q-item-section class="text-red text-bold" side top left></q-item-section>
         <q-item-section>
           <q-item-label class="text-center text-h6">Personal sanos</q-item-label>
@@ -122,7 +122,7 @@ export default {
     let logginIn = LocalStorage.getAll().loggin;
     let role = LocalStorage.getAll().role;
     if (logginIn && role == 1) {
-      console.log("WELCOME");
+      // console.log("WELCOME");
     } else {
       redirect("/");
     }
@@ -209,7 +209,7 @@ export default {
     },
     detalleCliente(arg) {
       this.$q.loading.show();
-      console.log(arg);
+      // console.log(arg);
       this.$store.commit("client/setDialogDetalleData", arg);
       setTimeout(() => {
         this.$store.commit("client/setDialogDetalle", true);
@@ -217,7 +217,7 @@ export default {
       }, 500);
     },
     formatDate(arg) {
-      console.log("Formateando Fecha");
+      // console.log("Formateando Fecha");
       return Fechas.larga(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
     }
@@ -225,7 +225,7 @@ export default {
   async created() {
     this.$q.loading.show();
     this.loading = true;
-    console.log("created - Cliente");
+    // console.log("created - Cliente");
     // this.$q.loading.show({
     //   spinner: QSpinnerGears,
     //   spinnerColor: "blue",

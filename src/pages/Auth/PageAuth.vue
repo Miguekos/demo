@@ -102,14 +102,14 @@
 // import { LocalStorage } from "quasar";
 import { LocalStorage } from "quasar";
 import { mapActions } from "vuex";
-console.log(process.env.API);
+// console.log(process.env.API);
 // import { openURL } from 'quasar'
 export default {
   // preFetch({ store }) {
-  //   console.log("stored autth");
-  //   console.log(store.state.auth.auth);
+  //   // console.log("stored autth");
+  //   // console.log(store.state.auth.auth);
   //   if (!store.state.auth) {
-  //     console.log(store.state.auth);
+  //     // console.log(store.state.auth);
   //     // redirect('/')
   //   }
   // },
@@ -136,14 +136,14 @@ export default {
       this.$refs.email.validate();
       this.$refs.password.validate();
       if (!this.$refs.email.hasError && !this.$refs.password.hasError) {
-        console.log();
+        // console.log();
         this.login({
           email: this.form.email,
           pwd: this.form.password
         })
           .then(resp => {
             if (resp.codRes == "00") {
-              console.log("resp", resp);
+              // console.log("resp", resp);
               LocalStorage.set("loggin", true);
               LocalStorage.set("role", resp.role);
               LocalStorage.set("idUser", resp.id.$oid);
@@ -163,11 +163,11 @@ export default {
                 position: "top"
               });
               LocalStorage.set("UserDetalle", resp);
-              console.log("loguerado Correctamente");
+              // console.log("loguerado Correctamente");
               this.loadlogin = false;
               this.$router.push("/");
             } else if (resp.codRes == "01") {
-              console.log("Email o Contraseña incorrecta");
+              // console.log("Email o Contraseña incorrecta");
               this.$q.notify({
                 message: "Email o Contraseña incorrecta",
                 color: "red-5"
@@ -176,10 +176,10 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
             this.loadlogin = false;
           });
-        console.log("login the user");
+        // console.log("login the user");
       }
     }
   }

@@ -37,12 +37,12 @@ export default {
     ...mapState("client", ["searchCS"]),
     searchField: {
       get() {
-        console.log("this.searchCS", this.searchCS);
+        // console.log("this.searchCS", this.searchCS);
         return this.searchCS;
       },
       set(value) {
         this.setSearchCS(value);
-        console.log(value);
+        // console.log(value);
       }
     }
   },

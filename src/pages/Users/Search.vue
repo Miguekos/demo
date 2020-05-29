@@ -37,12 +37,12 @@ export default {
     ...mapState("users", ["search"]),
     searchField: {
       get() {
-        console.log("this.search", this.search);
+        // console.log("this.search", this.search);
         return this.search;
       },
       set(value) {
         this.setSearch(value);
-        console.log(value);
+        // console.log(value);
       }
     }
   },
