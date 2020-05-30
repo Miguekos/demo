@@ -20,6 +20,7 @@ FROM node:13.7 as build-stage
 WORKDIR /app
 COPY package.json ./
 # COPY package*.json ./
+RUN npm install -g @quasar/cli
 RUN npm install
 COPY . .
 RUN quasar build
