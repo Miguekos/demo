@@ -17,7 +17,8 @@
 
 # develop stage
 FROM node:13.7 as build-stage
-COPY . .
+# COPY . ./app
+COPY ["." ,  "/app/"]
 WORKDIR /app
 # COPY package.json ./
 # COPY package*.json ./
