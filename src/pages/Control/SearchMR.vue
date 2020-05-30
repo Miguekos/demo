@@ -2,7 +2,7 @@
   <div class="">
     <q-input
       dense
-      standout="bg-green-4 text-white"
+      standout="bg-amber-4 text-white"
       type="search"
       placeholder="Buscar por nombre"
       v-model="searchField"
