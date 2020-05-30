@@ -16,7 +16,7 @@
             color="green"
             track-color="grey-3"
             class="q-ma-xs"
-          >{{ getClienteReport.clientes }}%</q-circular-progress>
+          >{{ getClienteReport.clientes }}</q-circular-progress>
         </q-item-section>
         <q-item-section
           style="align-items: center; font-size: 10px; text-align: center"
@@ -71,7 +71,7 @@
 
     <q-list separator>
       <q-item>
-        <q-item-section>Reportes por colaboradores en el ultimos mes</q-item-section>
+        <q-item-section>Reportes por colaboradores en el últimos mes</q-item-section>
       </q-item>
       <q-separator />
       <q-table

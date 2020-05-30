@@ -4,7 +4,7 @@
       <q-item @click="exportTable()" v-if="!$q.platform.is.cordova" dense clickable v-ripple>
         <q-item-section class="text-red text-bold" side top left></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6">Mis Registros</q-item-label>
+          <q-item-label class="text-center text-h6">Mis registros</q-item-label>
           <q-separator color="amber-4" inset />
         </q-item-section>
         <q-item-section class="text-amber text-bold" side top right>

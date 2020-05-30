@@ -1,11 +1,13 @@
 <template>
   <!-- <div class="echarts"> -->
   <div id="chart" class="q-pt-md">
+    <!-- {{$store.state.client.ClienteReport.graficDate}} -->
+    <!-- {{info}} -->
     <apex-chart type="bar" height="240" :options="chartOptions" :series="series"></apex-chart>
   </div>
 </template>
 <script type="text/babel">
-import { mapGetters, mapActions, mapState } from "vuex";
+// import { mapGetters, mapActions, mapState } from "vuex";
 // import VueApexCharts from "boot/vueApexCharts";
 export default {
   props: ["info"],
@@ -13,12 +15,14 @@ export default {
     return {
       series: [
         {
-          name: "Personas sanas",
-          data: this.$store.state.client.ClienteReport.graficSeriaS
+          name: "Personal sanos",
+          // data: this.$store.state.client.ClienteReport.graficSeriaS
+          data: this.info.graficSeriaS
         },
         {
-          name: "Personas con síntomas",
-          data: this.$store.state.client.ClienteReport.graficSeriaCS
+          name: "Personal con síntomas",
+          // data: this.$store.state.client.ClienteReport.graficSeriaCS
+          data: this.info.graficSeriaCS
         }
       ],
       chartOptions: {
@@ -53,7 +57,7 @@ export default {
         colors: ["#3f51b5", "#f44336"],
         xaxis: {
           type: "String",
-          categories: this.$store.state.client.ClienteReport.graficDate
+          categories: this.info.graficDate
         },
         legend: {
           position: "top",
@@ -66,10 +70,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("client", ["getClienteReport", "getClientes"])
+    // ...mapGetters("client", ["getClienteReport", "getClientes"])
   },
   methods: {
-    ...mapActions("client", ["callClienteReport", "callCliente"])
+    // ...mapActions("client", ["callClienteReport", "callCliente"])
   },
   async mounted() {
     // setTimeout(() => {
