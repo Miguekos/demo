@@ -3,7 +3,7 @@ FROM node:13.7-alpine as develop-stage
 WORKDIR /app
 # COPY package.json ./
 COPY package*.json ./
-RUN npm global add @quasar/cli
+RUN npm install -g @quasar/cli
 COPY . .
 # build stage
 FROM develop-stage as build-stage
