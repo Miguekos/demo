@@ -4,8 +4,8 @@ WORKDIR /app
 # COPY package.json ./
 COPY package*.json ./
 RUN yarn global add @quasar/cli
-RUN apk add build-base python-dev py-pip jpeg-dev zlib-dev
-ENV LIBRARY_PATH=/lib:/usr/lib
+# RUN apk add build-base python-dev py-pip jpeg-dev zlib-dev
+# ENV LIBRARY_PATH=/lib:/usr/lib
 COPY . .
 # build stage
 FROM develop-stage as build-stage
