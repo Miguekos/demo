@@ -134,7 +134,7 @@ export default {
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
-    Search: () => import("./SearchS")
+    Search: () => import("./SearchMR")
   },
   data() {
     return {
