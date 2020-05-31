@@ -8,38 +8,5 @@
   },
   "ide-helper": {
     "addToGitIgnore": true
-  },
-  "@quasar/icon-genie": {
-    "minify_dev": "pngquant",
-    "minify_build": "zopfli",
-    "cordova": {
-      "background_color": "#000074",
-      "splashscreen_type": "pure"
-    },
-    "build_always": false,
-    "__internal": {
-      "dev": {
-        "cordova": {
-          "iconHash": "95d1b6cacf3bc9f534dd26d5f1924db3",
-          "splashscreenHash": "c184fe79b47683d0442a951c49b056bc",
-          "splashscreenType": "pure",
-          "backgroundColor": "#000074"
-        },
-        "spa": {
-          "iconHash": "95d1b6cacf3bc9f534dd26d5f1924db3"
-        }
-      },
-      "build": {
-        "cordova": {
-          "iconHash": "95d1b6cacf3bc9f534dd26d5f1924db3",
-          "splashscreenHash": "c184fe79b47683d0442a951c49b056bc",
-          "splashscreenType": "pure",
-          "backgroundColor": "#000074"
-        },
-        "spa": {
-          "iconHash": "95d1b6cacf3bc9f534dd26d5f1924db3"
-        }
-      }
-    }
   }
 }
