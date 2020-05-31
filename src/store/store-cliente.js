@@ -6,6 +6,7 @@ const state = {
   ClientesS: [],
   ClienteReport: [],
   ClienteOne: [],
+  ClientesReportOrder: [],
   search: "",
   searchCS: "",
   searchS: "",
@@ -14,6 +15,9 @@ const state = {
 };
 
 const mutations = {
+  setClientesReportOrder(state, payload) {
+    state.ClientesReportOrder = payload;
+  },
   setClientes(state, payload) {
     state.Clientes = payload;
   },
@@ -55,6 +59,13 @@ const actions = {
     commit("setClientes", response.data);
     // return response.data;
   },
+  async callClienteReportOrder({ commit }) {
+    // console.log("callCliente");
+    const response = await axiosInstance.get(`/clientes/reporte/order`);
+    // console.log(response.data);
+    commit("setClientesReportOrder", response.data);
+    // return response.data;
+  },
   async callClienteCS({ commit }) {
     // console.log("callCliente");
     const response = await axiosInstance.get(`/clientesCS`);
@@ -93,10 +104,7 @@ const actions = {
   async updateCliente({ commit }, payload) {
     // console.log("updateCliente");
     // console.log(payload);
-    const response = await axiosInstance.post(
-      `/cliente/update`,
-      payload
-    );
+    const response = await axiosInstance.post(`/cliente/update`, payload);
     // console.log(response);
     // commit("setClientes", response.data);
     return response.data;
@@ -223,6 +231,19 @@ const getters = {
   getDialogDetalleData(state) {
     // console.log(state.dialogDetalleData);
     return state.dialogDetalleData;
+  },
+  getClientesReporteNewCS(state) {
+    let todoCS = [];
+    for (let index = 0; index < state.ClientesReportOrder.length; index++) {
+      const element = state.ClientesReportOrder[index];
+      // console.log(element._id.enfermo);
+      if (element._id.enfermo == "01") {
+        // console.log("Entro en 01");
+        // console.log(element);
+        todoCS.push(element);
+      }
+    }
+    return todoCS;
   }
 };
 

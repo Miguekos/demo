@@ -10,7 +10,7 @@
           <q-item-label class="q-pb-md">Total</q-item-label>
           <q-circular-progress
             show-value
-            :value="getClienteReport.clientes"
+            :value="parseInt(getClienteReport.clientes)"
             size="80px"
             :thickness="0.13"
             color="green"
@@ -65,7 +65,7 @@
       <q-item-section>Reportes por áreas</q-item-section>
     </q-item>
     <q-separator />
-    <q-list style="height: 240px;">
+    <q-list style="height: 280px;">
       <Graficas :info="getClienteReport" />
     </q-list>
 
@@ -75,25 +75,29 @@
       </q-item>
       <q-separator />
       <q-table
-        :data="getClientes"
+        :data="getClientesReporteNewCS"
         :columns="columns"
         hide-bottom
         hide-header
-        row-key="created_at.$date"
+        row-key="ultimaFecha.$date"
         :pagination.sync="pagination"
       >
         <template v-slot:body="props">
-          <q-tr :props="props" clickable @click="detalleCliente(props.row)">
-            <q-td key="nombre" :props="props">
+          <q-tr :props="props" clickable>
+            <q-td key="nombre" v-ripple:white :props="props">
               <q-item-section>
                 <q-item-label>{{ props.row.nombre }}</q-item-label>
                 <q-item-label caption>
-                  <b class="text-grey-5">Area:</b>
-                  {{ props.row.area }}
+                  <b class="text-grey-5">Cantidad:</b>
+                  {{ props.row.count }}
                 </q-item-label>
               </q-item-section>
             </q-td>
-            <q-td key="created_at.$date" :props="props">{{ formatDate(props.row.created_at.$date) }}</q-td>
+            <q-td
+              key="ultimaFecha.$date"
+              :props="props"
+              v-ripple:white
+            >{{ formatDate(props.row.ultimaFecha.$date) }}</q-td>
           </q-tr>
         </template>
       </q-table>
@@ -139,23 +143,31 @@ export default {
           sortable: true
         },
         {
-          name: "created_at.$date",
+          name: "ultimaFecha.$date",
           align: "right",
           label: "fecha",
-          field: "created_at.$date",
+          field: "ultimaFecha.$date",
           sortable: true
         }
       ]
     };
   },
   computed: {
-    ...mapGetters("client", ["getClienteReport", "getClientes"])
+    ...mapGetters("client", [
+      "getClienteReport",
+      "getClientes",
+      "getClientesReporteNewCS"
+    ])
   },
   methods: {
-    ...mapActions("client", ["callClienteReport", "callCliente"]),
+    ...mapActions("client", [
+      "callClienteReport",
+      "callCliente",
+      "callClienteReportOrder"
+    ]),
     detalleCliente(arg) {
       this.$q.loading.show();
-      // console.log(arg);
+      console.log(arg);
       this.$store.commit("client/setDialogDetalleData", arg);
       setTimeout(() => {
         this.$store.commit("client/setDialogDetalle", true);
@@ -184,6 +196,7 @@ export default {
   },
   components: {
     Graficas: () => import("components/ApexCharts")
+    // Graficas: () => import("components/Charts")
   },
   beforeDestroy() {
     if (this.timer !== void 0) {
@@ -194,9 +207,11 @@ export default {
   async mounted() {
     this.$q.loading.show();
     // this.showLoading();
-    await this.callClienteReport();
-    await this.callCliente();
-    this.$q.loading.hide();
+    // await this.callClienteReport();
+    await this.callClienteReportOrder();
+    await setTimeout(() => {
+      this.$q.loading.hide();
+    }, 1000);
   }
 };
 </script>

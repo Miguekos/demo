@@ -58,7 +58,7 @@
       </template>-->
       <template v-slot:body="props">
         <q-tr :props="props" clickable @click="detalleCliente(props.row)">
-          <q-td key="nombre" :props="props">
+          <q-td key="nombre" v-ripple:white :props="props">
             <q-item-section>
               <q-item-label>{{ props.row.nombre }}</q-item-label>
               <q-item-label caption>
@@ -67,7 +67,7 @@
               </q-item-label>
             </q-item-section>
           </q-td>
-          <q-td key="created_at.$date" :props="props">{{ formatDate(props.row.created_at.$date) }}</q-td>
+          <q-td key="created_at.$date" v-ripple:white :props="props">{{ formatDate(props.row.created_at.$date) }}</q-td>
         </q-tr>
       </template>
     </q-table>

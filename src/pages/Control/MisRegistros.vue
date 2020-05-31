@@ -59,7 +59,7 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="nombre" :props="props">
-            <q-item-section clickable @click="detalleCliente(props.row)">
+            <q-item-section v-ripple:white clickable @click="detalleCliente(props.row)">
               <q-item-label>{{ props.row.nombre }}</q-item-label>
               <q-item-label caption>
                 <b class="text-red-5">temp:</b>
@@ -67,9 +67,9 @@
               </q-item-label>
             </q-item-section>
           </q-td>
-          <q-td key="created_at.$date" :props="props">{{ formatDate(props.row.created_at.$date) }}</q-td>
-          <q-td key="email" :props="props" clickable @click="funcUpdateTemp(props.row)">
-            <q-btn size="xs" round color="blue-5" text-color="white" icon="whatshot" />
+          <q-td key="created_at.$date" v-ripple:white :props="props">{{ formatDate(props.row.created_at.$date) }}</q-td>
+          <q-td key="email" :props="props" v-ripple:white clickable @click="funcUpdateTemp(props.row)">
+            <q-btn size="xs" round color="amber-5" text-color="white" icon="whatshot" />
           </q-td>
         </q-tr>
       </template>

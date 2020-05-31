@@ -13,8 +13,7 @@
         />
 
         <q-toolbar-title @click="home()" class="text-black">
-          <b class="text-green">C</b>uid
-          <b class="text-red">APP</b>te
+          <b class="text-green">C</b>uid<b class="text-red">APP</b>te
         </q-toolbar-title>
 
         <div class="text-black">v{{ $q.version }}</div>
@@ -144,7 +143,7 @@ export default {
           link: "/"
         },
         {
-          title: "Mis Registros",
+          title: "Mis registros",
           caption: "Evaluaciones",
           icon: "scatter_plot",
           link: "/misregistros"

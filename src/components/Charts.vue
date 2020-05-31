@@ -1,44 +1,71 @@
 <template>
   <!-- <div class="echarts"> -->
   <div style="height: 280px;">
-    <IEcharts
-      :option="option"
-      :loading="loading"
-      @ready="onReady"
-      @click="onClick"
-    />
+    <!-- {{info}} -->
+    <!-- {{$store.state.client.ClienteReport.graficSeriaS}} -->
+    <IEcharts :option="option" :loading="loading" @ready="onReady" @click="onClick" />
   </div>
 </template>
 
 <script type="text/babel">
 import IEcharts from "vue-echarts-v3/src/full.js";
 export default {
-  props: ['info'],
+  props: ["info"],
   name: "charts",
   components: {
     IEcharts
   },
-  props: {},
   data: () => ({
     loading: false,
     option: {
-      legend: { right: "auto" },
-      tooltip: {},
-      color: ["#3f51b5", "#f44336", "#61a0a8"],
-      dataset: {
-        source: [
-          ["product", "Abril", "Mayo", "2017"],
-          ["Pro..", 43.3, 85.8, 93.7],
-          ["Ven..", 83.1, 73.4, 55.1],
-          ["Admi..", 86.4, 65.2, 82.5],
-          ["Ger..", 72.4, 53.9, 39.1]
-        ]
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "shadow" // 'line' | 'shadow'
+        }
       },
-      xAxis: { type: "category" },
-      yAxis: {},
-      // Declare several bar series, each will be mapped
-      // to a column of dataset.source by default.
-      series: [{ type: "bar", animation: true }, { type: "bar" }]
+      legend: {
+        data: ["Personal sanos", "Personal con síntomas"]
+      },
+      color: ["#f44336", "#3f51b5"],
+      grid: {
+        left: "2%",
+        right: "2%",
+        bottom: "2%",
+        containLabel: true
+      },
+      xAxis: {
+        // type: "value"
+        type: "category",
+        data: []
+      },
+      yAxis: {
+        type: "value"
+        // type: "category",
+        // data: ["2", "3", "3", "3", "3", "3", "周日"]
+      },
+      series: [
+        {
+          name: "Personal con síntomas",
+          type: "bar",
+          stack: "Total",
+          label: {
+            show: true,
+            position: "inside"
+          },
+          data: [0, 0, 0, 0, 0, 0]
+        },
+        {
+          name: "Personal sanos",
+          type: "bar",
+          stack: "Total",
+          label: {
+            show: true,
+            position: "inside"
+          },
+          data: []
+        }
+      ]
     }
   }),
   methods: {
@@ -49,7 +76,13 @@ export default {
       // console.log(arguments);
     }
   },
-  created() {}
+  created() {
+    setTimeout(() => {
+      this.option.xAxis.data = this.$store.state.client.ClienteReport.graficDate;
+      this.option.series[0].data = this.$store.state.client.ClienteReport.graficSeriaS;
+      this.option.series[1].data = this.$store.state.client.ClienteReport.graficSeriaCS;
+    }, 1000);
+  }
 };
 </script>
 
