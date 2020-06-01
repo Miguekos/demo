@@ -98,7 +98,7 @@
         <q-item>
           <q-item-section>
             <q-item-label v-ripple:white @click="modalRecoverPass()"
-              >Olvistate tu contraseña</q-item-label
+              >Olvidaste tu contraseña</q-item-label
             >
           </q-item-section>
           <q-item-section> </q-item-section>
@@ -145,9 +145,9 @@ export default {
     modalRecoverPass() {
       this.$q
         .dialog({
-          title: "Recuperar contraeña",
+          title: "Recuperar contraseña",
           message:
-            "¡Un correo sera enviado con la contraseña generada, no olvides verificar tu bandeja de spam!",
+            "¡Un correo será enviado con la contraseña generada, no olvides verificar tu bandeja de spam!",
           prompt: {
             model: "",
             isValid: val => val.length > 2, // << here is the magic
