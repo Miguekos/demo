@@ -1,8 +1,19 @@
 <template>
   <q-page padding>
     <q-list>
-      <q-item @click="exportTable()" v-if="!$q.platform.is.cordova" dense clickable v-ripple>
-        <q-item-section class="text-red text-bold" side top left></q-item-section>
+      <q-item
+        @click="exportTable()"
+        v-if="!$q.platform.is.cordova"
+        dense
+        clickable
+        v-ripple
+      >
+        <q-item-section
+          class="text-red text-bold"
+          side
+          top
+          left
+        ></q-item-section>
         <q-item-section>
           <q-item-label class="text-center text-h6">Mis registros</q-item-label>
           <q-separator color="amber-4" inset />
@@ -12,12 +23,22 @@
         </q-item-section>
       </q-item>
       <q-item dense v-else class="native-mobile-only" clickable v-ripple>
-        <q-item-section class="text-red text-bold" side top left></q-item-section>
+        <q-item-section
+          class="text-red text-bold"
+          side
+          top
+          left
+        ></q-item-section>
         <q-item-section>
           <q-item-label class="text-center text-h6">Mis Registros</q-item-label>
           <q-separator color="amber-4" inset />
         </q-item-section>
-        <q-item-section class="text-amber text-bold" side top right></q-item-section>
+        <q-item-section
+          class="text-amber text-bold"
+          side
+          top
+          right
+        ></q-item-section>
       </q-item>
       <q-item>
         <q-item-section>
@@ -59,7 +80,11 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="nombre" :props="props">
-            <q-item-section v-ripple:white clickable @click="detalleCliente(props.row)">
+            <q-item-section
+              v-ripple:white
+              clickable
+              @click="detalleCliente(props.row)"
+            >
               <q-item-label>{{ props.row.nombre }}</q-item-label>
               <q-item-label caption>
                 <b class="text-red-5">temp:</b>
@@ -67,9 +92,23 @@
               </q-item-label>
             </q-item-section>
           </q-td>
-          <q-td key="created_at.$date" v-ripple:white :props="props">{{ formatDate(props.row.created_at.$date) }}</q-td>
-          <q-td key="email" :props="props" v-ripple:white clickable @click="funcUpdateTemp(props.row)">
-            <q-btn size="xs" round color="amber-5" text-color="white" icon="whatshot" />
+          <q-td key="created_at.$date" v-ripple:white :props="props">{{
+            formatDate(props.row.created_at.$date)
+          }}</q-td>
+          <q-td
+            key="email"
+            :props="props"
+            v-ripple:white
+            clickable
+            @click="funcUpdateTemp(props.row)"
+          >
+            <q-btn
+              size="xs"
+              round
+              color="amber-5"
+              text-color="white"
+              icon="whatshot"
+            />
           </q-td>
         </q-tr>
       </template>
@@ -196,6 +235,27 @@ export default {
   },
   methods: {
     ...mapActions("client", ["callClienteOne", "updateCliente"]),
+    crearDataExport() {
+      const arraysJson = this.getClientesS[0];
+      let keys = [];
+      let values = [];
+      keys.push(Object.keys(arraysJson));
+      // console.log(keys[0].length);
+      // console.log(typeof keys[0].length);
+
+      for (let index = 0; index < keys[0].length; index++) {
+        // console.log(index);
+        const element = keys[0][index];
+        values.push({
+          name: element,
+          label: element,
+          field: element
+        });
+        // console.log(element);
+      }
+      // console.log(values);
+      this.columnsexport = values;
+    },
     funcUpdateTemp(arg) {
       // console.log(arg);
       this.$q
@@ -220,7 +280,7 @@ export default {
           this.updateCliente(jsonUpdate)
             .then(async resp => {
               this.$q.notify({
-                message: "¡Actualizamos tu temperatiura!",
+                message: "¡Actualizamos tu temperatura!",
                 color: "green",
                 position: "top"
               });

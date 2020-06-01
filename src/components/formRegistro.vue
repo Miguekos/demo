@@ -18,10 +18,13 @@
         label="DNI/CE *"
         mask="#########"
         unmasked-value
-        hint="Mask: #########"
         lazy-rules
         counter
-        :rules="[val => (val && val.length > 7 && val.length < 10) || 'Por favor escribe el DNI de 8/9']"
+        :rules="[
+          val =>
+            (val && val.length > 7 && val.length < 10) ||
+            'Por favor escribe el DNI de 8/9'
+        ]"
       />
 
       <q-input
@@ -43,9 +46,10 @@
         label="Celular *"
         mask="### - ### - ###"
         unmasked-value
-        hint="Mask: ### - ### - ###"
         lazy-rules
-        :rules="[val => (val && val.length == 9) || 'Por favor escribe el Celular']"
+        :rules="[
+          val => (val && val.length == 9) || 'Por favor escribe el Celular'
+        ]"
       />
 
       <q-select
@@ -74,6 +78,7 @@
         </div>
         <div class="col-6 q-pa-xs">
           <q-btn
+            :loading="loadBoton"
             class="full-width"
             outline
             label="Agregar"
@@ -91,6 +96,7 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
+      loadBoton: false,
       name: null,
       dni: null,
       email: null,
@@ -105,6 +111,7 @@ export default {
       // console.log("Se preciono Cerrar");
     },
     onSubmit() {
+      this.loadBoton = true;
       this.addUser({
         name: this.name,
         dni: this.dni,
@@ -122,6 +129,7 @@ export default {
               icon: "cloud_done",
               message: `DNI ya resgistrado`
             });
+            this.loadBoton = false;
           } else {
             this.$q.notify({
               color: "green",
@@ -131,6 +139,7 @@ export default {
               message: `Cliente ID: ${resp}`
             });
             this.callUser();
+            this.loadBoton = false;
             this.$emit("cerrarDialogo");
           }
         })
@@ -141,6 +150,7 @@ export default {
             icon: "cloud_done",
             message: `${err.data}`
           });
+          this.loadBoton = false;
         });
     },
     onReset() {

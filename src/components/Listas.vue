@@ -3,7 +3,9 @@
     <q-form @submit="onSubmit" class="q-gutter-md">
       <q-list bordered padding>
         <div v-if="datosPersonales">
-          <q-item-label header class="text-center text-h6 q-pb-xs text-bold">Datos personales</q-item-label>
+          <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
+            >Datos personales</q-item-label
+          >
           <q-separator spaced />
           <q-item>
             <q-item-section>
@@ -18,12 +20,24 @@
           </q-item>
           <q-item>
             <q-item-section>
-              <q-input color="red-5" name="dni" dense v-model="dni" label="DNI / C.E" />
+              <q-input
+                color="red-5"
+                name="dni"
+                dense
+                v-model="dni"
+                label="DNI / C.E"
+              />
             </q-item-section>
           </q-item>
           <q-item>
             <q-item-section>
-              <q-input color="red-5" name="telf" dense v-model="telf" label="Celular" />
+              <q-input
+                color="red-5"
+                name="telf"
+                dense
+                v-model="telf"
+                label="Celular"
+              />
             </q-item-section>
           </q-item>
           <q-item>
@@ -52,12 +66,16 @@
           <q-separator spaced />
         </div>
 
-        <q-item-label header class="text-center text-h6 q-pb-xs text-bold">¿Cómo te sientes?</q-item-label>
+        <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
+          >¿Cómo te sientes?</q-item-label
+        >
         <q-separator spaced />
 
         <q-item class="q-pr-xs" tag="label" v-ripple>
           <q-item-section>
-            <q-item-label class="text-left">¿Sensación de alza térmica o fiebre?</q-item-label>
+            <q-item-label class="text-left"
+              >¿Sensación de alza térmica o fiebre?</q-item-label
+            >
           </q-item-section>
           <q-item-section side>
             <q-toggle
@@ -75,7 +93,9 @@
 
         <q-item class="q-pr-xs" tag="label" v-ripple>
           <q-item-section>
-            <q-item-label class="text-left">¿Tos, estornudos o dificultad para respirar?</q-item-label>
+            <q-item-label class="text-left"
+              >¿Tos, estornudos o dificultad para respirar?</q-item-label
+            >
           </q-item-section>
           <q-item-section side>
             <q-toggle
@@ -92,7 +112,9 @@
 
         <q-item class="q-pr-xs" tag="label" v-ripple>
           <q-item-section>
-            <q-item-label class="text-left">¿Expectoración o flema amarilla o verdosa?</q-item-label>
+            <q-item-label class="text-left"
+              >¿Expectoración o flema amarilla o verdosa?</q-item-label
+            >
           </q-item-section>
           <q-item-section side>
             <q-toggle
@@ -110,8 +132,7 @@
         <q-item class="q-pr-xs" tag="label" v-ripple>
           <q-item-section>
             <q-item-label class="text-left">
-              ¿Contacto con persona(s) con un caso confirmado de
-              COVID-19?
+              ¿Contacto con persona(s) con un caso confirmado de COVID-19?
             </q-item-label>
           </q-item-section>
           <q-item-section side>
@@ -129,7 +150,9 @@
 
         <q-item class="q-pr-xs" tag="label" v-ripple>
           <q-item-section>
-            <q-item-label class="text-left">¿Estás tomando alguna medicación?</q-item-label>
+            <q-item-label class="text-left"
+              >¿Estás tomando alguna medicación?</q-item-label
+            >
             <!-- <q-item-label caption>Allow notification</q-item-label> -->
           </q-item-section>
           <q-item-section side>
@@ -190,6 +213,7 @@
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
 import { LocalStorage } from "quasar";
+
 const alerts = [
   {
     color: "negative",
@@ -272,7 +296,7 @@ export default {
       // console.log(this.dni.length);
       // console.log(this.telf.length);
       // console.log(this.area.length);
-      // console.log(typeof(this.area));
+      // console.log(typeof this.area);
       if (
         this.nombre.length > 0 &&
         this.dni.length > 0 &&
@@ -304,22 +328,23 @@ export default {
               color: "green-6",
               position: "top"
             });
+            this.reset();
           } else if (validacion == "01") {
             this.$q.notify({
               message: "Quédate en casa. Llama a tu jefe.",
               color: "red-6",
               position: "top"
             });
+            this.reset();
           }
           this.$router.push("/misregistros");
         } else {
           this.$q.notify({
-            message: "Debe aceptar los terminos y condiciones",
+            message: "Debe aceptar los términos y condiciones",
             color: "blue-6",
             position: "top"
           });
         }
-        this.reset();
         this.$q.loading.hide();
       } else {
         this.$q.notify({

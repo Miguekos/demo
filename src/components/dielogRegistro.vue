@@ -2,7 +2,7 @@
   <div class="full-width">
     <q-card class="bg-grey-4">
       <q-card-section>
-        <div class="text-center text-h6"><u>Agregar Usuario</u></div>
+        <div class="text-center text-h6"><u>Agregar usuario</u></div>
       </q-card-section>
 
       <q-separator />

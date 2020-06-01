@@ -3,10 +3,17 @@
     <q-list>
       <q-form @submit="onSubmit">
         <q-item-label header class="text-grey-8">
-          <q-item-label header class="text-center text-h6 q-pa-xs">Editar Perfil</q-item-label>
+          <q-item-label header class="text-center text-h6 q-pa-xs"
+            >Editar Perfil</q-item-label
+          >
           <q-separator spaced />
           <q-list>
-            <q-item @click="alert = true" clickable v-ripple class="justify-center">
+            <q-item
+              @click="alert = true"
+              clickable
+              v-ripple
+              class="justify-center"
+            >
               <q-avatar size="100px" font-size="52px">
                 <!-- <img src="https://cdn.quasar.dev/img/boy-avatar.png" /> -->
                 <img :src="urlImagen" />
@@ -72,7 +79,13 @@
             </q-item>
             <q-item class="justify-center">
               <q-item-section class="text-center text-bold">
-                <q-input dense color="red-5" filled v-model="pwd" label="Nuevo Password" />
+                <q-input
+                  dense
+                  color="red-5"
+                  filled
+                  v-model="pwd"
+                  label="Nuevo Password"
+                />
               </q-item-section>
             </q-item>
             <q-item class="justify-center">
@@ -89,7 +102,12 @@
     </q-list>
     <q-dialog v-model="alert">
       <q-card>
-        <q-uploader color="red-5" bordered :factory="factoryFn" style="max-width: 300px" />
+        <q-uploader
+          color="red-5"
+          bordered
+          :factory="factoryFn"
+          style="max-width: 300px"
+        />
 
         <!-- <q-card-actions align="right">
           <q-btn flat label="OK" color="primary" v-close-popup />
@@ -99,9 +117,10 @@
   </q-page>
 </template>
 <script>
-import { axiosInstance } from "boot/axios";
+import { axiosInstanceImagen } from "boot/axios";
 import { mapState, mapActions, mapGetters } from "vuex";
 import { LocalStorage } from "quasar";
+
 export default {
   computed: {
     ...mapGetters("users", ["getUserOne"]),
@@ -203,7 +222,7 @@ export default {
       // var imagefile = document.querySelector("#file");
       formData.append("file", file[0]);
       // console.log(formData);
-      axiosInstance
+      axiosInstanceImagen
         .post("/fileupload", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
@@ -226,7 +245,7 @@ export default {
     // console.log(this.$route.params.id);
     await this.callUserOne(this.$route.params.id);
     await this.ordenarCampos();
-    this.infoUrl = process.env.API_URL;
+    this.infoUrl = process.env.Imagen_URL;
   }
 };
 </script>

@@ -123,7 +123,7 @@ export default {
           link: "/detalles"
         },
         {
-          title: "Personal con sintomas",
+          title: "Personal con síntomas",
           caption: "Detalle",
           icon: "sentiment_very_dissatisfied",
           link: "/detallecs"
@@ -192,7 +192,7 @@ export default {
   created() {
     this.userdatil = LocalStorage.getAll().UserDetalle;
     this.role = LocalStorage.getAll().role;
-    this.infoUrl = process.env.API_URL;
+    this.infoUrl = process.env.Imagen_URL;
   }
 };
 </script>

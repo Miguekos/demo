@@ -299,7 +299,7 @@ export default {
         }
       } else {
         this.$q.notify({
-          message: "Debe aceptar los terminos y condiciones",
+          message: "Debe aceptar los términos y condiciones",
           color: "blue-6",
           position: "top"
         });

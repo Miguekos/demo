@@ -89,12 +89,23 @@
               color="red-6"
               type="submit"
               text-color="white"
-              label="Iniciar Sesion"
+              label="Iniciar Sesión"
             />
           </q-item-section>
         </q-item>
       </q-list>
+      <q-list class="q-pt-lg">
+        <q-item>
+          <q-item-section>
+            <q-item-label v-ripple:white @click="modalRecoverPass()"
+              >Olvistate tu contraseña</q-item-label
+            >
+          </q-item-section>
+          <q-item-section> </q-item-section>
+        </q-item>
+      </q-list>
     </form>
+    <q-dialog> </q-dialog>
   </div>
 </template>
 
@@ -130,7 +141,69 @@ export default {
     };
   },
   methods: {
-    ...mapActions("auth", ["login"]),
+    ...mapActions("auth", ["login", "recuperar"]),
+    modalRecoverPass() {
+      this.$q
+        .dialog({
+          title: "Recuperar contraeña",
+          message:
+            "¡Un correo sera enviado con la contraseña generada, no olvides verificar tu bandeja de spam!",
+          prompt: {
+            model: "",
+            isValid: val => val.length > 2, // << here is the magic
+            type: "text", // optional
+            label: "Correo",
+            outlined: true
+          },
+          color: "red-5",
+          cancel: true,
+          persistent: true,
+          transitionShow: "slide-down",
+          transitionHide: "slide-up"
+        })
+        .onOk(async data => {
+          console.log(">>>> OK, received", data);
+          const res = await this.recuperar(data);
+          console.log(res);
+          if (res.codRes == "00") {
+            this.$q.notify({
+              // progress: true,
+              message: "¡Correo enviado!",
+              // icon: "favorite_border",
+              icon: "email",
+              color: "white",
+              textColor: "green-5",
+              position: "top"
+            });
+          } else if (res.codRes == "01") {
+            this.$q.notify({
+              // progress: true,
+              message: "¡Correo no existe!",
+              // icon: "favorite_border",
+              icon: "unsubscribe",
+              color: "white",
+              textColor: "blue-5",
+              position: "top"
+            });
+          } else {
+            this.$q.notify({
+              // progress: true,
+              message: "¡Error controlado!",
+              // icon: "favorite_border",
+              icon: "cancel_presentation",
+              color: "white",
+              textColor: "red-5",
+              position: "top"
+            });
+          }
+        })
+        .onCancel(() => {
+          // console.log('>>>> Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
+    },
     submitForm() {
       this.loadlogin = true;
       this.$refs.email.validate();
@@ -147,8 +220,8 @@ export default {
               LocalStorage.set("loggin", true);
               LocalStorage.set("role", resp.role);
               LocalStorage.set("idUser", resp.id.$oid);
-              this.$store.commit('auth/setAuth', true)
-              this.$store.commit('auth/setRole', resp.role)
+              this.$store.commit("auth/setAuth", true);
+              this.$store.commit("auth/setRole", resp.role);
               const userDetalle = {
                 name: resp.name,
                 email: resp.email
@@ -170,7 +243,9 @@ export default {
               // console.log("Email o Contraseña incorrecta");
               this.$q.notify({
                 message: "Email o Contraseña incorrecta",
-                color: "red-5"
+                color: "white",
+                textColor: "amber-5",
+                position: "top"
               });
               this.loadlogin = false;
             }
@@ -178,6 +253,12 @@ export default {
           .catch(err => {
             // console.log(err);
             this.loadlogin = false;
+            this.$q.notify({
+              message: "Error en la red",
+              color: "white",
+              textColor: "red-5",
+              position: "top"
+            });
           });
         // console.log("login the user");
       }

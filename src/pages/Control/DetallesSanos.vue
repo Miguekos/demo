@@ -1,10 +1,23 @@
 <template>
   <q-page padding>
     <q-list>
-      <q-item @click="exportTable()" v-if="!$q.platform.is.cordova" dense clickable v-ripple>
-        <q-item-section class="text-red text-bold" side top left></q-item-section>
+      <q-item
+        @click="exportTable()"
+        v-if="!$q.platform.is.cordova"
+        dense
+        clickable
+        v-ripple
+      >
+        <q-item-section
+          class="text-red text-bold"
+          side
+          top
+          left
+        ></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6">Personal sanos</q-item-label>
+          <q-item-label class="text-center text-h6"
+            >Personal sanos
+          </q-item-label>
           <q-separator color="green-4" inset />
         </q-item-section>
         <q-item-section class="text-green text-bold" side top right>
@@ -12,9 +25,16 @@
         </q-item-section>
       </q-item>
       <q-item dense v-else class="native-mobile-only" clickable v-ripple>
-        <q-item-section class="text-red text-bold" side top left></q-item-section>
+        <q-item-section
+          class="text-red text-bold"
+          side
+          top
+          left
+        ></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6">Personal sanos</q-item-label>
+          <q-item-label class="text-center text-h6"
+            >Personal sanos
+          </q-item-label>
           <q-separator color="green-4" inset />
         </q-item-section>
         <q-item-section class="text-green text-bold" side top right>
@@ -38,7 +58,8 @@
       </q-item>
     </q-list>
 
-    <!-- {{ getClientesS }} -->
+    <!--     {{ getClientesS }}-->
+    <!--    {{ columnsexport }}-->
     <q-table
       hide-bottom
       hide-header
@@ -46,6 +67,7 @@
       :data="getClientesS"
       :columns="columns"
       row-key="created_at.$date"
+      :pagination.sync="pagination"
     >
       <!-- <template v-slot:top-right>
         <q-btn
@@ -67,7 +89,9 @@
               </q-item-label>
             </q-item-section>
           </q-td>
-          <q-td key="created_at.$date" v-ripple:white :props="props">{{ formatDate(props.row.created_at.$date) }}</q-td>
+          <q-td key="created_at.$date" v-ripple:white :props="props"
+            >{{ formatDate(props.row.created_at.$date) }}
+          </q-td>
         </q-tr>
       </template>
     </q-table>
@@ -135,23 +159,14 @@ export default {
   },
   data() {
     return {
-      columnsexport: [
-        {
-          name: "nombre",
-          label: "Nombre",
-          field: row => row.nombre
-        },
-        {
-          name: "correo",
-          label: "Correo",
-          field: "correo"
-        },
-        {
-          name: "created_at.$date",
-          label: "fecha",
-          field: "created_at.$date"
-        }
-      ],
+      pagination: {
+        sortBy: "created_at.$date",
+        descending: false,
+        page: 1,
+        rowsPerPage: 0
+        // rowsNumber: xx if getting data from a server
+      },
+      columnsexport: [],
       columns: [
         {
           name: "nombre",
@@ -177,6 +192,27 @@ export default {
   },
   methods: {
     ...mapActions("client", ["callClienteS"]),
+    crearDataExport() {
+      const arraysJson = this.getClientesS[0];
+      let keys = [];
+      let values = [];
+      keys.push(Object.keys(arraysJson));
+      // console.log(keys[0].length);
+      // console.log(typeof keys[0].length);
+
+      for (let index = 0; index < keys[0].length; index++) {
+        // console.log(index);
+        const element = keys[0][index];
+        values.push({
+          name: element,
+          label: element,
+          field: element
+        });
+        // console.log(element);
+      }
+      // console.log(values);
+      this.columnsexport = values;
+    },
     exportTable() {
       // naive encoding to csv format
       const content = [this.columnsexport.map(col => wrapCsvValue(col.label))]
@@ -232,6 +268,7 @@ export default {
     //   backgroundColor: "grey-4"
     // });
     await this.callClienteS();
+    await this.crearDataExport();
     // this.dataexport = this.getClientesS();
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);
