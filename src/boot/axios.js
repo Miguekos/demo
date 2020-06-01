@@ -1,4 +1,5 @@
 import axios from "axios";
+
 axios.defaults.withCredentials = true;
 // import qs from "qs";
 // import proxy from "http-proxy-middleware";
@@ -25,9 +26,9 @@ const axiosInstance = axios.create({
   // baseURL: "http://192.168.0.21:9876"
   // baseURL: "https://api.apps.com.pe"
   // baseURL: "http://192.168.0.33:9876"
-  baseURL: `${process.env.API_URL}`
+  baseURL: `${process.env.API_URL}`,
+  headers: { Authorization: `${process.env.AUTH_BASIC}` }
 });
-
 
 const axiosInstanceImagen = axios.create({
   // paramsSerializer: params => {
@@ -42,9 +43,9 @@ const axiosInstanceImagen = axios.create({
   // baseURL: "http://192.168.0.21:9876"
   // baseURL: "https://api.apps.com.pe"
   // baseURL: "http://192.168.0.33:9876"
-  baseURL: `${process.env.Imagen_URL}`
+  baseURL: `${process.env.Imagen_URL}`,
+  headers: { Authorization: `${process.env.AUTH_BASIC}` }
 });
-
 
 export default ({ Vue }) => {
   Vue.prototype.$axios = axiosInstance;
