@@ -4,7 +4,7 @@
       <q-item>
         <q-item-section avatar>
           <q-avatar>
-            <img :src="`${getDialogDetalleData.url}${getDialogDetalleData.profile}`" />
+            <img :src="urlImagen" />
           </q-avatar>
         </q-item-section>
 
@@ -28,36 +28,36 @@
         <q-list bordered separator>
           <q-item clickable v-ripple>
             <q-item-section>
-              <q-item-label class="text-center">¿Sensación de alza térmica o fiebre?</q-item-label>
+              <q-item-label class="text-center"
+                >¿Sensación de alza térmica o fiebre?</q-item-label
+              >
               <q-item-label>
                 <b class="text-uppercase">
-                  {{
-                  formatearResult(getDialogDetalleData.notif1)
-                  }}
+                  {{ formatearResult(getDialogDetalleData.notif1) }}
                 </b>
               </q-item-label>
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
             <q-item-section>
-              <q-item-label class="text-center">¿Tos, estornudos o dificultad para respirar?</q-item-label>
+              <q-item-label class="text-center"
+                >¿Tos, estornudos o dificultad para respirar?</q-item-label
+              >
               <q-item-label>
                 <b class="text-uppercase">
-                  {{
-                  formatearResult(getDialogDetalleData.notif2)
-                  }}
+                  {{ formatearResult(getDialogDetalleData.notif2) }}
                 </b>
               </q-item-label>
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
             <q-item-section>
-              <q-item-label class="text-center">¿Expectoración o flema amarilla o verdosa?</q-item-label>
+              <q-item-label class="text-center"
+                >¿Expectoración o flema amarilla o verdosa?</q-item-label
+              >
               <q-item-label>
                 <b class="text-uppercase">
-                  {{
-                  formatearResult(getDialogDetalleData.notif3)
-                  }}
+                  {{ formatearResult(getDialogDetalleData.notif3) }}
                 </b>
               </q-item-label>
             </q-item-section>
@@ -65,26 +65,23 @@
           <q-item clickable v-ripple>
             <q-item-section>
               <q-item-label class="text-center">
-                ¿Contacto con persona(s) con un caso confirmado
-                deCOVID-19?
+                ¿Contacto con persona(s) con un caso confirmado deCOVID-19?
               </q-item-label>
               <q-item-label>
                 <b class="text-uppercase">
-                  {{
-                  formatearResult(getDialogDetalleData.notif4)
-                  }}
+                  {{ formatearResult(getDialogDetalleData.notif4) }}
                 </b>
               </q-item-label>
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
             <q-item-section>
-              <q-item-label class="text-center">¿Estás tomando alguna medicación?</q-item-label>
+              <q-item-label class="text-center"
+                >¿Estás tomando alguna medicación?</q-item-label
+              >
               <q-item-label>
                 <b class="text-uppercase">
-                  {{
-                  formatearResult(getDialogDetalleData.notif5)
-                  }}
+                  {{ formatearResult(getDialogDetalleData.notif5) }}
                 </b>
               </q-item-label>
             </q-item-section>
@@ -115,11 +112,14 @@
 import { mapGetters, mapActions, mapState } from "vuex";
 export default {
   computed: {
-    ...mapGetters("client", ["getDialogDetalleData"])
+    ...mapGetters("client", ["getDialogDetalleData"]),
+    urlImagen() {
+      return `${this.infoUrl}/uploads/${this.getDialogDetalleData.profile}`;
+    }
   },
   data() {
     return {
-      Urlinfo: "",
+        infoUrl: "",
       basic: false,
       fixed: false,
       lorem: "Lorem"
@@ -141,7 +141,7 @@ export default {
     }
   },
   mounted() {
-    this.Urlinfo = process.env.API_URL;
+    this.infoUrl = process.env.Imagen_URL;
   }
 };
 </script>
