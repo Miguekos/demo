@@ -89,7 +89,7 @@ export const Fechas = {
     return formattedString;
   },
   Custom(arg) {
-    let formattedString = date.formatDate(arg, "ddd MM - HH:mm", {
+    let formattedString = date.formatDate(arg, "ddd DD - HH:mm", {
       days: [
         "Domingo",
         "Lunes",
