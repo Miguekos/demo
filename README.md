@@ -20,3 +20,11 @@ quasar build
 
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+
+
+### Updates ###
+1.- Camara Nativa \
+2.- Guardar en app \
+3.- Notificar diariamente las personas que no marquen su temp. \
+4.- Reporte por registro \
+5.- Modificar reportes por personal \

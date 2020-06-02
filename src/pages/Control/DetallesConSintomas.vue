@@ -156,7 +156,74 @@ export default {
         rowsPerPage: 0
         // rowsNumber: xx if getting data from a server
       },
-      columnsexport: [],
+      columnsexport: [
+        {
+          name: "notif1",
+          label: "¿Sensación de alza térmica o fiebre?",
+          field: row => (row.notif1 ? "Si" : "No")
+        },
+        {
+          name: "notif2",
+          label: "¿Tos, estornudos o dificultad para respirar?",
+          field: row => (row.notif2 ? "Si" : "No")
+        },
+        {
+          name: "notif3",
+          label: "¿Expectoración o flema amarilla o verdosa?",
+          field: row => (row.notif3 ? "Si" : "No")
+        },
+        {
+          name: "notif4",
+          label: "¿Contacto con persona(s) con un caso confirmado de COVID-19?",
+          field: row => (row.notif4 ? "Si" : "No")
+        },
+        {
+          name: "notif5",
+          label: "¿Estás tomando alguna medicación?",
+          field: row => (row.notif5 ? "Si" : "No")
+        },
+        {
+          name: "estados",
+          label: "Estados",
+          field: row => (row.estados === "00" ? "Sano" : "Con Sintomas")
+        },
+        {
+          name: "nombre",
+          label: "Nombre",
+          field: row => row.nombre
+        },
+        {
+          name: "dni",
+          label: "DNI",
+          field: "dni"
+        },
+        {
+          name: "telf",
+          label: "Celular",
+          field: "telf"
+        },
+        {
+          name: "area",
+          label: "Area",
+          field: "area"
+        },
+        {
+          name: "temp",
+          label: "Temperatura",
+          field: "temp"
+        },
+        {
+          name: "correo",
+          label: "Correo",
+          field: "correo"
+        },
+        {
+          name: "created_at.$date",
+          label: "Fecha de Registro",
+          field: row => row.created_at.$date,
+          format: val => `${this.formatDate(val)}`
+        }
+      ],
       columns: [
         {
           name: "nombre",
@@ -257,7 +324,7 @@ export default {
     //   backgroundColor: "grey-4"
     // });
     await this.callClienteCS();
-    await this.crearDataExport();
+    // await this.crearDataExport();
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");
