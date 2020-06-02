@@ -108,9 +108,13 @@
       <q-card>
         <q-uploader
           color="red-5"
+          square
+          flat
           bordered
+          accept=".jpg, image/*"
           :factory="factoryFn"
           style="max-width: 300px"
+          @rejected="onRejected"
         />
 
         <!-- <q-card-actions align="right">
@@ -154,6 +158,14 @@ export default {
   },
   methods: {
     ...mapActions("users", ["callUserOne", "updateUser", "updateImage"]),
+    onRejected(rejectedEntries) {
+      // Notify plugin needs to be installed
+      // https://quasar.dev/quasar-plugins/notify#Installation
+      this.$q.notify({
+        type: "negative",
+        message: `el archivo debe ser una iamgen`
+      });
+    },
     Salir() {
       this.$router.push("/");
     },
@@ -220,13 +232,29 @@ export default {
         ...this.getUserOne
       };
     },
+    factoryFnNew(file) {
+      return new Promise((resolve, reject) => {
+        // Retrieve JWT token from your store.
+        // const token = "myToken";
+        var formData = new FormData();
+        // var imagefile = document.querySelector("#file");
+        formData.append("file", file[0]);
+        console.log(formData);
+        resolve({
+          url: "http://192.168.0.34:9876/fileserver/fileupload",
+          method: "POST",
+          headers: [{ name: "Content-Type", value: "multipart/form-data" }],
+          formData
+        });
+      });
+    },
     factoryFn(file) {
       // console.log(file);
       let total;
       var formData = new FormData();
       // var imagefile = document.querySelector("#file");
       formData.append("file", file[0]);
-      // console.log(formData);
+      console.log(formData);
       axiosInstanceImagen
         .post("/fileupload", formData, {
           headers: {
@@ -234,15 +262,14 @@ export default {
           }
         })
         .then(resp => {
-          // console.log(resp.data);
+          console.log(resp.data);
           total = resp.data;
-          this.updateFoto(total);
+          // this.updateFoto(total);
         })
         .catch(err => {
           // console.log(err);
           total = err;
         });
-      return total;
     }
   },
   async created() {
