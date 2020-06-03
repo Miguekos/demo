@@ -1,8 +1,8 @@
 {
-  "name": "formq",
+  "name": "cuidappte",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Cuidappte",
+  "description": "Control Intranet",
+  "productName": "CuidAPPte",
   "cordovaId": "org.cordova.cuidappte.app",
   "capacitorId": "",
   "author": "Miguekos <miguel.rodriguez@acceso.com.pe>",

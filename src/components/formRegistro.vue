@@ -136,7 +136,7 @@ export default {
               textColor: "white",
               icon: "cloud_done",
               position: "top-right",
-              message: `Cliente ID: ${resp}`
+              message: `!Se registro satisfactoriamente el usuario¡`
             });
             this.callUser();
             this.loadBoton = false;

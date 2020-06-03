@@ -124,8 +124,8 @@ module.exports = function(/* ctx */) {
       workboxPluginMode: "GenerateSW", // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: "Cuidappte",
-        short_name: "Cuidappte",
+        name: "CuidAPPte",
+        short_name: "CuidAPPte",
         description: "A Quasar Framework app",
         display: "standalone",
         orientation: "portrait",

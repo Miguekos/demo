@@ -30,6 +30,7 @@
       :data="getUsers"
       :columns="columns"
       row-key="created_at.$date"
+      :pagination="pagination"
     >
       <template v-slot:body="props">
         <q-tr :props="props" clickable>
@@ -111,6 +112,13 @@ export default {
   },
   data() {
     return {
+      pagination: {
+        sortBy: "created_at.$date",
+        descending: false,
+        page: 1,
+        rowsPerPage: 0
+        // rowsNumber: xx if getting data from a server
+      },
       dialogRegistro: false,
       fabLeft: true,
       fabCenter: true,
