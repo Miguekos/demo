@@ -117,7 +117,7 @@ export default {
           link: "/registro"
         },
         {
-          title: "Personal sanos",
+          title: "Personal sano",
           caption: "Detalle",
           icon: "sentiment_satisfied_alt",
           link: "/detalles"

@@ -19,7 +19,7 @@ export default {
     loading: false,
     series: [
       {
-        name: "Personal sanos",
+        name: "Personal sano",
         // data: this.$store.state.client.ClienteReport.graficSeriaS
         data: [0, 0, 0, 0, 0, 0]
       },

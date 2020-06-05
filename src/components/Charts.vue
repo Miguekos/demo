@@ -25,7 +25,7 @@ export default {
         }
       },
       legend: {
-        data: ["Personal sanos", "Personal con síntomas"]
+        data: ["Personal sano", "Personal con síntomas"]
       },
       color: ["#f44336", "#3f51b5"],
       grid: {
@@ -56,7 +56,7 @@ export default {
           data: [0, 0, 0, 0, 0, 0]
         },
         {
-          name: "Personal sanos",
+          name: "Personal sano",
           type: "bar",
           stack: "Total",
           label: {
