@@ -312,7 +312,7 @@ export default {
       this.$q
         .dialog({
           title: "Temperatura",
-          message: "¿Cunta esta actualmente?",
+          message: "¿Cuál es tu temperatura?",
           prompt: {
             model: "",
             type: "number" // optional
