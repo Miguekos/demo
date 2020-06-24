@@ -28,3 +28,7 @@ See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 3.- Notificar diariamente las personas que no marquen su temp. \
 4.- Reporte por registro \
 5.- Modificar reportes por personal \
+
+
+docker build -t cuidateappg4s:1.0 .
+docker-compose up -d

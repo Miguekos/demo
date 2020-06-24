@@ -2,7 +2,7 @@
 version: "2"
 services:
   www:
-    image: quasardemo:1.0
+    image: cuidateappg4s:1.0
     restart: always
     expose:
       - "80"
@@ -10,8 +10,8 @@ services:
       # - /Users/kbs/git/peladonerd/varios/1/www:/usr/share/nginx/html:ro
       # - //d/storeDocker/html:/usr/share/nginx/html:ro
     environment:
-      - VIRTUAL_HOST=demo.apps.com.pe,www.demo.apps.com.pe
-      - LETSENCRYPT_HOST=demo.apps.com.pe,www.demo.apps.com.pe
+      - VIRTUAL_HOST=g4s.apps.com.pe,www.g4s.apps.com.pe
+      - LETSENCRYPT_HOST=g4s.apps.com.pe,www.g4s.apps.com.pe
       - LETSENCRYPT_EMAIL=kevin.silva.095@gmail.com
 networks:
   default:
