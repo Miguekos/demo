@@ -5,6 +5,7 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+
 export default {
   name: "App",
   methods: {
@@ -13,6 +14,7 @@ export default {
   async created() {
     // console.log("App");
     this.$q.addressbarColor.set("#FFFFFF");
+    console.log("CuidAPPte G4S");
     // await this.callClienteReport();
     // #004d40
   }
