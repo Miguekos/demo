@@ -13,6 +13,7 @@ export default {
   async created() {
     // console.log("App");
     this.$q.addressbarColor.set("#FFFFFF");
+    console.log("CuidAPPte TCOMP")
     // await this.callClienteReport();
     // #004d40
   }
