@@ -14,7 +14,7 @@ export default {
   async created() {
     // console.log("App");
     this.$q.addressbarColor.set("#FFFFFF");
-    console.log("CuidAPPte G4S");
+    console.log("CuidAPPte FRIOAEREO");
     // await this.callClienteReport();
     // #004d40
   }
