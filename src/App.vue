@@ -1,12 +1,23 @@
 <template>
-  <div id="q-app">
+  <div id="q-app" v-bind:style="bgc">
     <router-view />
+    <input type="text" v-on:input="bgc.backgroundColor = $event.target.value" />
   </div>
 </template>
 <script>
 import { mapActions } from "vuex";
+
 export default {
   name: "App",
+  data() {
+    return {
+      description:
+        "Type any colour name, rgb, hex or hsl in the input below and see what happens!",
+      bgc: {
+        backgroundColor: "#111"
+      }
+    };
+  },
   methods: {
     // ...mapActions("client", ["callClienteReport"])
   },

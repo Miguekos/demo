@@ -1,4 +1,5 @@
-import { axiosInstance } from "boot/axios";
+import {axiosInstance} from "boot/axios";
+
 const state = {
   Users: [],
   UsersOne: "",
@@ -18,21 +19,21 @@ const mutations = {
 };
 
 const actions = {
-  async callUser({ commit }) {
+  async callUser({commit}) {
     // console.log("callUser");
     const response = await axiosInstance.get(`/user/users`);
     // console.log(response.data);
     commit("setUsers", response.data);
     // return response.data;
   },
-  async callUserOne({ commit }, payload) {
+  async callUserOne({commit}, payload) {
     // console.log("callUserOne");
     const response = await axiosInstance.get(`/user/${payload}`);
     // console.log(response.data);
     commit("setUsersOne", response.data);
     // return response.data;
   },
-  async addUser({ commit }, payload) {
+  async addUser({commit}, payload) {
     // console.log("addUser");
     // console.log(payload);
     const response = await axiosInstance.post(`/user/add`, payload);
@@ -40,7 +41,7 @@ const actions = {
     // commit("setUsers", response.data);
     return response.data;
   },
-  async updateUser({ commit }, payload) {
+  async updateUser({commit}, payload) {
     // console.log("updateUser");
     // console.log(payload);
     const response = await axiosInstance.put(`/user/update`, payload);
@@ -48,7 +49,7 @@ const actions = {
     // commit("setUsers", response.data);
     return response.data;
   },
-  async deleteUser({ commit }, payload) {
+  async deleteUser({commit}, payload) {
     // console.log("deleteUser");
     // console.log(payload);
     const response = await axiosInstance.delete(`/user/delete/${payload}`);
@@ -56,7 +57,7 @@ const actions = {
     // commit("setUsers", response.data);
     return response.data;
   },
-  async updateTemp({ commit }, payload) {
+  async updateTemp({commit}, payload) {
     // console.log("updateUser");
     // console.log(payload);
     const response = await axiosInstance.put(`/user/temp`, payload);
@@ -64,7 +65,7 @@ const actions = {
     // commit("setUsers", response.data);
     return response.data;
   },
-  async updateImage({ commit }, payload) {
+  async updateImage({commit}, payload) {
     // console.log("updateUser");
     // console.log(payload);
     const response = await axiosInstance.put(`/user/updateImage`, payload);
@@ -72,7 +73,7 @@ const actions = {
     // commit("setUsers", response.data);
     return response.data;
   },
-  setSearch({ commit }, payload) {
+  setSearch({commit}, payload) {
     commit("setSearch", payload);
   }
 };
@@ -81,7 +82,7 @@ const getters = {
   taskFiltered: state => {
     let taskFiltered = {};
     if (state.search) {
-      Object.keys(state.Users).forEach(function(key) {
+      Object.keys(state.Users).forEach(function (key) {
         let task = state.Users[key],
           taskNameLowerCase = task.name.toLowerCase(),
           searchLowerCase = state.search.toLowerCase();
@@ -100,7 +101,7 @@ const getters = {
     // console.log("state.Users", state.Users);
     // return state.Users;
     // let tasks = {};
-    Object.keys(taskFiltered).forEach(function(key) {
+    Object.keys(taskFiltered).forEach(function (key) {
       let task = taskFiltered[key];
       // console.log(task);
       if (!task.completed) {

@@ -118,6 +118,7 @@
         </q-card-actions>-->
       </q-card>
     </q-dialog>
+    {{ $data }}
   </q-page>
 </template>
 <script>
@@ -181,6 +182,8 @@ export default {
         });
     },
     async updateFoto(arg) {
+      // console.log("NOmbre de la imagen", arg);
+      this.usersDetalle.profile = arg;
       let idUser = LocalStorage.getAll().idUser;
       let jsonUpdate = {
         profile: arg,
@@ -197,6 +200,7 @@ export default {
             color: "green-5"
           });
           this.callUserOne(this.$route.params.id);
+          // await this.ordenarCampos();
           if (idUser == this.$route.params.id) {
             LocalStorage.remove("UserDetalle");
             setTimeout(() => {

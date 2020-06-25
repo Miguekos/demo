@@ -16,19 +16,51 @@
           <b class="text-green">C</b>uid<b class="text-red">APP</b>te
         </q-toolbar-title>
 
-        <div class="text-black">v{{ $q.version }}</div>
+        <div v-if="role == 2" class="text-black">v{{ $q.version }}</div>
+        <div @click="(drawerRight = !drawerRight), actualizar()" v-if="role == 1" class="text-black q-pr-xs">
+          <q-icon size="sm" name="settings"></q-icon>
+        </div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
+    <q-drawer
+      side="right"
+      v-model="drawerRight"
+      show-if-above
+      bordered
+      :width="200"
+      :breakpoint="500"
+      content-class="bg-grey-3"
+    >
+      <q-scroll-area class="fit">
+        <div class="q-pa-sm">
+          <div v-for="n in 50" :key="n">Drawer {{ n }} / 50</div>
+        </div>
+      </q-scroll-area>
+    </q-drawer>
+
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      content-class="bg-grey-1"
+    >
       <q-list>
         <q-item-label header class="text-grey-8">
-          <q-item-label header class="text-center text-h6 q-pa-xs">Perfil</q-item-label>
-          <q-separator spaced />
+          <q-item-label header class="text-center text-h6 q-pa-xs"
+          >Perfil
+          </q-item-label
+          >
+          <q-separator spaced/>
           <q-list>
-            <q-item @click="detalleCliente()" clickable v-ripple class="justify-center">
+            <q-item
+              @click="detalleCliente()"
+              clickable
+              v-ripple
+              class="justify-center"
+            >
               <q-avatar size="100px" font-size="52px">
-                <img :src="urlImagen" />
+                <img :src="urlImagen"/>
               </q-avatar>
             </q-item>
             <q-item clickable v-ripple class="justify-center">
@@ -53,7 +85,7 @@
         />
         <q-item clickable tag="a" @click="Logout()">
           <q-item-section avatar>
-            <q-icon name="logout" />
+            <q-icon name="logout"/>
           </q-item-section>
 
           <q-item-section>
@@ -65,134 +97,135 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
     <q-dialog v-model="dialogDetalle">
-      <detalleDeLosUsuarios />
+      <detalleDeLosUsuarios/>
     </q-dialog>
   </q-layout>
 </template>
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
-import EssentialLink from "components/EssentialLink";
-import detalleDeLosUsuarios from "components/DetalleGeneral";
-import { LocalStorage } from "quasar";
+    import {mapGetters, mapActions, mapState} from "vuex";
+    import EssentialLink from "components/EssentialLink";
+    import detalleDeLosUsuarios from "components/DetalleGeneral";
+    import {LocalStorage} from "quasar";
 
-export default {
-  name: "MainLayout",
-  components: {
-    EssentialLink,
-    detalleDeLosUsuarios
-  },
-  computed: {
-    // ...mapGetters('client',["dialogDetalle"]),
-    ...mapState("client", ["dialogDetalle"]),
-    urlImagen() {
-      return `${this.infoUrl}/uploads/${this.userdatil.profile}`;
-    }
-  },
-  data() {
-    return {
-      infoUrl: "",
-      role: null,
-      userdatil: {},
-      leftDrawerOpen: false,
-      essentialLinks: [
-        {
-          title: "Reportes",
-          caption: "Estadísticas",
-          icon: "assessment",
-          link: "/dashboard"
+    export default {
+        name: "MainLayout",
+        components: {
+            EssentialLink,
+            detalleDeLosUsuarios
         },
-        {
-          title: "Mis registros",
-          caption: "Evaluaciones",
-          icon: "scatter_plot",
-          link: "/misregistros"
+        computed: {
+            // ...mapGetters('client',["dialogDetalle"]),
+            ...mapState("client", ["dialogDetalle"]),
+            urlImagen() {
+                return `${this.infoUrl}/uploads/${this.userdatil.profile}`;
+            }
         },
-        {
-          title: "Evalúate",
-          caption: "Evaluación",
-          icon: "local_hospital",
-          link: "/registro"
+        data() {
+            return {
+                infoUrl: "",
+                role: null,
+                userdatil: {},
+                drawerRight: false,
+                leftDrawerOpen: false,
+                essentialLinks: [
+                    {
+                        title: "Reportes",
+                        caption: "Estadísticas",
+                        icon: "assessment",
+                        link: "/dashboard"
+                    },
+                    {
+                        title: "Mis registros",
+                        caption: "Evaluaciones",
+                        icon: "scatter_plot",
+                        link: "/misregistros"
+                    },
+                    {
+                        title: "Evalúate",
+                        caption: "Evaluación",
+                        icon: "local_hospital",
+                        link: "/registro"
+                    },
+                    {
+                        title: "Personal sano",
+                        caption: "Detalle",
+                        icon: "sentiment_satisfied_alt",
+                        link: "/detalles"
+                    },
+                    {
+                        title: "Personal con síntomas",
+                        caption: "Detalle",
+                        icon: "sentiment_very_dissatisfied",
+                        link: "/detallecs"
+                    },
+                    {
+                        title: "Usuarios",
+                        caption: "Administrar",
+                        icon: "group",
+                        link: "/usuarios"
+                    }
+                ],
+                essentialLinksUser: [
+                    {
+                        title: "Inicio",
+                        caption: "Inicio",
+                        icon: "dashboard",
+                        link: "/"
+                    },
+                    {
+                        title: "Mis registros",
+                        caption: "Evaluaciones",
+                        icon: "scatter_plot",
+                        link: "/misregistros"
+                    },
+                    {
+                        title: "Evalúate",
+                        caption: "Evaluación",
+                        icon: "local_hospital",
+                        link: "/registro"
+                    }
+                ]
+            };
         },
-        {
-          title: "Personal sano",
-          caption: "Detalle",
-          icon: "sentiment_satisfied_alt",
-          link: "/detalles"
+        methods: {
+            actualizar() {
+                this.userdatil = LocalStorage.getAll().UserDetalle;
+                // console.log(this.userdatil);
+                this.role = LocalStorage.getAll().role;
+            },
+            detalleCliente(arg) {
+                const idUser = LocalStorage.getAll().idUser;
+                // console.log(idUser);
+                this.$router.push(`/profile/${idUser}`);
+            },
+            home() {
+                this.$router.push(`/`);
+            },
+            Logout() {
+                this.$q.loading.show();
+                LocalStorage.clear();
+                // setTimeout(() => {
+                this.$router.push("/auth");
+                this.$q.notify({
+                    // progress: true,
+                    message: "Regresa pronto",
+                    // icon: "favorite_border",
+                    icon: "favorite",
+                    color: "white",
+                    textColor: "red-5",
+                    position: "top"
+                });
+                this.$q.loading.hide();
+                // }, 2000);
+            }
         },
-        {
-          title: "Personal con síntomas",
-          caption: "Detalle",
-          icon: "sentiment_very_dissatisfied",
-          link: "/detallecs"
-        },
-        {
-          title: "Usuarios",
-          caption: "Administrar",
-          icon: "group",
-          link: "/usuarios"
+        created() {
+            this.userdatil = LocalStorage.getAll().UserDetalle;
+            this.role = LocalStorage.getAll().role;
+            this.infoUrl = process.env.Imagen_URL;
         }
-      ],
-      essentialLinksUser: [
-        {
-          title: "Inicio",
-          caption: "Inicio",
-          icon: "dashboard",
-          link: "/"
-        },
-        {
-          title: "Mis registros",
-          caption: "Evaluaciones",
-          icon: "scatter_plot",
-          link: "/misregistros"
-        },
-        {
-          title: "Evalúate",
-          caption: "Evaluación",
-          icon: "local_hospital",
-          link: "/registro"
-        }
-      ]
     };
-  },
-  methods: {
-    actualizar() {
-      this.userdatil = LocalStorage.getAll().UserDetalle;
-      // console.log(this.userdatil);
-      this.role = LocalStorage.getAll().role;
-    },
-    detalleCliente(arg) {
-      const idUser = LocalStorage.getAll().idUser;
-      // console.log(idUser);
-      this.$router.push(`/profile/${idUser}`);
-    },
-    home() {
-      this.$router.push(`/`);
-    },
-    Logout() {
-      this.$q.loading.show();
-      LocalStorage.clear();
-      // setTimeout(() => {
-      this.$router.push("/auth");
-      this.$q.notify({
-        // progress: true,
-        message: "Regresa pronto",
-        // icon: "favorite_border",
-        icon: "favorite",
-        color: "white",
-        textColor: "red-5",
-        position: "top"
-      });
-      this.$q.loading.hide();
-      // }, 2000);
-    }
-  },
-  created() {
-    this.userdatil = LocalStorage.getAll().UserDetalle;
-    this.role = LocalStorage.getAll().role;
-    this.infoUrl = process.env.Imagen_URL;
-  }
-};
 </script>
