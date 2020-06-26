@@ -1,17 +1,20 @@
 # docker-compose.yml
 version: "2"
 services:
-  www:
-    image: cuidateappg4s:1.0
+  cuidateappfrioaereo:
+    #    image: cuidateappfrioaereo:1.0
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
     expose:
       - "80"
-    # volumes:
+      # volumes:
       # - /Users/kbs/git/peladonerd/varios/1/www:/usr/share/nginx/html:ro
       # - //d/storeDocker/html:/usr/share/nginx/html:ro
     environment:
-      - VIRTUAL_HOST=g4s.apps.com.pe,www.g4s.apps.com.pe
-      - LETSENCRYPT_HOST=g4s.apps.com.pe,www.g4s.apps.com.pe
+      - VIRTUAL_HOST=frioaereo.apps.com.pe,www.frioaereo.apps.com.pe
+      - LETSENCRYPT_HOST=frioaereo.apps.com.pe,www.frioaereo.apps.com.pe
       - LETSENCRYPT_EMAIL=kevin.silva.095@gmail.com
 networks:
   default:
