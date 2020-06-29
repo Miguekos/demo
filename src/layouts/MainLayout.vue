@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHr LpR lFf">
     <q-header>
       <q-toolbar class="bg-white">
         <q-btn
@@ -12,14 +12,24 @@
           @click="(leftDrawerOpen = !leftDrawerOpen), actualizar()"
         />
 
-        <q-toolbar-title @click="home()" class="text-black">
-          <b class="text-green">C</b>uid<b class="text-red">APP</b>te
+        <q-toolbar-title class="text-black">
+          <span v-ripple:white class="cursor-pointer" @click="home()">
+            <b class="text-green">C</b>uid<b class="text-red">APP</b>te
+          </span>
         </q-toolbar-title>
 
         <div v-if="role == 2" class="text-black">v{{ $q.version }}</div>
-        <div @click="(drawerRight = !drawerRight), actualizar()" v-if="role == 1" class="text-black q-pr-xs">
-          <q-icon size="sm" name="settings"></q-icon>
-        </div>
+        <q-btn
+          v-if="role == 1"
+          flat
+          dense
+          round
+          size="sm"
+          color="black"
+          icon="settings"
+          aria-label="Menu"
+          @click="(drawerRight = !drawerRight), actualizar()"
+        />
       </q-toolbar>
     </q-header>
 
@@ -28,15 +38,39 @@
       v-model="drawerRight"
       show-if-above
       bordered
-      :width="200"
-      :breakpoint="500"
-      content-class="bg-grey-3"
+      content-class="bg-grey-1"
     >
-      <q-scroll-area class="fit">
-        <div class="q-pa-sm">
-          <div v-for="n in 50" :key="n">Drawer {{ n }} / 50</div>
-        </div>
-      </q-scroll-area>
+      <q-list>
+        <q-item-label header class="text-grey-8">
+          <q-item-label header class="text-center text-h6 q-pa-xs"
+          >Configuracion
+          </q-item-label
+          >
+          <q-separator spaced/>
+        </q-item-label>
+        <EssentialLink
+          v-if="role == 1"
+          v-for="link in essentialLinks"
+          :key="link.title"
+          v-bind="link"
+        />
+        <EssentialLink
+          v-if="role == 2"
+          v-for="link in essentialLinksUser"
+          :key="link.title"
+          v-bind="link"
+        />
+        <q-item clickable tag="a" @click="Logout()">
+          <q-item-section avatar>
+            <q-icon name="logout"/>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Salir</q-item-label>
+            <q-item-label caption>Cerar sesíon</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
     </q-drawer>
 
     <q-drawer
@@ -162,6 +196,12 @@
                         link: "/detallecs"
                     },
                     {
+                        title: "Seguimiento",
+                        caption: "Personal Meidico",
+                        icon: "group",
+                        link: "/seguimiento"
+                    },
+                    {
                         title: "Usuarios",
                         caption: "Administrar",
                         icon: "group",
@@ -186,7 +226,13 @@
                         caption: "Evaluación",
                         icon: "local_hospital",
                         link: "/registro"
-                    }
+                    },
+                    {
+                        title: "Cuidate",
+                        caption: "Lleva el control",
+                        icon: "group",
+                        link: "/usuarios"
+                    },
                 ]
             };
         },

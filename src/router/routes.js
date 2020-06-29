@@ -21,6 +21,8 @@ const routes = [
         component: () => import("pages/Control/MisRegistros.vue")
       },
       { path: '/usuarios', component: () => import('pages/Users/Index.vue') },
+      { path: '/seguimiento', component: () => import('pages/Seguimiento/Index.vue') },
+      { path: '/asistencia', component: () => import('pages/Asistencia/Index.vue') },
       { path: "/profile/:id", component: () => import("pages/Users/Profile.vue") },
       { path: "/dashboard", component: () => import("pages/Control/Index.vue") },
       { path: "/grafica", component: () => import("components/ApexCharts") }

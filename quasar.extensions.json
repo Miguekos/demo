@@ -8,5 +8,8 @@
   },
   "ide-helper": {
     "addToGitIgnore": true
+  },
+  "geolocation": {
+    "installVueGoogleMaps": true
   }
 }

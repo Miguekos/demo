@@ -1,7 +1,7 @@
 <template>
   <div id="q-app" v-bind:style="bgc">
     <router-view />
-    <input type="text" v-on:input="bgc.backgroundColor = $event.target.value" />
+<!--    <input type="text" v-on:input="bgc.backgroundColor = $event.target.value" />-->
   </div>
 </template>
 <script>
@@ -14,7 +14,7 @@ export default {
       description:
         "Type any colour name, rgb, hex or hsl in the input below and see what happens!",
       bgc: {
-        backgroundColor: "#111"
+        backgroundColor: "#ffffff"
       }
     };
   },
