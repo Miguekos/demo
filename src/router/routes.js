@@ -22,6 +22,7 @@ const routes = [
       },
       { path: '/usuarios', component: () => import('pages/Users/Index.vue') },
       { path: '/seguimiento', component: () => import('pages/Seguimiento/Index.vue') },
+      { path: '/cuidate', component: () => import('pages/Seguimiento/Cuidate.vue') },
       { path: '/asistencia', component: () => import('pages/Asistencia/Index.vue') },
       { path: "/profile/:id", component: () => import("pages/Users/Profile.vue") },
       { path: "/dashboard", component: () => import("pages/Control/Index.vue") },

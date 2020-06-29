@@ -5,6 +5,7 @@ import Vuex from "vuex";
 import auth from "./store-auth";
 import client from "./store-cliente";
 import users from "./store-users";
+import segui from "./store-segui";
 
 Vue.use(Vuex);
 
@@ -22,7 +23,8 @@ export default function(/* { ssrContext } */) {
     modules: {
       client,
       users,
-      auth
+      auth,
+      segui
     },
 
     // enable strict mode (adds overhead!)

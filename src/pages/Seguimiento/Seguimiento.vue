@@ -15,10 +15,11 @@
           left
         ></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6">Mis registros</q-item-label>
-          <q-separator color="amber-4" inset />
+          <q-item-label class="text-center text-h6">Seguimientos </q-item-label>
+          <!--          {{this.columnsexport}}-->
+          <q-separator color="indigo-4" inset />
         </q-item-section>
-        <q-item-section class="text-amber text-bold" side top right>
+        <q-item-section class="text-indigo text-bold" side top right>
           <q-icon name="archive" />
         </q-item-section>
       </q-item>
@@ -30,22 +31,20 @@
           left
         ></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6">Mis Registros</q-item-label>
-          <q-separator color="amber-4" inset />
+          <q-item-label class="text-center text-h6"
+            >Personal sanos
+          </q-item-label>
+          <q-separator color="indigo-4" inset />
         </q-item-section>
-        <q-item-section
-          class="text-amber text-bold"
-          side
-          top
-          right
-        ></q-item-section>
+        <q-item-section class="text-indigo text-bold" side top right>
+        </q-item-section>
       </q-item>
       <q-item>
         <q-item-section>
           <!-- <q-input
             v-model="search"
             dense
-            standout="bg-amber-4 text-white"
+            standout="bg-indigo-4 text-white"
             type="search"
             placeholder="Buscar"
           >
@@ -58,12 +57,13 @@
       </q-item>
     </q-list>
 
-    <!-- {{ getClientesS }} -->
+    <!--     {{ getClientesS }}-->
+    <!--    {{ columnsexport }}-->
     <q-table
       hide-bottom
       hide-header
       flat
-      :data="getClienteOne"
+      :data="getSeguimientos"
       :columns="columns"
       row-key="created_at.$date"
       :pagination.sync="pagination"
@@ -78,37 +78,18 @@
         />
       </template>-->
       <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td key="nombre" :props="props">
-            <q-item-section
-              v-ripple:white
-              clickable
-              @click="detalleCliente(props.row)"
-            >
-              <q-item-label>{{ props.row.nombre }}</q-item-label>
+        <q-tr :props="props" clickable @click="detalleCliente(props.row)">
+          <q-td key="nombre" v-ripple:white :props="props">
+            <q-item-section>
+              <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
-                <b class="text-red-5">temp:</b>
-                {{ props.row.temp }}°
+                <b class="text-indigo-5">Area:</b>
+                {{ props.row.area }}
               </q-item-label>
             </q-item-section>
           </q-td>
           <q-td key="created_at.$date" v-ripple:white :props="props"
             >{{ formatDate(props.row.created_at.$date) }}
-          </q-td>
-          <q-td
-            key="email"
-            :props="props"
-            v-ripple:white
-            clickable
-            @click="funcUpdateTemp(props.row)"
-          >
-            <q-btn
-              size="xs"
-              round
-              color="amber-5"
-              text-color="white"
-              icon="whatshot"
-            />
           </q-td>
         </q-tr>
       </template>
@@ -124,7 +105,7 @@
         <q-item-section>
           <q-item-label>{{ item.nombre }}</q-item-label>
           <q-item-label caption>
-            <b class="text-amber-5">Cel:</b> {{ item.telf }}</q-item-label
+            <b class="text-indigo-5">Cel:</b> {{ item.telf }}</q-item-label
           >
         </q-item-section>
         <q-item-section side right>
@@ -159,21 +140,21 @@ function wrapCsvValue(val, formatFn) {
 }
 
 export default {
-  // preFetch({ store, redirect }) {
-  //   let logginIn = LocalStorage.getAll().loggin;
-  //   let role = LocalStorage.getAll().role;
-  //   if (logginIn && role == 1) {
-  //     // console.log("WELCOME");
-  //   } else {
-  //     redirect("/");
-  //   }
-  // },
+  preFetch({ store, redirect }) {
+    let logginIn = LocalStorage.getAll().loggin;
+    let role = LocalStorage.getAll().role;
+    if (logginIn && role == 1) {
+      // console.log("WELCOME");
+    } else {
+      redirect("/");
+    }
+  },
   computed: {
-    ...mapGetters("client", ["getClienteOne"])
+    ...mapGetters("segui", ["getSeguimientos"])
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
-    Search: () => import("./SearchMR")
+    Search: () => import("./SearchSG")
   },
   data() {
     return {
@@ -267,15 +248,6 @@ export default {
           align: "right",
           label: "fecha",
           field: "created_at.$date",
-          style: "width: 20px",
-          sortable: true
-        },
-        {
-          name: "email",
-          align: "right",
-          label: "Email",
-          field: "email",
-          style: "width: 10px",
           sortable: true
         }
       ],
@@ -285,9 +257,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions("client", ["callClienteOne", "updateCliente"]),
+    ...mapActions("segui", ["callRegistroSegui"]),
     crearDataExport() {
-      const arraysJson = this.getClienteOne[0];
+      const arraysJson = this.getClientesS[0];
       let keys = [];
       let values = [];
       keys.push(Object.keys(arraysJson));
@@ -304,63 +276,14 @@ export default {
         });
         // console.log(element);
       }
-      // console.log(values);
+      console.log(values);
       this.columnsexport = values;
-    },
-    funcUpdateTemp(arg) {
-      // console.log(arg);
-      this.$q
-        .dialog({
-          title: "Temperatura",
-          message: "¿Cuál es tu temperatura?",
-          prompt: {
-            model: "",
-            type: "number" // optional
-          },
-          cancel: true,
-          persistent: true
-        })
-        .onOk(data => {
-          this.$q.loading.show();
-          // console.log(">>>> OK, received", data);
-          let jsonUpdate = {
-            temp: data,
-            _id: arg._id.$oid
-          };
-          // console.log(jsonUpdate);
-          this.updateCliente(jsonUpdate)
-            .then(async resp => {
-              this.$q.notify({
-                message: "¡Actualizamos tu temperatura!",
-                color: "green",
-                position: "top"
-              });
-              await this.callClienteOne(LocalStorage.getAll().UserDetalle.dni);
-              this.$q.loading.hide();
-            })
-            .catch(err => {
-              this.$q.notify({
-                message: "Oh oh, algo salio mal",
-                color: "negative",
-                position: "top"
-              });
-              this.$q.loading.hide();
-            });
-        })
-        .onCancel(() => {
-          this.$q.loading.hide();
-          // console.log('>>>> Cancel')
-        })
-        .onDismiss(() => {
-          this.$q.loading.hide();
-          // console.log('I am triggered on both OK and Cancel')
-        });
     },
     exportTable() {
       // naive encoding to csv format
       const content = [this.columnsexport.map(col => wrapCsvValue(col.label))]
         .concat(
-          this.getClienteOne.map(row =>
+          this.getClientesS.map(row =>
             this.columnsexport
               .map(col =>
                 wrapCsvValue(
@@ -388,20 +311,21 @@ export default {
     detalleCliente(arg) {
       this.$q.loading.show();
       // console.log(arg);
-      this.$store.commit("client/setDialogDetalleData", arg);
+      this.$store.commit("segui/setDialogDetalleSeguiData", arg);
       setTimeout(() => {
-        this.$store.commit("client/setDialogDetalle", true);
+        this.$store.commit("segui/setDialogSeguiDetalle", true);
         this.$q.loading.hide();
       }, 500);
     },
     formatDate(arg) {
       // console.log("Formateando Fecha");
-      return Fechas.Custom(arg);
+      return Fechas.larga(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
     }
   },
   async created() {
     this.$q.loading.show();
+    this.loading = true;
     // console.log("created - Cliente");
     // this.$q.loading.show({
     //   spinner: QSpinnerGears,
@@ -409,8 +333,8 @@ export default {
     //   spinnerSize: 100,
     //   backgroundColor: "grey-4"
     // });
-    // console.log(LocalStorage.getAll().UserDetalle.dni);
-    await this.callClienteOne(LocalStorage.getAll().UserDetalle.dni);
+    await this.callRegistroSegui("all");
+    // await this.crearDataExport();
     // this.dataexport = this.getClientesS();
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);
