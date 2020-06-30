@@ -3,7 +3,8 @@ import { axiosInstance } from "boot/axios";
 const state = {
   Seguimientos: [],
   dialogDetalleSegui: false,
-  dialogDetalleSeguiData: ""
+  dialogDetalleSeguiData: "",
+  setSeguimientosOne: []
 };
 
 const mutations = {
@@ -12,6 +13,9 @@ const mutations = {
   },
   setRole(state, payload) {
     state.role = payload;
+  },
+  setSeguimientosOne(state, payload) {
+    state.setSeguimientosOne = payload;
   },
   setDialogSeguiDetalle(state, payload) {
     state.dialogDetalleSegui = payload;
@@ -30,6 +34,14 @@ const actions = {
     commit("setSeguimientos", response.data);
     // return response.data;
   },
+  async callOneRegistroSegui({ commit }, payload) {
+    // console.log("Login");
+    console.log(payload);
+    const response = await axiosInstance.get(`/seguimientoOne/${payload}`);
+    // console.log(response.data);
+    commit("setSeguimientosOne", response.data);
+    // return response.data;
+  },
   async addRegistroSegui({ commit }, payload) {
     // console.log("Login");
     // console.log(payload);
@@ -40,7 +52,7 @@ const actions = {
   },
   async updateRegistroSegui({ commit }, payload) {
     // console.log("Login");
-    // console.log(payload);
+    console.log(payload);
     const response = await axiosInstance.put(`/seguimiento`, payload);
     // console.log(response.data);
     // commit("setClientes", response.data);
@@ -63,6 +75,10 @@ const getters = {
   getDialogDetalleSeguiData(state) {
     return state.dialogDetalleSeguiData;
   },
+  getSeguimientoOne(state) {
+    console.log(state.setSeguimientosOne);
+    return state.setSeguimientosOne;
+  }
 };
 
 export default {

@@ -1,48 +1,49 @@
 <template>
   <q-page padding>
-    <q-list>
-      <q-item
-        @click="exportTable()"
-        v-if="!$q.platform.is.cordova"
-        dense
-        clickable
-        v-ripple
-      >
-        <q-item-section
-          class="text-red text-bold"
-          side
-          top
-          left
-        ></q-item-section>
-        <q-item-section>
-          <q-item-label class="text-center text-h6">Mis registros</q-item-label>
-          <q-separator color="amber-4" inset />
-        </q-item-section>
-        <q-item-section class="text-amber text-bold" side top right>
-          <q-icon name="archive" />
-        </q-item-section>
-      </q-item>
-      <q-item dense v-else class="native-mobile-only" clickable v-ripple>
-        <q-item-section
-          class="text-red text-bold"
-          side
-          top
-          left
-        ></q-item-section>
-        <q-item-section>
-          <q-item-label class="text-center text-h6">Mis Registros</q-item-label>
-          <q-separator color="amber-4" inset />
-        </q-item-section>
-        <q-item-section
-          class="text-amber text-bold"
-          side
-          top
-          right
-        ></q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-section>
-          <!-- <q-input
+    <div class="q-pb-lg">
+      <q-list>
+        <q-item
+          @click="exportTable()"
+          v-if="!$q.platform.is.cordova"
+          dense
+          clickable
+          v-ripple
+        >
+          <q-item-section
+            class="text-red text-bold"
+            side
+            top
+            left
+          ></q-item-section>
+          <q-item-section>
+            <q-item-label class="text-center text-h6">Evaluate</q-item-label>
+            <q-separator color="amber-4" inset />
+          </q-item-section>
+          <q-item-section class="text-amber text-bold" side top right>
+            <q-icon name="archive" />
+          </q-item-section>
+        </q-item>
+        <q-item dense v-else class="native-mobile-only" clickable v-ripple>
+          <q-item-section
+            class="text-red text-bold"
+            side
+            top
+            left
+          ></q-item-section>
+          <q-item-section>
+            <q-item-label class="text-center text-h6">Evaluate</q-item-label>
+            <q-separator color="amber-4" inset />
+          </q-item-section>
+          <q-item-section
+            class="text-amber text-bold"
+            side
+            top
+            right
+          ></q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <!-- <q-input
             v-model="search"
             dense
             standout="bg-amber-4 text-white"
@@ -53,22 +54,25 @@
               <q-icon name="search" />
             </template>
           </q-input>-->
-          <Search />
-        </q-item-section>
-      </q-item>
-    </q-list>
+            <Search />
+          </q-item-section>
+        </q-item>
+      </q-list>
 
-    <!-- {{ getClientesS }} -->
-    <q-table
-      hide-bottom
-      hide-header
-      flat
-      :data="getClienteOne"
-      :columns="columns"
-      row-key="created_at.$date"
-      :pagination.sync="pagination"
-    >
-      <!-- <template v-slot:top-right>
+      <!--      {{ getClienteOne }}-->
+      <q-table
+        style="height: 230px"
+        hide-bottom
+        hide-header
+        virtual-scroll
+        flat
+        :data="getClienteOne"
+        :columns="columns"
+        row-key="created_at.$date"
+        :pagination.sync="pagination"
+        :rows-per-page-options="[0]"
+      >
+        <!-- <template v-slot:top-right>
         <q-btn
           color="primary"
           icon-right="archive"
@@ -77,43 +81,163 @@
           @click="exportTable"
         />
       </template>-->
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td key="nombre" :props="props">
-            <q-item-section
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td key="nombre" :props="props">
+              <q-item-section
+                v-ripple:white
+                clickable
+                @click="detalleCliente(props.row)"
+              >
+                <q-item-label>{{ props.row.nombre }}</q-item-label>
+                <q-item-label caption>
+                  <b class="text-red-5">temp:</b>
+                  {{ props.row.temp }}°
+                </q-item-label>
+              </q-item-section>
+            </q-td>
+            <q-td key="created_at.$date" v-ripple:white :props="props">{{
+              formatDate(props.row.created_at.$date)
+            }}</q-td>
+            <q-td
+              key="email"
+              :props="props"
               v-ripple:white
               clickable
-              @click="detalleCliente(props.row)"
+              @click="funcUpdateTemp(props.row)"
             >
-              <q-item-label>{{ props.row.nombre }}</q-item-label>
-              <q-item-label caption>
-                <b class="text-red-5">temp:</b>
-                {{ props.row.temp }}°
-              </q-item-label>
-            </q-item-section>
-          </q-td>
-          <q-td key="created_at.$date" v-ripple:white :props="props">{{
-            formatDate(props.row.created_at.$date)
-          }}</q-td>
-          <q-td
-            key="email"
-            :props="props"
-            v-ripple:white
-            clickable
-            @click="funcUpdateTemp(props.row)"
-          >
-            <q-btn
-              size="xs"
-              round
-              color="amber-5"
-              text-color="white"
-              icon="whatshot"
-            />
-          </q-td>
-        </q-tr>
-      </template>
-    </q-table>
+              <q-btn
+                size="xs"
+                round
+                color="amber-5"
+                text-color="white"
+                icon="whatshot"
+              />
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
+    </div>
 
+    <div>
+      <q-list>
+        <q-item
+          @click="exportTable()"
+          v-if="!$q.platform.is.cordova"
+          dense
+          clickable
+          v-ripple
+        >
+          <q-item-section
+            class="text-red text-bold"
+            side
+            top
+            left
+          ></q-item-section>
+          <q-item-section>
+            <q-item-label class="text-center text-h6">Cuidate</q-item-label>
+            <q-separator color="indigo-4" inset />
+          </q-item-section>
+          <!--          <q-item-section class="text-indigo text-bold" side top right>-->
+          <!--            <q-icon name="archive" />-->
+          <!--          </q-item-section>-->
+        </q-item>
+        <!--        <q-item dense v-else class="native-mobile-only" clickable v-ripple>-->
+        <!--          <q-item-section-->
+        <!--            class="text-red text-bold"-->
+        <!--            side-->
+        <!--            top-->
+        <!--            left-->
+        <!--          ></q-item-section>-->
+        <!--          <q-item-section>-->
+        <!--            <q-item-label class="text-center text-h6">Cuidate</q-item-label>-->
+        <!--            <q-separator color="indigo-4" inset />-->
+        <!--          </q-item-section>-->
+        <!--          <q-item-section-->
+        <!--            class="text-indigo text-bold"-->
+        <!--            side-->
+        <!--            top-->
+        <!--            right-->
+        <!--          ></q-item-section>-->
+        <!--        </q-item>-->
+        <q-item>
+          <q-item-section>
+            <!-- <q-input
+            v-model="search"
+            dense
+            standout="bg-amber-4 text-white"
+            type="search"
+            placeholder="Buscar"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>-->
+            <Search />
+          </q-item-section>
+        </q-item>
+      </q-list>
+
+      <!--       {{ getSeguimientoOne }}-->
+      <q-table
+        style="height: 230px"
+        virtual-scroll
+        hide-bottom
+        hide-header
+        flat
+        :data="getSeguimientoOne"
+        :columns="columnsOne"
+        row-key="created_at.$date"
+        :pagination.sync="pagination"
+        :rows-per-page-options="[0]"
+      >
+        <!-- <template v-slot:top-right>
+        <q-btn
+          color="primary"
+          icon-right="archive"
+          label="Export to csv"
+          no-caps
+          @click="exportTable"
+        />
+      </template>-->
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td key="name" :props="props">
+              <q-item-section
+                v-ripple:white
+                clickable
+                @click="detalleSeguimientoOne(props.row)"
+              >
+                <q-item-label>{{ props.row.name }}</q-item-label>
+                <q-item-label caption>
+                  <b class="text-red-5">temp:</b>
+                  {{ props.row.temp }}°
+                </q-item-label>
+              </q-item-section>
+            </q-td>
+            <q-td key="created_at.$date" v-ripple:white :props="props">{{
+              formatDate(props.row.created_at.$date)
+            }}</q-td>
+            <!--            <q-td-->
+            <!--              key="email"-->
+            <!--              :props="props"-->
+            <!--              v-ripple:white-->
+            <!--              clickable-->
+            <!--              file-->
+            <!--              @click="funcUpdateTemp(props.row)"-->
+            <!--            >-->
+            <!--              <q-btn-->
+            <!--                size="xs"-->
+            <!--                round-->
+            <!--                color="indigo-5"-->
+            <!--                text-color="white"-->
+            <!--                icon="whatshot"-->
+            <!--              />-->
+            <!--            </q-td>-->
+          </q-tr>
+        </template>
+      </q-table>
+    </div>
     <!-- <q-list separator>
       <q-item
         v-for="(item, index) in getClientesS"
@@ -140,7 +264,7 @@ import { Fechas } from "src/directives/formatFecha";
 import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { date, exportFile, LocalStorage } from "quasar";
-
+import { myMixin } from "../../mixins/mixin.js";
 function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0 ? formatFn(val) : val;
 
@@ -168,8 +292,10 @@ export default {
   //     redirect("/");
   //   }
   // },
+  mixins: [myMixin],
   computed: {
-    ...mapGetters("client", ["getClienteOne"])
+    ...mapGetters("client", ["getClienteOne"]),
+    ...mapGetters("segui", ["getSeguimientoOne"])
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
@@ -184,101 +310,6 @@ export default {
         rowsPerPage: 0
         // rowsNumber: xx if getting data from a server
       },
-      columnsexport: [
-        {
-          name: "notif1",
-          label: "¿Sensación de alza térmica o fiebre?",
-          field: row => (row.notif1 ? "Si" : "No")
-        },
-        {
-          name: "notif2",
-          label: "¿Tos, estornudos o dificultad para respirar?",
-          field: row => (row.notif2 ? "Si" : "No")
-        },
-        {
-          name: "notif3",
-          label: "¿Expectoración o flema amarilla o verdosa?",
-          field: row => (row.notif3 ? "Si" : "No")
-        },
-        {
-          name: "notif4",
-          label: "¿Contacto con persona(s) con un caso confirmado de COVID-19?",
-          field: row => (row.notif4 ? "Si" : "No")
-        },
-        {
-          name: "notif5",
-          label: "¿Estás tomando alguna medicación?",
-          field: row => (row.notif5 ? "Si" : "No")
-        },
-        {
-          name: "estados",
-          label: "Estados",
-          field: row => (row.estados === "00" ? "Sano" : "Con Sintomas")
-        },
-        {
-          name: "nombre",
-          label: "Nombre",
-          field: row => row.nombre
-        },
-        {
-          name: "dni",
-          label: "DNI",
-          field: "dni"
-        },
-        {
-          name: "telf",
-          label: "Celular",
-          field: "telf"
-        },
-        {
-          name: "area",
-          label: "Area",
-          field: "area"
-        },
-        {
-          name: "temp",
-          label: "Temperatura",
-          field: "temp"
-        },
-        {
-          name: "correo",
-          label: "Correo",
-          field: "correo"
-        },
-        {
-          name: "created_at.$date",
-          label: "Fecha de Registro",
-          field: row => row.created_at.$date,
-          format: val => `${this.formatDate(val)}`
-        }
-      ],
-      columns: [
-        {
-          name: "nombre",
-          required: true,
-          label: "Nombre",
-          align: "left",
-          field: row => row.nombre,
-          format: val => `${val}`,
-          sortable: true
-        },
-        {
-          name: "created_at.$date",
-          align: "right",
-          label: "fecha",
-          field: "created_at.$date",
-          style: "width: 20px",
-          sortable: true
-        },
-        {
-          name: "email",
-          align: "right",
-          label: "Email",
-          field: "email",
-          style: "width: 10px",
-          sortable: true
-        }
-      ],
       text: "",
       loading: false,
       search: ""
@@ -286,6 +317,7 @@ export default {
   },
   methods: {
     ...mapActions("client", ["callClienteOne", "updateCliente"]),
+    ...mapActions("segui", ["callOneRegistroSegui"]),
     crearDataExport() {
       const arraysJson = this.getClienteOne[0];
       let keys = [];
@@ -394,6 +426,15 @@ export default {
         this.$q.loading.hide();
       }, 500);
     },
+    detalleSeguimientoOne(arg) {
+      this.$q.loading.show();
+      // console.log(arg);
+      this.$store.commit("segui/setDialogDetalleSeguiData", arg);
+      setTimeout(() => {
+        this.$store.commit("segui/setDialogSeguiDetalle", true);
+        this.$q.loading.hide();
+      }, 500);
+    },
     formatDate(arg) {
       // console.log("Formateando Fecha");
       return Fechas.Custom(arg);
@@ -402,19 +443,10 @@ export default {
   },
   async created() {
     this.$q.loading.show();
-    // console.log("created - Cliente");
-    // this.$q.loading.show({
-    //   spinner: QSpinnerGears,
-    //   spinnerColor: "blue",
-    //   spinnerSize: 100,
-    //   backgroundColor: "grey-4"
-    // });
-    // console.log(LocalStorage.getAll().UserDetalle.dni);
-    await this.callClienteOne(LocalStorage.getAll().UserDetalle.dni);
-    // this.dataexport = this.getClientesS();
-    // this.$store.commit("general/setAtras", false);
-    // this.$store.commit("general/setSearch", true);
-    // this.$q.addressbarColor.set("#0056a1");
+    const userData = LocalStorage.getAll().UserDetalle;
+    // console.log(userData.id.$oid);
+    await this.callClienteOne(userData.dni);
+    await this.callOneRegistroSegui(userData.id.$oid);
     this.$q.loading.hide();
   }
 };

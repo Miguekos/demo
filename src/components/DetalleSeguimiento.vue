@@ -8,7 +8,7 @@
           </q-avatar>
         </q-item-section>
         <!--        {{getDialogDetalleSeguiData}}-->
-        <q-item-section href="tel:+1123-456-7890">
+        <q-item-section>
           <q-item-label>{{ getDialogDetalleSeguiData.name }}</q-item-label>
           <q-item-label caption>
             {{ getDialogDetalleSeguiData.telefono }}
@@ -19,23 +19,39 @@
           {{ getDialogDetalleSeguiData.temp }}°
         </q-item-section>
       </q-item>
-      <!-- {{getDialogDetalleData}} -->
+      <!--      {{ getDialogDetalleSeguiData }}-->
 
       <q-separator />
 
       <q-card-section class="q-pa-xs">
         <q-list bordered separator>
           <q-item clickable v-ripple>
-            <q-item-section> </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                Simtomas: {{ getDialogDetalleSeguiData.sintomas }}
+              </q-item-label>
+            </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
-            <q-item-section> </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                Medicamentos: {{ getDialogDetalleSeguiData.medicacion }}
+              </q-item-label>
+            </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
-            <q-item-section> </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                Fecha Diagnostico: {{ getDialogDetalleSeguiData.dateDiag }}
+              </q-item-label>
+            </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
-            <q-item-section> </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                Fecha Registro: {{ getDialogDetalleSeguiData.dateReport }}
+              </q-item-label>
+            </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
             <q-item-section> </q-item-section>
@@ -51,7 +67,7 @@
             <q-btn flat @click="llamar()" color="info">Llamar</q-btn>
           </q-item-section>
           <q-item-section>
-            <q-btn flat @click="cerrarDialog()" color="indigo-5">Control</q-btn>
+            <q-btn flat @click="irControl()" color="indigo-5">Control</q-btn>
           </q-item-section>
         </q-item>
       </q-list>
@@ -86,6 +102,10 @@ export default {
     };
   },
   methods: {
+    irControl() {
+      this.$store.commit("segui/setDialogSeguiDetalle", false);
+      this.$router.push(`/control/${this.getDialogDetalleSeguiData._id.$oid}`);
+    },
     llamar() {
       this.$store.commit("segui/setDialogSeguiDetalle", false);
       window.open(`tel:+51${this.getDialogDetalleSeguiData.telefono}`);
