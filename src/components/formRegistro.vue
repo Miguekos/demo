@@ -92,76 +92,76 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
 
 export default {
-    data() {
-        return {
-            loadBoton: false,
-            name: null,
-            dni: null,
-            email: null,
-            telefono: null,
-            area: "",
-            options: ["Producción", "Ventas", "Administración", "Gerencia"]
-        };
+  data() {
+    return {
+      loadBoton: false,
+      name: null,
+      dni: null,
+      email: null,
+      telefono: null,
+      area: "",
+      options: ["Producción", "Ventas", "Administración", "Gerencia"]
+    };
+  },
+  methods: {
+    ...mapActions("users", ["addUser", "callUser"]),
+    cerrar() {
+      // console.log("Se preciono Cerrar");
     },
-    methods: {
-        ...mapActions("users", ["addUser", "callUser"]),
-        cerrar() {
-            // console.log("Se preciono Cerrar");
-        },
-        onSubmit() {
-            this.loadBoton = true;
-            this.addUser({
-                name: this.name,
-                dni: this.dni,
-                email: this.email,
-                telefono: this.telefono,
-                area: this.area,
-                temp: "00",
-                role: 2
-            })
-                .then(resp => {
-                    if (resp.codRes == "02") {
-                        this.$q.notify({
-                            color: "blue-4",
-                            textColor: "white",
-                            icon: "cloud_done",
-                            message: `DNI ya resgistrado`
-                        });
-                        this.loadBoton = false;
-                    } else {
-                        this.$q.notify({
-                            // progress: true,
-                            message: `¡ Se registro satisfactoriamente el usuario !`
-                            // icon: "favorite_border",
-                            icon: "cloud_done",
-                            color: "white",
-                            textColor: "green-5",
-                            position: "top"
-                        });
-                        this.callUser();
-                        this.loadBoton = false;
-                        this.$emit("cerrarDialogo");
-                    }
-                })
-                .catch(err => {
-                    this.$q.notify({
-                        color: "red-4",
-                        textColor: "white",
-                        icon: "cloud_done",
-                        message: `${err.data}`
-                    });
-                    this.loadBoton = false;
-                });
-        },
-        onReset() {
-            this.name = null;
-            this.dni = null;
-            this.email = null;
-            this.telefono = null;
-        }
+    onSubmit() {
+      this.loadBoton = true;
+      this.addUser({
+        name: this.name,
+        dni: this.dni,
+        email: this.email,
+        telefono: this.telefono,
+        area: this.area,
+        temp: "00",
+        role: 2
+      })
+        .then(resp => {
+          if (resp.codRes == "02") {
+            this.$q.notify({
+              color: "blue-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: `DNI ya resgistrado`
+            });
+            this.loadBoton = false;
+          } else {
+            this.$q.notify({
+              // progress: true,
+              message: `¡ Se registro satisfactoriamente el usuario !`,
+              // icon: "favorite_border",
+              icon: "cloud_done",
+              color: "white",
+              textColor: "green-5",
+              position: "top"
+            });
+            this.callUser();
+            this.loadBoton = false;
+            this.$emit("cerrarDialogo");
+          }
+        })
+        .catch(err => {
+          this.$q.notify({
+            color: "red-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: `${err.data}`
+          });
+          this.loadBoton = false;
+        });
+    },
+    onReset() {
+      this.name = null;
+      this.dni = null;
+      this.email = null;
+      this.telefono = null;
     }
+  }
 };
 </script>
