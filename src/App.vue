@@ -1,7 +1,7 @@
 <template>
   <div id="q-app" v-bind:style="bgc">
     <router-view />
-<!--    <input type="text" v-on:input="bgc.backgroundColor = $event.target.value" />-->
+    <!--    <input type="text" v-on:input="bgc.backgroundColor = $event.target.value" />-->
   </div>
 </template>
 <script>
@@ -22,7 +22,7 @@ export default {
     // ...mapActions("client", ["callClienteReport"])
   },
   async created() {
-    // console.log("App");
+    console.log("App");
     this.$q.addressbarColor.set("#FFFFFF");
     // await this.callClienteReport();
     // #004d40
