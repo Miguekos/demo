@@ -201,8 +201,8 @@ export default {
         },
         {
           title: "Seguimiento",
-          caption: "Personal Meidico",
-          icon: "group",
+          caption: "Personal médico",
+          icon: "supervised_user_circle",
           link: "/seguimiento"
         },
         {

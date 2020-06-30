@@ -10,7 +10,10 @@ const state = {
 
 const mutations = {
   addObserva(state, payload) {
-    state.seguiObserva.observa.push(payload);
+    // console.log(payload);
+    state.seguiObserva.observa.push(payload.observa);
+    state.seguiObserva.sintomas = payload.sintomas;
+    state.seguiObserva.medicacion = payload.medicacion;
   },
   setSeguimientos(state, payload) {
     state.Seguimientos = payload;

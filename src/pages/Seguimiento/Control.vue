@@ -1,19 +1,61 @@
 <template>
   <div>
     <q-list>
-      <q-item>
+      <q-item dense clickable v-ripple>
+        <q-item-section
+          class="text-red text-bold"
+          side
+          top
+          left
+        ></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center">
-            Control de: {{ getSeguimientos.name }}
-            <!--            {{ getSeguiObserva }}-->
-          </q-item-label>
+          <q-item-label class="text-center text-h6">{{
+            getSeguiObserva.name
+          }}</q-item-label>
+          <q-separator color="indigo-4" inset />
         </q-item-section>
+        <!--          <q-item-section class="text-indigo text-bold" side top right>-->
+        <!--            <q-icon name="archive" />-->
+        <!--          </q-item-section>-->
       </q-item>
     </q-list>
     <q-list>
+      <q-item class="q-pb-xs" tag="label">
+        <q-item-section>
+          <q-select
+            label="Sintomas"
+            filled
+            v-model="sintomas"
+            use-input
+            use-chips
+            multiple
+            hide-dropdown-icon
+            input-debounce="0"
+            new-value-mode="add-unique"
+          />
+        </q-item-section>
+      </q-item>
+
+      <!--      <q-separator inset color="red-5" />-->
+
+      <q-item class="q-pb-xs" tag="label">
+        <q-item-section>
+          <q-select
+            label="Medicacion"
+            filled
+            v-model="medicacion"
+            use-input
+            use-chips
+            multiple
+            hide-dropdown-icon
+            input-debounce="0"
+            new-value-mode="add-unique"
+          />
+        </q-item-section>
+      </q-item>
       <q-item>
         <q-item-section>
-          <q-input v-model="detalle" filled autogrow />
+          <q-input v-model="detalle" label="Comentario" filled autogrow />
         </q-item-section>
       </q-item>
       <q-item>
@@ -22,12 +64,13 @@
         </q-item-section>
       </q-item>
     </q-list>
-    <q-list>
+    <q-list separator>
       <q-item>
         <q-item-section class="text-center">
           <q-card
-            v-for="(items, index) in getSeguimientos.observa"
+            v-for="(items, index) in getSeguiObserva.observa"
             :key="index"
+            style="margin: 10px 10px 10px 10px"
           >
             <q-card-section>
               <q-item-label>{{ items.nombre }}</q-item-label>
@@ -36,7 +79,7 @@
               }}</q-item-label>
             </q-card-section>
             <q-card-section class="text-center">
-              <q-item-label>Comenta que:</q-item-label>
+              <q-item-label>Observación:</q-item-label>
               {{ items.detalle }}
             </q-card-section>
           </q-card>
@@ -53,11 +96,13 @@ export default {
   name: "Control",
   mixins: [MixinDefault],
   computed: {
-    ...mapState("segui", ["seguiObserva"]),
+    // ...mapState("segui", ["seguiObserva"]),
     ...mapGetters("segui", ["getSeguimientos", "getSeguiObserva"])
   },
   data() {
     return {
+      sintomas: null,
+      medicacion: null,
       detalle: null,
       arrayObserva: []
     };
@@ -67,18 +112,21 @@ export default {
     async update() {
       if (this.detalle != null) {
         this.$store.commit("segui/addObserva", {
-          nombre: this.arrayObserva.name,
-          fecha: new Date(),
-          detalle: this.detalle,
-          color: "red-5"
+          observa: {
+            nombre: this.arrayObserva.name,
+            fecha: new Date(),
+            detalle: this.detalle,
+            color: "red-5",
+            sintomas: this.sintomas,
+            medicacion: this.medicacion
+          },
+          sintomas: this.sintomas,
+          medicacion: this.medicacion
         });
-        const jsonEnviar = {
-          // ...this.arrayObserva,
-          // observa: this.seguiObserva
-          ...this.getSeguiObserva
-        };
         try {
-          const updateResponse = await this.updateRegistroSegui(jsonEnviar);
+          const updateResponse = await this.updateRegistroSegui(
+            this.getSeguiObserva
+          );
           console.log(updateResponse);
           this.detalle = null;
           await this.callRegistroSegui(this.$route.params.id);
@@ -94,7 +142,10 @@ export default {
     console.log(this.$route.params.id);
     await this.callRegistroSegui(this.$route.params.id);
     // this.$store.commit("segui/addSeguiObserva", this.getSeguimientos);
-    this.arrayObserva = this.getSeguimientos;
+    const dataSG = await this.getSeguimientos;
+    this.arrayObserva = dataSG;
+    this.sintomas = dataSG.sintomas;
+    this.medicacion = dataSG.medicacion;
   }
 };
 </script>
