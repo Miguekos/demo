@@ -4,12 +4,17 @@ const state = {
   Seguimientos: [],
   dialogDetalleSegui: false,
   dialogDetalleSeguiData: "",
-  setSeguimientosOne: []
+  setSeguimientosOne: [],
+  seguiObserva: []
 };
 
 const mutations = {
+  addObserva(state, payload) {
+    state.seguiObserva.observa.push(payload);
+  },
   setSeguimientos(state, payload) {
     state.Seguimientos = payload;
+    state.seguiObserva = payload;
   },
   setRole(state, payload) {
     state.role = payload;
@@ -78,6 +83,9 @@ const getters = {
   getSeguimientoOne(state) {
     console.log(state.setSeguimientosOne);
     return state.setSeguimientosOne;
+  },
+  getSeguiObserva(state) {
+    return state.seguiObserva;
   }
 };
 

@@ -5,6 +5,7 @@
         <q-item-section>
           <q-item-label class="text-center">
             Control de: {{ getSeguimientos.name }}
+            <!--            {{ getSeguiObserva }}-->
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -30,7 +31,9 @@
           >
             <q-card-section>
               <q-item-label>{{ items.nombre }}</q-item-label>
-              <q-item-label caption>{{ items.fecha }}</q-item-label>
+              <q-item-label caption>{{
+                formatFecha(items.fecha)
+              }}</q-item-label>
             </q-card-section>
             <q-card-section class="text-center">
               <q-item-label>Comenta que:</q-item-label>
@@ -45,47 +48,53 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
+import { MixinDefault } from "../../mixins/mixin";
 export default {
   name: "Control",
+  mixins: [MixinDefault],
   computed: {
-    // ...mapState("segui", ["getSeguimientos"]),
-    ...mapGetters("segui", ["getSeguimientos"])
+    ...mapState("segui", ["seguiObserva"]),
+    ...mapGetters("segui", ["getSeguimientos", "getSeguiObserva"])
   },
   data() {
     return {
-      detalle: null
+      detalle: null,
+      arrayObserva: []
     };
   },
   methods: {
     ...mapActions("segui", ["updateRegistroSegui", "callRegistroSegui"]),
     async update() {
-      if (this.detalle.length > 0) {
-        let jsonObserva = this.getSeguimientos.observa;
-        const jsonEnviar = {
-          ...this.getSeguimientos,
-          observa: jsonObserva
-        };
-        jsonObserva.push({
-          nombre: this.getSeguimientos.name,
+      if (this.detalle != null) {
+        this.$store.commit("segui/addObserva", {
+          nombre: this.arrayObserva.name,
           fecha: new Date(),
           detalle: this.detalle,
           color: "red-5"
         });
+        const jsonEnviar = {
+          // ...this.arrayObserva,
+          // observa: this.seguiObserva
+          ...this.getSeguiObserva
+        };
         try {
           const updateResponse = await this.updateRegistroSegui(jsonEnviar);
           console.log(updateResponse);
           this.detalle = null;
+          await this.callRegistroSegui(this.$route.params.id);
         } catch (e) {
           console.log(e);
         }
       } else {
-        console.log(e);
+        console.log("No pueden existir campos vacios");
       }
     }
   },
   async created() {
     console.log(this.$route.params.id);
     await this.callRegistroSegui(this.$route.params.id);
+    // this.$store.commit("segui/addSeguiObserva", this.getSeguimientos);
+    this.arrayObserva = this.getSeguimientos;
   }
 };
 </script>

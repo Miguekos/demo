@@ -137,8 +137,56 @@ const myMixin = {
   created: function() {
     // this.hello();
   },
+  methods: {}
+};
+
+const MixinDefault = {
+  data() {
+    return {
+    };
+  },
+  created: function() {
+    // this.hello();
+  },
   methods: {
+    noti(val) {
+      if (val === 1) {
+        this.$q.notify({
+          message: "Se actualizo correctamente",
+          color: "white",
+          textColor: "blue-5",
+          position: "top"
+        });
+      }
+      if (val === 2) {
+        this.$q.notify({
+          message: "Ya esta asignado a este usuario",
+          color: "white",
+          textColor: "blue-5",
+          position: "top"
+        });
+      }
+      if (val === 3) {
+        this.$q.notify({
+          message: "Oh oh, algo salio mal",
+          color: "white",
+          textColor: "red-5",
+          position: "top"
+        });
+      }
+      if (val === 4) {
+        this.$q.notify({
+          message: "No puedes dejar campos vacios",
+          color: "white",
+          textColor: "red-5",
+          position: "top"
+        });
+      }
+    },
+    formatFecha(val) {
+      return Fechas.larga(val);
+    }
   }
 };
 
-export { myMixin };
+export { myMixin, MixinDefault };
