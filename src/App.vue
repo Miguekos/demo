@@ -22,7 +22,7 @@ export default {
     // ...mapActions("client", ["callClienteReport"])
   },
   async created() {
-    console.log("App - 3");
+    console.log("App - 4");
     this.$q.addressbarColor.set("#FFFFFF");
     // await this.callClienteReport();
     // #004d40
