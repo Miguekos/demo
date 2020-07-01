@@ -64,10 +64,10 @@
             <q-btn flat @click="cerrarDialog()" color="red-5">Cerrar</q-btn>
           </q-item-section>
           <q-item-section>
-            <q-btn flat @click="llamar()" color="info">Llamar</q-btn>
+            <q-btn flat @click="llamar()" color="green">Llamar</q-btn>
           </q-item-section>
           <q-item-section>
-            <q-btn flat @click="irControl()" color="indigo-5">Control</q-btn>
+            <q-btn flat @click="irControl()" color="amber-5">Control</q-btn>
           </q-item-section>
         </q-item>
       </q-list>
@@ -103,6 +103,8 @@ export default {
   },
   methods: {
     irControl() {
+      console.log("control");
+
       this.$store.commit("segui/setDialogSeguiDetalle", false);
       this.$router.push(`/control/${this.getDialogDetalleSeguiData._id.$oid}`);
     },

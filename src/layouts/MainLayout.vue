@@ -36,7 +36,6 @@
     <q-drawer
       side="right"
       v-model="drawerRight"
-      show-if-above
       bordered
       content-class="bg-grey-1"
     >
@@ -176,8 +175,8 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Mis registros",
-          caption: "Evaluaciones",
+          title: "Control",
+          caption: "Control",
           icon: "scatter_plot",
           link: "/misregistros"
         },
@@ -188,17 +187,17 @@ export default {
           link: "/registro"
         },
         {
-          title: "Personal sano",
-          caption: "Detalle",
-          icon: "sentiment_satisfied_alt",
-          link: "/detalles"
+          title: "Documentos",
+          caption: "Certificado",
+          icon: "note_add",
+          link: "/certificado"
         },
-        {
-          title: "Personal con síntomas",
-          caption: "Detalle",
-          icon: "sentiment_very_dissatisfied",
-          link: "/detallecs"
-        },
+        // {
+        //   title: "Personal con síntomas",
+        //   caption: "Detalle",
+        //   icon: "sentiment_very_dissatisfied",
+        //   link: "/detallecs"
+        // },
         {
           title: "Seguimiento",
           caption: "Personal médico",

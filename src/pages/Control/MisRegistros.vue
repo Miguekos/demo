@@ -1,261 +1,162 @@
 <template>
   <q-page padding>
-    <div class="q-pb-lg">
-      <q-list>
-        <q-item
-          @click="exportTable()"
-          v-if="!$q.platform.is.cordova"
-          dense
-          clickable
-          v-ripple
-        >
-          <q-item-section
-            class="text-red text-bold"
-            side
-            top
-            left
-          ></q-item-section>
-          <q-item-section>
-            <q-item-label class="text-center text-h6">Evaluate</q-item-label>
-            <q-separator color="amber-4" inset />
-          </q-item-section>
-          <q-item-section class="text-amber text-bold" side top right>
-            <q-icon name="archive" />
-          </q-item-section>
-        </q-item>
-        <q-item dense v-else class="native-mobile-only" clickable v-ripple>
-          <q-item-section
-            class="text-red text-bold"
-            side
-            top
-            left
-          ></q-item-section>
-          <q-item-section>
-            <q-item-label class="text-center text-h6">Evaluate</q-item-label>
-            <q-separator color="amber-4" inset />
-          </q-item-section>
-          <q-item-section
-            class="text-amber text-bold"
-            side
-            top
-            right
-          ></q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <!-- <q-input
-            v-model="search"
-            dense
-            standout="bg-amber-4 text-white"
-            type="search"
-            placeholder="Buscar"
-          >
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>-->
-            <Search />
-          </q-item-section>
-        </q-item>
-      </q-list>
-
-      <!--      {{ getClienteOne }}-->
-      <q-table
-        style="height: 230px"
-        hide-bottom
-        hide-header
-        virtual-scroll
-        flat
-        :data="getClienteOne"
-        :columns="columns"
-        row-key="created_at.$date"
-        :pagination.sync="pagination"
-        :rows-per-page-options="[0]"
+    <q-card flat>
+      <q-tabs
+        v-model="tab"
+        dense
+        class="text-grey"
+        active-color="primary"
+        indicator-color="primary"
+        align="justify"
       >
-        <!-- <template v-slot:top-right>
-        <q-btn
-          color="primary"
-          icon-right="archive"
-          label="Export to csv"
-          no-caps
-          @click="exportTable"
-        />
-      </template>-->
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td key="nombre" :props="props">
-              <q-item-section
-                v-ripple:white
+        <q-tab name="mails" label="Evaluate" />
+        <q-tab name="alarms" label="Sanos" />
+        <q-tab name="movies" label="Con sintomas" />
+        <q-tab name="otro" label="Cuidate" />
+      </q-tabs>
+
+      <q-separator />
+
+      <q-tab-panels v-model="tab" animated>
+        <q-tab-panel name="mails">
+          <div class="q-pb-lg">
+            <q-list>
+              <q-item
+                @click="exportTable()"
+                v-if="!$q.platform.is.cordova"
+                dense
                 clickable
-                @click="detalleCliente(props.row)"
+                v-ripple
               >
-                <q-item-label>{{ props.row.nombre }}</q-item-label>
-                <q-item-label caption>
-                  <b class="text-red-5">temp:</b>
-                  {{ props.row.temp }}°
-                </q-item-label>
-              </q-item-section>
-            </q-td>
-            <q-td key="created_at.$date" v-ripple:white :props="props">{{
-              formatDate(props.row.created_at.$date)
-            }}</q-td>
-            <q-td
-              key="email"
-              :props="props"
-              v-ripple:white
-              clickable
-              @click="funcUpdateTemp(props.row)"
+                <q-item-section
+                  class="text-red text-bold"
+                  side
+                  top
+                  left
+                ></q-item-section>
+                <q-item-section>
+                  <q-item-label class="text-center text-h6">Evaluate</q-item-label>
+                  <q-separator color="amber-4" inset />
+                </q-item-section>
+                <q-item-section class="text-amber text-bold" side top right>
+                  <q-icon name="archive" />
+                </q-item-section>
+              </q-item>
+              <q-item
+                dense
+                v-else
+                class="native-mobile-only"
+                clickable
+                v-ripple
+              >
+                <q-item-section
+                  class="text-red text-bold"
+                  side
+                  top
+                  left
+                ></q-item-section>
+                <q-item-section>
+                  <q-item-label class="text-center text-h6"
+                    >Evaluate</q-item-label
+                  >
+                  <q-separator color="amber-4" inset />
+                </q-item-section>
+                <q-item-section
+                  class="text-amber text-bold"
+                  side
+                  top
+                  right
+                ></q-item-section>
+              </q-item>
+              <q-item>
+                <q-item-section>
+                  <!-- <q-input
+                  v-model="search"
+                  dense
+                  standout="bg-amber-4 text-white"
+                  type="search"
+                  placeholder="Buscar"
+                >
+                  <template v-slot:append>
+                    <q-icon name="search" />
+                  </template>
+                </q-input>-->
+                  <Search />
+                </q-item-section>
+              </q-item>
+            </q-list>
+
+            <!--      {{ getClienteOne }}-->
+            <q-table
+              hide-bottom
+              hide-header
+              flat
+              :data="getClienteOne"
+              :columns="columns"
+              row-key="created_at.$date"
+              :pagination.sync="pagination"
             >
+              <!-- <template v-slot:top-right>
               <q-btn
-                size="xs"
-                round
-                color="amber-5"
-                text-color="white"
-                icon="whatshot"
+                color="primary"
+                icon-right="archive"
+                label="Export to csv"
+                no-caps
+                @click="exportTable"
               />
-            </q-td>
-          </q-tr>
-        </template>
-      </q-table>
-    </div>
+            </template>-->
+              <template v-slot:body="props">
+                <q-tr :props="props">
+                  <q-td key="nombre" :props="props">
+                    <q-item-section
+                      v-ripple:white
+                      clickable
+                      @click="detalleCliente(props.row)"
+                    >
+                      <q-item-label>{{ props.row.nombre }}</q-item-label>
+                      <q-item-label caption>
+                        <b class="text-red-5">temp:</b>
+                        {{ props.row.temp }}°
+                      </q-item-label>
+                    </q-item-section>
+                  </q-td>
+                  <q-td key="created_at.$date" v-ripple:white :props="props">{{
+                    formatDate(props.row.created_at.$date)
+                  }}</q-td>
+                  <q-td
+                    key="email"
+                    :props="props"
+                    v-ripple:white
+                    clickable
+                    @click="funcUpdateTemp(props.row)"
+                  >
+                    <q-btn
+                      size="xs"
+                      round
+                      color="amber-5"
+                      text-color="white"
+                      icon="whatshot"
+                    />
+                  </q-td>
+                </q-tr>
+              </template>
+            </q-table>
+          </div>
+        </q-tab-panel>
 
-    <div>
-      <q-list>
-        <q-item
-          @click="exportTable()"
-          v-if="!$q.platform.is.cordova"
-          dense
-          clickable
-          v-ripple
-        >
-          <q-item-section
-            class="text-red text-bold"
-            side
-            top
-            left
-          ></q-item-section>
-          <q-item-section>
-            <q-item-label class="text-center text-h6">Cuidate</q-item-label>
-            <q-separator color="indigo-4" inset />
-          </q-item-section>
-          <!--          <q-item-section class="text-indigo text-bold" side top right>-->
-          <!--            <q-icon name="archive" />-->
-          <!--          </q-item-section>-->
-        </q-item>
-        <!--        <q-item dense v-else class="native-mobile-only" clickable v-ripple>-->
-        <!--          <q-item-section-->
-        <!--            class="text-red text-bold"-->
-        <!--            side-->
-        <!--            top-->
-        <!--            left-->
-        <!--          ></q-item-section>-->
-        <!--          <q-item-section>-->
-        <!--            <q-item-label class="text-center text-h6">Cuidate</q-item-label>-->
-        <!--            <q-separator color="indigo-4" inset />-->
-        <!--          </q-item-section>-->
-        <!--          <q-item-section-->
-        <!--            class="text-indigo text-bold"-->
-        <!--            side-->
-        <!--            top-->
-        <!--            right-->
-        <!--          ></q-item-section>-->
-        <!--        </q-item>-->
-        <q-item>
-          <q-item-section>
-            <!-- <q-input
-            v-model="search"
-            dense
-            standout="bg-amber-4 text-white"
-            type="search"
-            placeholder="Buscar"
-          >
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>-->
-            <Search />
-          </q-item-section>
-        </q-item>
-      </q-list>
+        <q-tab-panel name="alarms">
+          <DetallesSanos />
+        </q-tab-panel>
 
-      <!--       {{ getSeguimientoOne }}-->
-      <q-table
-        style="height: 230px"
-        virtual-scroll
-        hide-bottom
-        hide-header
-        flat
-        :data="getSeguimientoOne"
-        :columns="columnsOne"
-        row-key="created_at.$date"
-        :pagination.sync="pagination"
-        :rows-per-page-options="[0]"
-      >
-        <!-- <template v-slot:top-right>
-        <q-btn
-          color="primary"
-          icon-right="archive"
-          label="Export to csv"
-          no-caps
-          @click="exportTable"
-        />
-      </template>-->
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td key="name" :props="props">
-              <q-item-section
-                v-ripple:white
-                clickable
-                @click="detalleSeguimientoOne(props.row)"
-              >
-                <q-item-label>{{ props.row.name }}</q-item-label>
-                <q-item-label caption>
-                  <b class="text-red-5">temp:</b>
-                  {{ props.row.temp }}°
-                </q-item-label>
-              </q-item-section>
-            </q-td>
-            <q-td key="created_at.$date" v-ripple:white :props="props">{{
-              formatDate(props.row.created_at.$date)
-            }}</q-td>
-            <!--            <q-td-->
-            <!--              key="email"-->
-            <!--              :props="props"-->
-            <!--              v-ripple:white-->
-            <!--              clickable-->
-            <!--              file-->
-            <!--              @click="funcUpdateTemp(props.row)"-->
-            <!--            >-->
-            <!--              <q-btn-->
-            <!--                size="xs"-->
-            <!--                round-->
-            <!--                color="indigo-5"-->
-            <!--                text-color="white"-->
-            <!--                icon="whatshot"-->
-            <!--              />-->
-            <!--            </q-td>-->
-          </q-tr>
-        </template>
-      </q-table>
-    </div>
-    <!-- <q-list separator>
-      <q-item
-        v-for="(item, index) in getClientesS"
-        :key="index"
-        clickable
-        v-ripple
-      >
-        <q-item-section>
-          <q-item-label>{{ item.nombre }}</q-item-label>
-          <q-item-label caption>
-            <b class="text-amber-5">Cel:</b> {{ item.telf }}</q-item-label
-          >
-        </q-item-section>
-        <q-item-section side right>
-          <q-item-label>{{ formatDate(item.created_at.$date) }}</q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>-->
+        <q-tab-panel name="movies">
+          <DetallesConSintomas />
+        </q-tab-panel>
+
+        <q-tab-panel name="otro">
+          <DetallesCuidate />
+        </q-tab-panel>
+      </q-tab-panels>
+    </q-card>
   </q-page>
 </template>
 
@@ -299,10 +200,14 @@ export default {
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
-    Search: () => import("./SearchMR")
+    Search: () => import("./SearchMR"),
+    DetallesConSintomas: () => import("./DetallesConSintomas"),
+    DetallesSanos: () => import("./DetallesSanos"),
+    DetallesCuidate: () => import("./DetallesCuidate")
   },
   data() {
     return {
+      tab: "mails",
       pagination: {
         sortBy: "created_at.$date",
         descending: false,
@@ -446,7 +351,7 @@ export default {
     const userData = LocalStorage.getAll().UserDetalle;
     // console.log(userData.id.$oid);
     await this.callClienteOne(userData.dni);
-    await this.callOneRegistroSegui(userData.id.$oid);
+    // await this.callOneRegistroSegui(userData.id.$oid);
     this.$q.loading.hide();
   }
 };

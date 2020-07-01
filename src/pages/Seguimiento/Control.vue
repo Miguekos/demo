@@ -12,17 +12,18 @@
           <q-item-label class="text-center text-h6">{{
             getSeguiObserva.name
           }}</q-item-label>
-          <q-separator color="indigo-4" inset />
+          <q-separator color="red-4" inset />
         </q-item-section>
-        <!--          <q-item-section class="text-indigo text-bold" side top right>-->
+        <!--          <q-item-section class="text-red text-bold" side top right>-->
         <!--            <q-icon name="archive" />-->
         <!--          </q-item-section>-->
       </q-item>
     </q-list>
     <q-list>
-      <q-item class="q-pb-xs" tag="label">
+      <q-item class="q-pb-xs">
         <q-item-section>
           <q-select
+            color="red-5"
             label="Sintomas"
             filled
             v-model="sintomas"
@@ -36,11 +37,10 @@
         </q-item-section>
       </q-item>
 
-      <!--      <q-separator inset color="red-5" />-->
-
-      <q-item class="q-pb-xs" tag="label">
+      <q-item class="q-pb-xs">
         <q-item-section>
           <q-select
+            color="red-5"
             label="Medicacion"
             filled
             v-model="medicacion"
@@ -55,12 +55,21 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <q-input v-model="detalle" label="Comentario" filled autogrow />
+          <q-input
+            color="red-5"
+            v-model="detalle"
+            label="Comentario"
+            filled
+            autogrow
+          />
         </q-item-section>
       </q-item>
       <q-item>
         <q-item-section>
-          <q-btn @click="update" color="indigo-5">Comentar</q-btn>
+          <q-btn @click="update" color="green-5">Dar de Alta</q-btn>
+        </q-item-section>
+        <q-item-section>
+          <q-btn @click="update" color="red-5">Confirmar</q-btn>
         </q-item-section>
       </q-item>
     </q-list>
@@ -70,16 +79,56 @@
           <q-card
             v-for="(items, index) in getSeguiObserva.observa"
             :key="index"
-            style="margin: 10px 10px 10px 10px"
+            style="margin: 10px 0px 10px 0px"
           >
-            <q-card-section>
-              <q-item-label>{{ items.nombre }}</q-item-label>
-              <q-item-label caption>{{
-                formatFecha(items.fecha)
-              }}</q-item-label>
-            </q-card-section>
+            <q-list bordered separator>
+              <q-card-section class="text-center">
+                <q-item-label class="text-bold">{{
+                  items.nombre
+                }}</q-item-label>
+                <q-item-label caption>{{
+                  formatFecha(items.fecha)
+                }}</q-item-label>
+              </q-card-section>
+              <!--              <q-item clickable v-ripple>-->
+              <!--                <q-item-section>-->
+              <!--                  <q-item-label>{{ items.nombre }}</q-item-label>-->
+              <!--                </q-item-section>-->
+              <!--                <q-item-section>-->
+              <!--                  <q-item-label caption>{{-->
+              <!--                    formatFecha(items.fecha)-->
+              <!--                  }}</q-item-label>-->
+              <!--                </q-item-section>-->
+              <!--              </q-item>-->
+              <q-item clickable v-ripple>
+                <q-item-section class="text-left">
+                  <q-item-label class="text-bold">Sintomas:</q-item-label>
+                </q-item-section>
+                <q-item-section class="text-left">
+                  <q-item-label class="text-bold">Medicamentos:</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-ripple>
+                <q-item-section class="text-left">
+                  <q-item-label
+                    v-for="(sintoma, index) in items.sintomas"
+                    :key="index"
+                  >
+                    - {{ sintoma }}</q-item-label
+                  >
+                </q-item-section>
+                <q-item-section class="text-left">
+                  <q-item-label
+                    v-for="(medicamentos, index) in items.medicacion"
+                    :key="index"
+                  >
+                    - {{ medicamentos }}</q-item-label
+                  >
+                </q-item-section>
+              </q-item>
+            </q-list>
             <q-card-section class="text-center">
-              <q-item-label>Observación:</q-item-label>
+              <q-item-label class="text-bold">Observación:</q-item-label>
               {{ items.detalle }}
             </q-card-section>
           </q-card>
@@ -97,7 +146,7 @@ export default {
   mixins: [MixinDefault],
   computed: {
     // ...mapState("segui", ["seguiObserva"]),
-    ...mapGetters("segui", ["getSeguimientos", "getSeguiObserva"])
+    ...mapGetters("segui", ["getSeguiFilter", "getSeguiObserva"])
   },
   data() {
     return {
@@ -141,8 +190,8 @@ export default {
   async created() {
     console.log(this.$route.params.id);
     await this.callRegistroSegui(this.$route.params.id);
-    // this.$store.commit("segui/addSeguiObserva", this.getSeguimientos);
-    const dataSG = await this.getSeguimientos;
+    // this.$store.commit("segui/addSeguiObserva", this.getSeguiFilter);
+    const dataSG = await this.getSeguiFilter;
     this.arrayObserva = dataSG;
     this.sintomas = dataSG.sintomas;
     this.medicacion = dataSG.medicacion;

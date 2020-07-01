@@ -2,6 +2,7 @@ import { axiosInstance } from "boot/axios";
 
 const state = {
   Seguimientos: [],
+  SeguimientosFilter: [],
   dialogDetalleSegui: false,
   dialogDetalleSeguiData: "",
   setSeguimientosOne: [],
@@ -17,6 +18,9 @@ const mutations = {
   },
   setSeguimientos(state, payload) {
     state.Seguimientos = payload;
+  },
+  setSeguimientosFilter(state, payload) {
+    state.SeguimientosFilter = payload;
     state.seguiObserva = payload;
   },
   setRole(state, payload) {
@@ -39,7 +43,11 @@ const actions = {
     // console.log(payload);
     const response = await axiosInstance.get(`/seguimiento/${payload}`);
     // console.log(response.data);
-    commit("setSeguimientos", response.data);
+    if (payload == "all") {
+      commit("setSeguimientos", response.data);
+    } else {
+      commit("setSeguimientosFilter", response.data);
+    }
     // return response.data;
   },
   async callOneRegistroSegui({ commit }, payload) {
@@ -89,6 +97,9 @@ const getters = {
   },
   getSeguiObserva(state) {
     return state.seguiObserva;
+  },
+  getSeguiFilter(state) {
+    return state.SeguimientosFilter;
   }
 };
 

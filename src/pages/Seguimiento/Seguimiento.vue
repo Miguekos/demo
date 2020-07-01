@@ -15,11 +15,11 @@
           left
         ></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6">Seguimientos </q-item-label>
+          <q-item-label class="text-center text-h6">Seguimiento</q-item-label>
           <!--          {{this.columnsexport}}-->
-          <q-separator color="indigo-4" inset />
+          <q-separator color="red-4" inset />
         </q-item-section>
-        <q-item-section class="text-indigo text-bold" side top right>
+        <q-item-section class="text-red text-bold" side top right>
           <q-icon name="archive" />
         </q-item-section>
       </q-item>
@@ -34,9 +34,9 @@
           <q-item-label class="text-center text-h6"
             >Personal sanos
           </q-item-label>
-          <q-separator color="indigo-4" inset />
+          <q-separator color="red-4" inset />
         </q-item-section>
-        <q-item-section class="text-indigo text-bold" side top right>
+        <q-item-section class="text-red text-bold" side top right>
         </q-item-section>
       </q-item>
       <q-item>
@@ -44,7 +44,7 @@
           <!-- <q-input
             v-model="search"
             dense
-            standout="bg-indigo-4 text-white"
+            standout="bg-red-4 text-white"
             type="search"
             placeholder="Buscar"
           >
@@ -83,7 +83,7 @@
             <q-item-section>
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
-                <b class="text-indigo-5">Area:</b>
+                <b class="text-red-5">Area:</b>
                 {{ props.row.area }}
               </q-item-label>
             </q-item-section>
@@ -105,7 +105,7 @@
         <q-item-section>
           <q-item-label>{{ item.nombre }}</q-item-label>
           <q-item-label caption>
-            <b class="text-indigo-5">Cel:</b> {{ item.telf }}</q-item-label
+            <b class="text-red-5">Cel:</b> {{ item.telf }}</q-item-label
           >
         </q-item-section>
         <q-item-section side right>

@@ -45,6 +45,10 @@ const routes = [
         path: "/dashboard",
         component: () => import("pages/Control/Index.vue")
       },
+      {
+        path: "/certificado",
+        component: () => import("pages/Documentos/Index.vue")
+      },
       { path: "/grafica", component: () => import("components/ApexCharts") }
     ]
   },

@@ -6,11 +6,6 @@
           <q-item-label header class="text-center text-h6 q-pa-xs"
             >Editar perfil de {{ $store.state.users.UsersOne.name }}
           </q-item-label>
-          <q-item-label v-if="role === 1" class="text-center text-h6 q-pa-xs">
-            <q-btn flat @click="abrirDialogReg" color="red-5"
-              >Recibir cuidados
-            </q-btn>
-          </q-item-label>
           <q-separator spaced />
           <q-list>
             <q-item
@@ -34,61 +29,6 @@
                 <q-item-label caption>{{ userdatil.email }}</q-item-label>-->
                 <q-item-label>{{ getUserOne.name }}</q-item-label>
                 <q-item-label caption>{{ getUserOne.email }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section style="align-items: center">
-                <q-file
-                  dense
-                  :value="files"
-                  @input="updateFiles"
-                  label="Sube aqui tu certificado"
-                  outlined
-                  multiple
-                  :clearable="!isUploading"
-                >
-                  <template v-slot:file="{ index, file }">
-                    <q-chip
-                      class="full-width q-my-xs"
-                      :removable="
-                        isUploading && uploadProgress[index].percent < 1
-                      "
-                      square
-                      @remove="cancelFile(index)"
-                    >
-                      <q-linear-progress
-                        class="absolute-full full-height"
-                        :value="uploadProgress[index].percent"
-                        :color="uploadProgress[index].color"
-                        track-color="grey-2"
-                      />
-
-                      <q-avatar>
-                        <q-icon :name="uploadProgress[index].icon" />
-                      </q-avatar>
-
-                      <div class="ellipsis relative-position">
-                        {{ file.name }}
-                      </div>
-
-                      <q-tooltip>
-                        {{ file.name }}
-                      </q-tooltip>
-                    </q-chip>
-                  </template>
-
-                  <template v-slot:after v-if="canUpload">
-                    <q-btn
-                      color="primary"
-                      dense
-                      icon="cloud_upload"
-                      round
-                      @click="upload"
-                      :disable="!canUpload"
-                      :loading="isUploading"
-                    />
-                  </template>
-                </q-file>
               </q-item-section>
             </q-item>
             <q-item class="justify-center">
