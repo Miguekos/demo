@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page>
     <q-list>
       <q-item
         @click="exportTable()"

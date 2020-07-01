@@ -184,8 +184,8 @@ export default {
   async created() {
     this.$q.loading.show();
     const userData = LocalStorage.getAll().UserDetalle;
-    // console.log(userData.id.$oid);
-    await this.callOneRegistroSegui(userData.id.$oid);
+    console.log(userData._id.$oid);
+    await this.callOneRegistroSegui(userData._id.$oid);
     this.$q.loading.hide();
   }
 };

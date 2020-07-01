@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page>
     <q-card flat>
       <q-tabs
         v-model="tab"
