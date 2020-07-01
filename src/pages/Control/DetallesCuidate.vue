@@ -184,7 +184,7 @@ export default {
   async created() {
     this.$q.loading.show();
     const userData = LocalStorage.getAll().UserDetalle;
-    console.log(userData._id.$oid);
+    console.log(userData);
     await this.callOneRegistroSegui(userData._id.$oid);
     this.$q.loading.hide();
   }
