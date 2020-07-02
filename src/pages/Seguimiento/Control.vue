@@ -24,7 +24,7 @@
         <q-item-section>
           <q-select
             color="red-5"
-            label="Sintomas"
+            label="Síntomas"
             filled
             v-model="sintomas"
             use-input
@@ -41,7 +41,7 @@
         <q-item-section>
           <q-select
             color="red-5"
-            label="Medicacion"
+            label="Medicación"
             filled
             v-model="medicacion"
             use-input
@@ -77,7 +77,7 @@
       <q-item>
         <q-item-section class="text-center">
           <q-card
-            v-for="(items, index) in getSeguiObserva.observa"
+            v-for="(items, index) in ordenar"
             :key="index"
             style="margin: 10px 0px 10px 0px"
           >
@@ -90,6 +90,7 @@
                   formatFecha(items.fecha)
                 }}</q-item-label>
               </q-card-section>
+              <!--              {{ ordenar }}-->
               <!--              <q-item clickable v-ripple>-->
               <!--                <q-item-section>-->
               <!--                  <q-item-label>{{ items.nombre }}</q-item-label>-->
@@ -102,10 +103,10 @@
               <!--              </q-item>-->
               <q-item clickable v-ripple>
                 <q-item-section class="text-left">
-                  <q-item-label class="text-bold">Sintomas:</q-item-label>
+                  <q-item-label class="text-bold">Síntomas:</q-item-label>
                 </q-item-section>
                 <q-item-section class="text-left">
-                  <q-item-label class="text-bold">Medicamentos:</q-item-label>
+                  <q-item-label class="text-bold">Medicación:</q-item-label>
                 </q-item-section>
               </q-item>
               <q-item clickable v-ripple>
@@ -146,7 +147,22 @@ export default {
   mixins: [MixinDefault],
   computed: {
     // ...mapState("segui", ["seguiObserva"]),
-    ...mapGetters("segui", ["getSeguiFilter", "getSeguiObserva"])
+    ...mapGetters("segui", ["getSeguiFilter", "getSeguiObserva"]),
+    ordenar() {
+      const unordered = this.getSeguiObserva.observa;
+      const ordered = {};
+      Object.keys(unordered.reverse())
+        .sort()
+        .forEach(function(key) {
+          console.log(key);
+          ordered[key] = unordered[key];
+        });
+
+      console.log(JSON.stringify(ordered));
+      // return unordered.sort((a, b) => a.fecha > b.fecha);
+      return ordered;
+      // return this.getSeguiObserva.observa;
+    }
   },
   data() {
     return {
@@ -162,9 +178,10 @@ export default {
       this.$q
         .dialog({
           title: "Confirm",
-          message: "Would you like to turn on the wifi?",
+          message: "¿Estas seguro que quieres dar De Alta?",
           cancel: true,
-          persistent: true
+          persistent: true,
+          color: "red-5"
         })
         .onOk(async () => {
           // console.log('>>>> OK')

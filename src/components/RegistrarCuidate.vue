@@ -3,7 +3,7 @@
     <q-form @submit="onSubmit" class="q-gutter-md">
       <q-list dense bordered>
         <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
-          >Cuéntanos, ¿cómo estas?
+          >Cuéntanos, ¿cómo estás?
         </q-item-label>
         <q-separator spaced />
 
@@ -12,7 +12,7 @@
             <q-input
               borderless
               v-model="dateDiag"
-              label="Fecha Diagnostico"
+              label="Fecha de diagnóstico"
               mask="date"
             >
               <template v-slot:append>
@@ -38,9 +38,10 @@
         <q-item class="q-pb-xs">
           <q-item-section>
             <q-input
+              disable
               borderless
               v-model="dateReport"
-              label="Fecha Reporte"
+              label="Fecha de reporte"
               mask="date"
             >
               <template v-slot:append>
@@ -66,7 +67,7 @@
         <q-item class="q-pb-xs">
           <q-item-section>
             <q-select
-              label="Sintomas"
+              label="Síntomas"
               borderless
               v-model="sintomas"
               use-input
@@ -84,7 +85,7 @@
         <q-item class="q-pb-xs">
           <q-item-section>
             <q-select
-              label="Medicacion"
+              label="Medicación"
               borderless
               v-model="medicacion"
               use-input
@@ -197,15 +198,14 @@ export default {
     },
     async onSubmit() {
       // console.log(this.observa.length);
-      // console.log(this.sintomas.length);
-      // console.log(this.medicacion.length);
-      // console.log(this.dateDiag.length);
-      // console.log(this.dateReport.length);
+      // console.log(this.sintomas);
+      // console.log(this.medicacion);
+      // console.log(this.temp);
       if (
         this.observa.length > 0 &&
-        this.sintomas.length > 0 &&
-        this.temp.length > 0 &&
-        this.medicacion.length > 0
+        this.sintomas != null &&
+        this.temp != null &&
+        this.medicacion != null
       ) {
         this.$q.loading.show();
         // let validacion = this.valdairEstados();

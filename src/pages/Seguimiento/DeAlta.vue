@@ -59,7 +59,7 @@
       </q-item>
     </q-list>
 
-    <!--     {{ getClientesS }}-->
+    <!--     {{ getSeguiDealta }}-->
     <!--    {{ columnsexport }}-->
     <q-table
       hide-bottom
@@ -99,7 +99,7 @@
 
     <!-- <q-list separator>
       <q-item
-        v-for="(item, index) in getClientesS"
+        v-for="(item, index) in getSeguiDealta"
         :key="index"
         clickable
         v-ripple
@@ -169,39 +169,9 @@ export default {
       },
       columnsexport: [
         {
-          name: "notif1",
-          label: "¿Sensación de alza térmica o fiebre?",
-          field: row => (row.notif1 ? "Si" : "No")
-        },
-        {
-          name: "notif2",
-          label: "¿Tos, estornudos o dificultad para respirar?",
-          field: row => (row.notif2 ? "Si" : "No")
-        },
-        {
-          name: "notif3",
-          label: "¿Expectoración o flema amarilla o verdosa?",
-          field: row => (row.notif3 ? "Si" : "No")
-        },
-        {
-          name: "notif4",
-          label: "¿Contacto con persona(s) con un caso confirmado de COVID-19?",
-          field: row => (row.notif4 ? "Si" : "No")
-        },
-        {
-          name: "notif5",
-          label: "¿Estás tomando alguna medicación?",
-          field: row => (row.notif5 ? "Si" : "No")
-        },
-        {
-          name: "estados",
-          label: "Estados",
-          field: row => (row.estados === "00" ? "Sano" : "Con Sintomas")
-        },
-        {
-          name: "nombre",
+          name: "name",
           label: "Nombre",
-          field: row => row.nombre
+          field: row => row.name
         },
         {
           name: "dni",
@@ -209,9 +179,9 @@ export default {
           field: "dni"
         },
         {
-          name: "telf",
+          name: "telefono",
           label: "Celular",
-          field: "telf"
+          field: "telefono"
         },
         {
           name: "area",
@@ -224,9 +194,35 @@ export default {
           field: "temp"
         },
         {
-          name: "correo",
+          name: "email",
           label: "Correo",
-          field: "correo"
+          field: "email"
+        },
+        {
+          name: "observa",
+          label: "Observaciones",
+          field: row => row.observa,
+          format: val => `${JSON.stringify(val)}`
+        },
+        {
+          name: "dateDiag",
+          label: "Fecha de diagnostico",
+          field: "dateDiag"
+        },
+        {
+          name: "dateReport",
+          label: "Fecha de registro",
+          field: "dateReport"
+        },
+        {
+          name: "dealta",
+          label: "De Alta",
+          field: row => (row.dealta == 0 ? "No" : "Si")
+        },
+        {
+          name: "seguimiento",
+          label: "Seguimiento",
+          field: row => (row.seguimiento == 0 ? "No" : "Si")
         },
         {
           name: "created_at.$date",
@@ -261,7 +257,7 @@ export default {
   methods: {
     ...mapActions("segui", ["callSeguiDealta"]),
     crearDataExport() {
-      const arraysJson = this.getClientesS[0];
+      const arraysJson = this.getSeguiDealta[0];
       let keys = [];
       let values = [];
       keys.push(Object.keys(arraysJson));
@@ -285,7 +281,7 @@ export default {
       // naive encoding to csv format
       const content = [this.columnsexport.map(col => wrapCsvValue(col.label))]
         .concat(
-          this.getClientesS.map(row =>
+          this.getSeguiDealta.map(row =>
             this.columnsexport
               .map(col =>
                 wrapCsvValue(
@@ -300,7 +296,7 @@ export default {
         )
         .join("\r\n");
 
-      const status = exportFile("table-sanos.csv", content, "text/csv");
+      const status = exportFile("table-dealta.csv", content, "text/csv");
 
       if (status !== true) {
         this.$q.notify({
@@ -336,7 +332,7 @@ export default {
     // });
     await this.callSeguiDealta();
     // await this.crearDataExport();
-    // this.dataexport = this.getClientesS();
+    // this.dataexport = this.getSeguiDealta();
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");

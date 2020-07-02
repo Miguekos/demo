@@ -2,10 +2,31 @@
   <q-page>
     <q-card flat>
       <q-tabs v-model="tab" dense align="justify">
-        <q-tab class="text-amber-5" name="mails" label="Evaluate" />
-        <q-tab class="text-green-5" name="alarms" label="Sanos" />
-        <q-tab class="text-red-5" name="movies" label="Con sintomas" />
-        <q-tab class="text-indigo-5" name="otro" label="Cuidate" />
+        <q-tab class="text-amber-5" name="mails" label="Mis evaluaciones" />
+        <q-tab
+          v-if="role === 1"
+          class="text-green-5"
+          name="alarms"
+          label="Sanos"
+        />
+        <q-tab
+          v-if="role === 1"
+          class="text-red-5"
+          name="movies"
+          label="Con sintomas"
+        />
+        <q-tab
+          v-if="role === 1"
+          class="text-indigo-5"
+          name="otro"
+          label="En cuidate"
+        />
+        <q-tab
+          v-if="role === 2"
+          class="text-indigo-5"
+          name="otro_user"
+          label="Mi cuidado"
+        />
       </q-tabs>
 
       <q-separator />
@@ -147,8 +168,12 @@
           <DetallesConSintomas />
         </q-tab-panel>
 
-        <q-tab-panel name="otro">
+        <q-tab-panel v-if="role === 1" name="otro">
           <DetallesCuidate />
+        </q-tab-panel>
+
+        <q-tab-panel v-if="role === 2" name="otro_user">
+          <DetallesCuidateOne />
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
@@ -198,10 +223,12 @@ export default {
     Search: () => import("./SearchMR"),
     DetallesConSintomas: () => import("./DetallesConSintomas"),
     DetallesSanos: () => import("./DetallesSanos"),
-    DetallesCuidate: () => import("./DetallesCuidate")
+    DetallesCuidate: () => import("./DetallesCuidate"),
+    DetallesCuidateOne: () => import("./DetallesCuidateOne")
   },
   data() {
     return {
+      role: null,
       tab: "mails",
       pagination: {
         sortBy: "created_at.$date",
@@ -307,7 +334,11 @@ export default {
         )
         .join("\r\n");
 
-      const status = exportFile("table-sanos.csv", content, "text/csv");
+      const status = exportFile(
+        "table-misevaluaciones.csv",
+        content,
+        "text/csv"
+      );
 
       if (status !== true) {
         this.$q.notify({
@@ -344,6 +375,7 @@ export default {
   async created() {
     this.$q.loading.show();
     const userData = LocalStorage.getAll().UserDetalle;
+    this.role = LocalStorage.getAll().role;
     // console.log(userData.id.$oid);
     await this.callClienteOne(userData.dni);
     // await this.callOneRegistroSegui(userData.id.$oid);

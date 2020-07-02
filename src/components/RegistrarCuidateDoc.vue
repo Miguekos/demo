@@ -13,7 +13,7 @@
             <q-input
               borderless
               v-model="dateDiag"
-              label="Fecha Diagnostico"
+              label="Fecha de diagnóstico"
               mask="date"
             >
               <template v-slot:append>
@@ -41,7 +41,7 @@
             <q-input
               borderless
               v-model="dateReport"
-              label="Fecha Reporte"
+              label="Fecha de reporte"
               mask="date"
             >
               <template v-slot:append>
@@ -67,7 +67,7 @@
         <q-item class="q-pb-xs">
           <q-item-section>
             <q-select
-              label="Sintomas"
+              label="Síntomas"
               borderless
               v-model="sintomas"
               use-input
@@ -85,7 +85,7 @@
         <q-item class="q-pb-xs">
           <q-item-section>
             <q-select
-              label="Medicacion"
+              label="Medicación"
               borderless
               v-model="medicacion"
               use-input
@@ -126,24 +126,6 @@
         </q-item>
 
         <q-separator inset color="red-5" />
-
-        <!--        <q-item class="q-pr-xs">-->
-        <!--          <q-item-section>-->
-        <!--            <q-item-label class="text-left">-->
-        <!--              Todos los datos expresados en esta ficha constituyen declaración-->
-        <!--              jurada de mi parte. He sido informado(a) que de omitir o falsear-->
-        <!--              información puedo perjudicar la salud de mis compañeros(as), y la-->
-        <!--              mía propia, lo cual, de constituir una falta grave a la salud-->
-        <!--              pública, asumo sus consecuencias.-->
-        <!--            </q-item-label>-->
-        <!--            &lt;!&ndash; <q-item-label caption-->
-        <!--            >Allow notification when uploading images</q-item-label-->
-        <!--            >&ndash;&gt;-->
-        <!--          </q-item-section>-->
-        <!--          <q-item-section side center>-->
-        <!--            <q-checkbox v-model="terminos" val="blue" color="teal"/>-->
-        <!--          </q-item-section>-->
-        <!--        </q-item>-->
 
         <q-separator spaced />
 

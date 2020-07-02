@@ -187,6 +187,12 @@ export default {
           link: "/registro"
         },
         {
+          title: "Cuídate",
+          caption: "Lleva tu control",
+          icon: "favorite",
+          link: "/cuidate"
+        },
+        {
           title: "Documentos",
           caption: "Certificado",
           icon: "note_add",
@@ -231,10 +237,16 @@ export default {
           link: "/registro"
         },
         {
-          title: "Cuidate",
+          title: "Cuídate",
           caption: "Lleva tu control",
-          icon: "group",
+          icon: "favorite",
           link: "/cuidate"
+        },
+        {
+          title: "Documentos",
+          caption: "Certificado",
+          icon: "note_add",
+          link: "/certificado"
         }
       ]
     };

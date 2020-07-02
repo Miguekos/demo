@@ -325,7 +325,11 @@ export default {
           if (validacion == "00") {
             this.$q.notify({
               message: "!Sigue cuidándote! Que tengas buen día.",
-              color: "green-6",
+              // progress: true,
+              // icon: "favorite_border",
+              icon: "insert_emoticon",
+              color: "white",
+              textColor: "green-5",
               position: "top"
             });
             this.reset();

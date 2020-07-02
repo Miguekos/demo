@@ -28,7 +28,7 @@
           <q-item clickable v-ripple>
             <q-item-section>
               <q-item-label>
-                Simtomas:
+                Síntomas:
               </q-item-label>
             </q-item-section>
             <q-item-section>
@@ -43,7 +43,7 @@
           <q-item clickable v-ripple>
             <q-item-section>
               <q-item-label>
-                Medicamentos:
+                Medicación:
               </q-item-label>
             </q-item-section>
             <q-item-section>
@@ -58,7 +58,7 @@
           <q-item clickable v-ripple>
             <q-item-section>
               <q-item-label>
-                Fecha diagnostico:
+                Fecha de diagnóstico:
               </q-item-label>
             </q-item-section>
             <q-item-section>
@@ -70,7 +70,7 @@
           <q-item clickable v-ripple>
             <q-item-section>
               <q-item-label>
-                Fecha registro:
+                Fecha de registro:
               </q-item-label>
             </q-item-section>
             <q-item-section>

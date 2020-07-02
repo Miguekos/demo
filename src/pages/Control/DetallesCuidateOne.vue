@@ -60,12 +60,12 @@
       </q-item>
     </q-list>
 
-    <!--       {{ getSeguimientos }}-->
+    <!--       {{ getSeguimientoOne }}-->
     <q-table
       hide-bottom
       hide-header
       flat
-      :data="getSeguimientos"
+      :data="getSeguimientoOne"
       :columns="columnsOne"
       row-key="created_at.$date"
       :pagination.sync="pagination"
@@ -83,6 +83,7 @@
         <q-tr :props="props">
           <q-td key="name" :props="props">
             <q-item-section
+              v-if="role == 1"
               v-ripple:white
               clickable
               @click="detalleSeguimientoOne(props.row)"
@@ -93,26 +94,34 @@
                 {{ props.row.temp }}°
               </q-item-label>
             </q-item-section>
+            <q-item-section v-if="role == 2" v-ripple:white clickable>
+              <q-item-label>{{ props.row.name }}</q-item-label>
+              <q-item-label caption>
+                <b class="text-red-5">temp:</b>
+                {{ props.row.temp }}°
+              </q-item-label>
+            </q-item-section>
           </q-td>
           <q-td key="created_at.$date" v-ripple:white :props="props">{{
             formatDate(props.row.created_at.$date)
           }}</q-td>
-          <!--            <q-td-->
-          <!--              key="email"-->
-          <!--              :props="props"-->
-          <!--              v-ripple:white-->
-          <!--              clickable-->
-          <!--              file-->
-          <!--              @click="funcUpdateTemp(props.row)"-->
-          <!--            >-->
-          <!--              <q-btn-->
-          <!--                size="xs"-->
-          <!--                round-->
-          <!--                color="indigo-5"-->
-          <!--                text-color="white"-->
-          <!--                icon="whatshot"-->
-          <!--              />-->
-          <!--            </q-td>-->
+          <q-td
+            v-if="role == 2"
+            key="email"
+            :props="props"
+            v-ripple:white
+            clickable
+            file
+            @click="funcUpdateTemp(props.row)"
+          >
+            <q-btn
+              size="xs"
+              round
+              color="indigo-5"
+              text-color="white"
+              icon="whatshot"
+            />
+          </q-td>
         </q-tr>
       </template>
     </q-table>
@@ -145,7 +154,7 @@ export default {
   name: "DetallesCuidate",
   // mixins: [myMixin],
   computed: {
-    ...mapGetters("segui", ["getSeguimientos"])
+    ...mapGetters("segui", ["getSeguimientoOne"])
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
@@ -153,6 +162,8 @@ export default {
   },
   data() {
     return {
+      role: null,
+      userData: [],
       tab: "mails",
       pagination: {
         sortBy: "created_at.$date",
@@ -258,9 +269,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions("segui", ["callRegistroSegui"]),
+    ...mapActions("segui", ["callOneRegistroSegui", "updateRegistroSegui"]),
     crearDataExport() {
-      const arraysJson = this.getSeguimientos[0];
+      const arraysJson = this.getSeguimientoOne[0];
       let keys = [];
       let values = [];
       keys.push(Object.keys(arraysJson));
@@ -284,7 +295,7 @@ export default {
       // naive encoding to csv format
       const content = [this.columnsexport.map(col => wrapCsvValue(col.label))]
         .concat(
-          this.getSeguimientos.map(row =>
+          this.getSeguimientoOne.map(row =>
             this.columnsexport
               .map(col =>
                 wrapCsvValue(
@@ -309,6 +320,55 @@ export default {
         });
       }
     },
+    funcUpdateTemp(arg) {
+      // console.log(arg);
+      this.$q
+        .dialog({
+          title: "Temperatura",
+          message: "¿Cuál es tu temperatura?",
+          prompt: {
+            model: "",
+            type: "number" // optional
+          },
+          cancel: true,
+          persistent: true
+        })
+        .onOk(data => {
+          this.$q.loading.show();
+          // console.log(">>>> OK, received", data);
+          let jsonUpdate = {
+            temp: data,
+            _id: arg._id
+          };
+          // console.log(jsonUpdate);
+          this.updateRegistroSegui(jsonUpdate)
+            .then(async resp => {
+              this.$q.notify({
+                message: "¡Actualizamos tu temperatura!",
+                color: "green",
+                position: "top"
+              });
+              await this.callOneRegistroSegui(this.userData.id.$oid);
+              this.$q.loading.hide();
+            })
+            .catch(err => {
+              this.$q.notify({
+                message: "Oh oh, algo salio mal",
+                color: "negative",
+                position: "top"
+              });
+              this.$q.loading.hide();
+            });
+        })
+        .onCancel(() => {
+          this.$q.loading.hide();
+          // console.log('>>>> Cancel')
+        })
+        .onDismiss(() => {
+          this.$q.loading.hide();
+          // console.log('I am triggered on both OK and Cancel')
+        });
+    },
     detalleSeguimientoOne(arg) {
       this.$q.loading.show();
       // console.log(arg);
@@ -326,9 +386,10 @@ export default {
   },
   async created() {
     // this.$q.loading.show();
-    // const userData = LocalStorage.getAll().UserDetalle;
-    // console.log(userData.id.$oid);
-    await this.callRegistroSegui("all");
+    this.userData = LocalStorage.getAll().UserDetalle;
+    this.role = LocalStorage.getAll().role;
+    console.log(this.userData.id.$oid);
+    await this.callOneRegistroSegui(this.userData.id.$oid);
     // this.$q.loading.hide();
   }
 };
