@@ -6,7 +6,9 @@ const state = {
   dialogDetalleSegui: false,
   dialogDetalleSeguiData: "",
   setSeguimientosOne: [],
-  seguiObserva: []
+  seguiObserva: [],
+  SeguimientosCuidate: [],
+  SeguimientosDealta: []
 };
 
 const mutations = {
@@ -18,6 +20,12 @@ const mutations = {
   },
   setSeguimientos(state, payload) {
     state.Seguimientos = payload;
+  },
+  setSeguimientosCuidate(state, payload) {
+    state.SeguimientosCuidate = payload;
+  },
+  setSeguimientosDealta(state, payload) {
+    state.SeguimientosDealta = payload;
   },
   setSeguimientosFilter(state, payload) {
     state.SeguimientosFilter = payload;
@@ -48,6 +56,22 @@ const actions = {
     } else {
       commit("setSeguimientosFilter", response.data);
     }
+    // return response.data;
+  },
+  async callSeguiCuidate({ commit }) {
+    // console.log("Login");
+    // console.log(payload);
+    const response = await axiosInstance.get(`/seguimiento/seguimiento`);
+    // console.log(response.data);
+    commit("setSeguimientosCuidate", response.data);
+    // return response.data;
+  },
+  async callSeguiDealta({ commit }) {
+    // console.log("Login");
+    // console.log(payload);
+    const response = await axiosInstance.get(`/seguimiento/dealta`);
+    // console.log(response.data);
+    commit("setSeguimientosDealta", response.data);
     // return response.data;
   },
   async callOneRegistroSegui({ commit }, payload) {
@@ -100,6 +124,12 @@ const getters = {
   },
   getSeguiFilter(state) {
     return state.SeguimientosFilter;
+  },
+  getSeguiCuidate(state) {
+    return state.SeguimientosCuidate;
+  },
+  getSeguiDealta(state) {
+    return state.SeguimientosDealta;
   }
 };
 

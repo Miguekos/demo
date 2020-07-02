@@ -1,18 +1,11 @@
 <template>
   <q-page>
     <q-card flat>
-      <q-tabs
-        v-model="tab"
-        dense
-        class="text-grey"
-        active-color="primary"
-        indicator-color="primary"
-        align="justify"
-      >
-        <q-tab name="mails" label="Evaluate" />
-        <q-tab name="alarms" label="Sanos" />
-        <q-tab name="movies" label="Con sintomas" />
-        <q-tab name="otro" label="Cuidate" />
+      <q-tabs v-model="tab" dense align="justify">
+        <q-tab class="text-amber-5" name="mails" label="Evaluate" />
+        <q-tab class="text-green-5" name="alarms" label="Sanos" />
+        <q-tab class="text-red-5" name="movies" label="Con sintomas" />
+        <q-tab class="text-indigo-5" name="otro" label="Cuidate" />
       </q-tabs>
 
       <q-separator />
@@ -35,7 +28,9 @@
                   left
                 ></q-item-section>
                 <q-item-section>
-                  <q-item-label class="text-center text-h6">Evaluate</q-item-label>
+                  <q-item-label class="text-center text-h6">
+                    <!--                    Evaluate-->
+                  </q-item-label>
                   <q-separator color="amber-4" inset />
                 </q-item-section>
                 <q-item-section class="text-amber text-bold" side top right>
@@ -56,9 +51,9 @@
                   left
                 ></q-item-section>
                 <q-item-section>
-                  <q-item-label class="text-center text-h6"
-                    >Evaluate</q-item-label
-                  >
+                  <q-item-label class="text-center text-h6">
+                    <!--                    Evaluate-->
+                  </q-item-label>
                   <q-separator color="amber-4" inset />
                 </q-item-section>
                 <q-item-section
@@ -356,3 +351,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.q-tab-panel {
+  padding: 10px 0px 0px 0px;
+}
+</style>

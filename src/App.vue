@@ -6,7 +6,7 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-
+import { LocalStorage } from "quasar";
 export default {
   name: "App",
   data() {

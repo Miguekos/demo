@@ -15,7 +15,9 @@
           left
         ></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6">Cuidate</q-item-label>
+          <q-item-label class="text-center text-h6">
+            <!--            Cuidate-->
+          </q-item-label>
           <q-separator color="indigo-4" inset />
         </q-item-section>
         <!--          <q-item-section class="text-indigo text-bold" side top right>-->
@@ -182,11 +184,11 @@ export default {
     }
   },
   async created() {
-    this.$q.loading.show();
+    // this.$q.loading.show();
     const userData = LocalStorage.getAll().UserDetalle;
     console.log(userData.id.$oid);
     await this.callOneRegistroSegui(userData.id.$oid);
-    this.$q.loading.hide();
+    // this.$q.loading.hide();
   }
 };
 </script>

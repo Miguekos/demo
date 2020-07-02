@@ -220,6 +220,7 @@ export default {
               LocalStorage.set("loggin", true);
               LocalStorage.set("role", resp.role);
               LocalStorage.set("idUser", resp.id.$oid);
+              LocalStorage.set("fechaInicioSession", new Date());
               this.$store.commit("auth/setAuth", true);
               this.$store.commit("auth/setRole", resp.role);
               const userDetalle = {

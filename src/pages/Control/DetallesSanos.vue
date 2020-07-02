@@ -15,8 +15,8 @@
           left
         ></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6"
-            >Personal sanos
+          <q-item-label class="text-center text-h6">
+            <!--            Personal sanos-->
           </q-item-label>
           <!--          {{this.columnsexport}}-->
           <q-separator color="green-4" inset />
@@ -326,7 +326,7 @@ export default {
     }
   },
   async created() {
-    this.$q.loading.show();
+    // this.$q.loading.show();
     this.loading = true;
     // console.log("created - Cliente");
     // this.$q.loading.show({
@@ -341,7 +341,7 @@ export default {
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");
-    this.$q.loading.hide();
+    // this.$q.loading.hide();
   }
 };
 </script>

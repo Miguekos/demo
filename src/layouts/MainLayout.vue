@@ -130,10 +130,10 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-dialog v-model="dialogDetalle">
+    <q-dialog full-width v-model="dialogDetalle">
       <detalleDeLosUsuarios />
     </q-dialog>
-    <q-dialog v-model="dialogDetalleSegui">
+    <q-dialog full-width v-model="dialogDetalleSegui">
       <detalleSeguimiento />
     </q-dialog>
   </q-layout>
@@ -255,7 +255,12 @@ export default {
     },
     Logout() {
       this.$q.loading.show();
-      LocalStorage.clear();
+      // LocalStorage.clear();
+      LocalStorage.remove("loggin");
+      LocalStorage.remove("role");
+      LocalStorage.remove("idUser");
+      LocalStorage.remove("fechaInicioSession");
+      LocalStorage.remove("UserDetalle");
       // setTimeout(() => {
       this.$router.push("/auth");
       this.$q.notify({

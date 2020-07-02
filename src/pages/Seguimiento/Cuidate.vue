@@ -9,20 +9,18 @@
       />
     </div>
     <div class="full-width">
-      <Listas/>
+      <Listas />
     </div>
   </q-page>
 </template>
 
 <script>
-    export default {
-        name: "Cuidate",
-        components: {
-            Listas: () => import("components/RegistrarCuidate")
-        }
-    }
+export default {
+  name: "Cuidate",
+  components: {
+    Listas: () => import("components/RegistrarCuidate")
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

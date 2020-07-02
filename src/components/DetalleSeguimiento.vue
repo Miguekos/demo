@@ -7,7 +7,7 @@
             <img :src="urlImagen" />
           </q-avatar>
         </q-item-section>
-        <!--        {{getDialogDetalleSeguiData}}-->
+        <!--        {{ getDialogDetalleSeguiData }}-->
         <q-item-section>
           <q-item-label>{{ getDialogDetalleSeguiData.name }}</q-item-label>
           <q-item-label caption>
@@ -24,38 +24,64 @@
       <q-separator />
 
       <q-card-section class="q-pa-xs">
-        <q-list bordered separator>
+        <q-list separator>
           <q-item clickable v-ripple>
             <q-item-section>
               <q-item-label>
-                Simtomas: {{ getDialogDetalleSeguiData.sintomas }}
+                Simtomas:
+              </q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label
+                v-for="(items, index) in getDialogDetalleSeguiData.sintomas"
+                :key="index"
+              >
+                {{ items }}
               </q-item-label>
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
             <q-item-section>
               <q-item-label>
-                Medicamentos: {{ getDialogDetalleSeguiData.medicacion }}
+                Medicamentos:
+              </q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label
+                v-for="(items, index) in getDialogDetalleSeguiData.medicacion"
+                :key="index"
+              >
+                {{ items }}
               </q-item-label>
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
             <q-item-section>
               <q-item-label>
-                Fecha Diagnostico: {{ getDialogDetalleSeguiData.dateDiag }}
+                Fecha diagnostico:
+              </q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                {{ getDialogDetalleSeguiData.dateDiag }}
               </q-item-label>
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
             <q-item-section>
               <q-item-label>
-                Fecha Registro: {{ getDialogDetalleSeguiData.dateReport }}
+                Fecha registro:
+              </q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                {{ getDialogDetalleSeguiData.dateReport }}
               </q-item-label>
             </q-item-section>
           </q-item>
-          <q-item clickable v-ripple>
-            <q-item-section> </q-item-section>
-          </q-item>
+          <!--          <q-item clickable v-ripple>-->
+          <!--            <q-item-section> </q-item-section>-->
+          <!--          </q-item>-->
         </q-list>
       </q-card-section>
       <q-list bordered separator>
@@ -66,7 +92,7 @@
           <q-item-section>
             <q-btn flat @click="llamar()" color="green">Llamar</q-btn>
           </q-item-section>
-          <q-item-section>
+          <q-item-section v-if="getDialogDetalleSeguiData.dealta == 0">
             <q-btn flat @click="irControl()" color="amber-5">Control</q-btn>
           </q-item-section>
         </q-item>

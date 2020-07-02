@@ -1,13 +1,13 @@
 <template>
   <div class="q-pa-sm">
     <q-form @submit="onSubmit" class="q-gutter-md">
-      <q-list bordered>
+      <q-list dense bordered>
         <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
           >Cuéntanos, ¿cómo estas?
         </q-item-label>
         <q-separator spaced />
 
-        <q-item dense class="q-pb-xs" tag="label">
+        <q-item dense class="q-pb-xs">
           <q-item-section>
             <q-input
               borderless
@@ -35,7 +35,7 @@
 
         <q-separator inset color="red-5" />
 
-        <q-item class="q-pb-xs" tag="label">
+        <q-item class="q-pb-xs">
           <q-item-section>
             <q-input
               borderless
@@ -63,7 +63,7 @@
 
         <q-separator inset color="red-5" />
 
-        <q-item class="q-pb-xs" tag="label">
+        <q-item class="q-pb-xs">
           <q-item-section>
             <q-select
               label="Sintomas"
@@ -81,7 +81,7 @@
 
         <q-separator inset color="red-5" />
 
-        <q-item class="q-pb-xs" tag="label">
+        <q-item class="q-pb-xs">
           <q-item-section>
             <q-select
               label="Medicacion"
@@ -99,7 +99,20 @@
 
         <q-separator inset color="red-5" />
 
-        <q-item class="q-pb-xs" tag="label">
+        <q-item class="q-pb-xs">
+          <q-item-section>
+            <q-input
+              v-model="temp"
+              color="red-5"
+              borderless
+              label="Temperatura"
+            />
+          </q-item-section>
+        </q-item>
+
+        <q-separator inset color="red-5" />
+
+        <q-item class="q-pb-xs">
           <q-item-section>
             <q-input
               v-model="observa"
@@ -113,7 +126,7 @@
 
         <q-separator inset color="red-5" />
 
-        <!--        <q-item class="q-pr-xs" tag="label">-->
+        <!--        <q-item class="q-pr-xs">-->
         <!--          <q-item-section>-->
         <!--            <q-item-label class="text-left">-->
         <!--              Todos los datos expresados en esta ficha constituyen declaración-->
@@ -164,6 +177,7 @@ export default {
   data() {
     return {
       infoUser: null,
+      temp: null,
       observa: [],
       sintomas: null,
       medicacion: null,
@@ -174,6 +188,7 @@ export default {
   methods: {
     ...mapActions("segui", ["addRegistroSegui"]),
     reset() {
+      this.temp = null;
       this.observa = null;
       this.sintomas = null;
       this.medicacion = null;
@@ -189,6 +204,7 @@ export default {
       if (
         this.observa.length > 0 &&
         this.sintomas.length > 0 &&
+        this.temp.length > 0 &&
         this.medicacion.length > 0
       ) {
         this.$q.loading.show();
@@ -200,11 +216,15 @@ export default {
             {
               nombre: this.infoUser.name,
               fecha: new Date(),
-              detalle: this.observa
+              detalle: this.observa,
+              temp: this.temp,
+              sintomas: this.sintomas,
+              medicacion: this.medicacion
             }
           ],
           sintomas: this.sintomas,
           medicacion: this.medicacion,
+          seguimiento: 1,
           dateDiag: this.dateDiag,
           dateReport: this.dateReport
         };

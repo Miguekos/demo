@@ -43,19 +43,25 @@
           <q-td key="created_at.$date" :props="props">
             {{ formatDate(props.row.created_at.$date) }}
           </q-td>
-          <q-td
-            key="email"
-            :props="props"
-            clickable
-            @click="eliminarUser(props.row)"
-          >
-            <q-btn
-              size="xs"
-              round
-              color="red-5"
-              text-color="white"
-              icon="delete"
-            />
+          <q-td key="email" :props="props">
+            <div class="q-gutter-md">
+              <q-btn
+                size="xs"
+                round
+                color="indigo-5"
+                text-color="white"
+                icon="add"
+                @click="abrirDialogReg(props.row)"
+              />
+              <q-btn
+                size="xs"
+                round
+                color="red-5"
+                text-color="white"
+                icon="delete"
+                @click="eliminarUser(props.row)"
+              />
+            </div>
           </q-td>
         </q-tr>
       </template>
@@ -84,6 +90,11 @@
     <q-dialog persistent v-model="dialogRegistro">
       <Registro @cerrarDialog="dialogRegistro = false" />
     </q-dialog>
+    <q-dialog v-model="registarCuidate">
+      <q-card>
+        <registarCuidate :id="this.idRegitro" @cerrarDialogCu="registarCuidate = false"/>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -108,10 +119,13 @@ export default {
   },
   components: {
     Search: () => import("./Search"),
-    Registro: () => import("src/components/dielogRegistro")
+    Registro: () => import("src/components/dielogRegistro"),
+    registarCuidate: () => import("../../components/RegistrarCuidateDoc")
   },
   data() {
     return {
+      idRegitro: null,
+      registarCuidate: false,
       pagination: {
         sortBy: "created_at.$date",
         descending: false,
@@ -155,6 +169,15 @@ export default {
   },
   methods: {
     ...mapActions("users", ["callUser", "deleteUser"]),
+    abrirDialogReg(val) {
+      console.log(val);
+      console.log(val._id.$oid);
+      this.idRegitro = val._id.$oid;
+      this.registarCuidate = true;
+    },
+    cerrarDialogReg() {
+      this.registarCuidate = false;
+    },
     eliminarUser(arg) {
       // console.log(arg._id.$oid);
       this.$q
@@ -223,6 +246,11 @@ export default {
   },
   async created() {
     this.$q.loading.show();
+    // this.$on("cerrarDialogReg", this.cerrarDialogReg);
+    this.$on("cerrarDialogReg", function(msg) {
+      console.log(msg);
+    });
+    console.log("cerrarDialogReg");
     // console.log("created - Cliente");
     // this.$q.loading.show({
     //   spinner: QSpinnerGears,

@@ -11,9 +11,9 @@
         </q-item-section>
       </q-item>
       <q-item align="center">
-        <q-item-section>
+        <q-item-section v-if="certificadoCheck">
           <embed
-            src="https://api.apps.com.pe/fileserver/uploads/1.pdf"
+            :src="`https://api.apps.com.pe/fileserver/uploads/${certificado}`"
             type="application/pdf"
             width="100%"
             height="600px"
@@ -30,32 +30,45 @@
 <script>
 import { axiosInstanceImagen } from "boot/axios";
 import { LocalStorage } from "quasar";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Certificado",
+  computed: {
+    ...mapGetters("users", ["getUserOne"])
+  },
   data() {
     return {
-      pdf: null
+      certificadoCheck: false,
+      certificado: null,
+      userData: null,
+      idUser: null
     };
   },
   methods: {
+    ...mapActions("users", ["callUserOne", "updateCertificado"]),
     async updateFoto(arg) {
       // console.log("NOmbre de la imagen", arg);
-      this.usersDetalle.certificado = arg;
+      this.certificado = arg;
       let idUser = LocalStorage.getAll().idUser;
       let jsonUpdate = {
         certificado: arg,
-        _id: this.$route.params.id
+        _id: this.idUser
       };
       // console.log(jsonUpdate);
-      this.updateImage(jsonUpdate)
+      this.updateCertificado(jsonUpdate)
         .then(async resp => {
           // console.log("antes de actualizar");
           // this.alert = false;
           this.$q.notify({
-            message: "¡Se actualizo tu foto de perfil!",
-            position: "top",
-            color: "green-5"
+            message: "¡Se actualizo el documento!",
+            // progress: true,
+            // icon: "favorite_border",
+            icon: "insert_emoticon",
+            color: "white",
+            textColor: "green-5",
+            position: "top"
           });
+          await this.callUserOne(this.idUser);
           // this.callUserOne(this.$route.params.id);
           // await this.ordenarCampos();
           // if (idUser == this.$route.params.id) {
@@ -101,9 +114,23 @@ export default {
       return total;
     }
   },
-  created() {
-    let idUser = LocalStorage.getAll().idUser;
-    console.log(idUser);
+  async created() {
+    this.$q.loading.show();
+    this.idUser = LocalStorage.getAll().idUser;
+    console.log(this.idUser);
+    await this.callUserOne(this.idUser);
+    this.userData = await this.getUserOne;
+    // console.log("this.userData");
+    // console.log(this.userData.certificado);
+    // console.log(this.userData);
+    this.certificado = (await this.userData.certificado)
+      ? this.userData.certificado
+      : "BrochueCuidAPPtebyPandoraTI.pdf";
+    await setTimeout(async () => {
+      console.log("luego de 2 segundos");
+      this.certificadoCheck = true;
+      this.$q.loading.hide();
+    }, 2000);
   }
 };
 </script>

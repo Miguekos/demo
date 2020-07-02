@@ -15,9 +15,9 @@
           left
         ></q-item-section>
         <q-item-section>
-          <q-item-label class="text-center text-h6"
-            >Personal con síntomas</q-item-label
-          >
+          <q-item-label class="text-center text-h6">
+            <!--            Personal con síntomas-->
+          </q-item-label>
           <q-separator color="red-5" inset />
         </q-item-section>
         <q-item-section class="text-red-5 text-bold" side top right>
@@ -315,7 +315,7 @@ export default {
     }
   },
   async created() {
-    this.$q.loading.show();
+    // this.$q.loading.show();
     // console.log("created - Cliente");
     // this.$q.loading.show({
     //   spinner: QSpinnerGears,
@@ -329,7 +329,7 @@ export default {
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");
     // this.$q.loading.hide();
-    this.$q.loading.hide();
+    // this.$q.loading.hide();
   }
 };
 </script>

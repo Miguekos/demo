@@ -1,32 +1,40 @@
 <template>
-  <!-- <q-page class="flex flex-center"> -->
   <q-page>
-    <div v-if="role === 1" id="corazon" class="flex flex-center">
-      <q-img
-        color="grey"
-        style="height: 170px; max-width: 180px;"
-        alt="Roseline logo"
-        src="~assets/lococorazon.png"
-      />
-    </div>
-    <div class="full-width">
-      <Listas />
-    </div>
+    <q-tabs v-model="tab" dense align="justify">
+      <q-tab class="text-red-5" name="seguimiento" label="Seguimiento" />
+      <q-tab class="text-green-5" name="dealta" label="De Alta" />
+    </q-tabs>
+
+    <q-separator />
+
+    <q-tab-panels v-model="tab" animated>
+      <q-tab-panel name="seguimiento">
+        <Seguimiento />
+      </q-tab-panel>
+
+      <q-tab-panel name="dealta">
+        <DeAlta />
+      </q-tab-panel>
+    </q-tab-panels>
   </q-page>
 </template>
 
 <script>
 export default {
-  name: "Seguimiento",
   data() {
     return {
-      role: 2
+      tab: "seguimiento"
     };
   },
   components: {
-    Listas: () => import("./Seguimiento")
+    Seguimiento: () => import("./Seguimiento"),
+    DeAlta: () => import("./DeAlta")
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.q-tab-panel {
+  padding: 10px 0px 0px 0px;
+}
+</style>

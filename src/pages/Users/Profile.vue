@@ -250,7 +250,7 @@ export default {
         done !== true ? setTimeout(this.__updateUploadProgress, 300) : null;
     },
     Salir() {
-      this.$router.push("/");
+      this.$router.push("/usuarios");
     },
     async onSubmit() {
       let jsonUpdate = {

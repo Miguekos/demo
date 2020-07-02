@@ -66,7 +66,7 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <q-btn @click="update" color="green-5">Dar de Alta</q-btn>
+          <q-btn @click="dealta" color="green-5">Dar de Alta</q-btn>
         </q-item-section>
         <q-item-section>
           <q-btn @click="update" color="red-5">Confirmar</q-btn>
@@ -158,6 +158,42 @@ export default {
   },
   methods: {
     ...mapActions("segui", ["updateRegistroSegui", "callRegistroSegui"]),
+    async dealta() {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "Would you like to turn on the wifi?",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(async () => {
+          // console.log('>>>> OK')
+          try {
+            const updateResponse = await this.updateRegistroSegui({
+              _id: {
+                $oid: this.$route.params.id
+              },
+              seguimiento: 0,
+              dealta: 1
+            });
+            console.log(updateResponse);
+            this.detalle = null;
+            await this.callRegistroSegui(this.$route.params.id);
+            this.$router.push(`/seguimiento`);
+          } catch (e) {
+            console.log(e);
+          }
+        })
+        .onOk(() => {
+          // console.log('>>>> second OK catcher')
+        })
+        .onCancel(() => {
+          // console.log('>>>> Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
+    },
     async update() {
       if (this.detalle != null) {
         this.$store.commit("segui/addObserva", {

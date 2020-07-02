@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page padding>
     <q-list>
       <q-item
         @click="exportTable()"
@@ -9,25 +9,25 @@
         v-ripple
       >
         <q-item-section
-          class="text-red text-bold"
+          class="text-green text-bold"
           side
           top
           left
         ></q-item-section>
         <q-item-section>
           <q-item-label class="text-center text-h6">
-            <!--            Seguimiento-->
+            <!--            De Alta-->
           </q-item-label>
           <!--          {{this.columnsexport}}-->
-          <q-separator color="red-4" inset />
+          <q-separator color="green-4" inset />
         </q-item-section>
-        <q-item-section class="text-red text-bold" side top right>
+        <q-item-section class="text-green text-bold" side top right>
           <q-icon name="archive" />
         </q-item-section>
       </q-item>
       <q-item dense v-else class="native-mobile-only" clickable v-ripple>
         <q-item-section
-          class="text-red text-bold"
+          class="text-green text-bold"
           side
           top
           left
@@ -36,9 +36,9 @@
           <q-item-label class="text-center text-h6"
             >Personal sanos
           </q-item-label>
-          <q-separator color="red-4" inset />
+          <q-separator color="green-4" inset />
         </q-item-section>
-        <q-item-section class="text-red text-bold" side top right>
+        <q-item-section class="text-green text-bold" side top right>
         </q-item-section>
       </q-item>
       <q-item>
@@ -46,7 +46,7 @@
           <!-- <q-input
             v-model="search"
             dense
-            standout="bg-red-4 text-white"
+            standout="bg-green-4 text-white"
             type="search"
             placeholder="Buscar"
           >
@@ -65,7 +65,7 @@
       hide-bottom
       hide-header
       flat
-      :data="getSeguiCuidate"
+      :data="getSeguiDealta"
       :columns="columns"
       row-key="created_at.$date"
       :pagination.sync="pagination"
@@ -85,7 +85,7 @@
             <q-item-section>
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
-                <b class="text-red-5">Area:</b>
+                <b class="text-green-5">Area:</b>
                 {{ props.row.area }}
               </q-item-label>
             </q-item-section>
@@ -107,7 +107,7 @@
         <q-item-section>
           <q-item-label>{{ item.nombre }}</q-item-label>
           <q-item-label caption>
-            <b class="text-red-5">Cel:</b> {{ item.telf }}</q-item-label
+            <b class="text-green-5">Cel:</b> {{ item.telf }}</q-item-label
           >
         </q-item-section>
         <q-item-section side right>
@@ -152,7 +152,7 @@ export default {
   //   }
   // },
   computed: {
-    ...mapGetters("segui", ["getSeguiCuidate"])
+    ...mapGetters("segui", ["getSeguiDealta"])
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
@@ -259,7 +259,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("segui", ["callSeguiCuidate"]),
+    ...mapActions("segui", ["callSeguiDealta"]),
     crearDataExport() {
       const arraysJson = this.getClientesS[0];
       let keys = [];
@@ -326,7 +326,6 @@ export default {
     }
   },
   async created() {
-    this.$q.loading.show();
     this.loading = true;
     // console.log("created - Cliente");
     // this.$q.loading.show({
@@ -335,13 +334,12 @@ export default {
     //   spinnerSize: 100,
     //   backgroundColor: "grey-4"
     // });
-    await this.callSeguiCuidate();
+    await this.callSeguiDealta();
     // await this.crearDataExport();
     // this.dataexport = this.getClientesS();
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");
-    this.$q.loading.hide();
   }
 };
 </script>
