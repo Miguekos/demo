@@ -46,18 +46,6 @@
           </q-item-label>
           <q-separator spaced />
         </q-item-label>
-        <EssentialLink
-          v-if="role == 1"
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-        <EssentialLink
-          v-if="role == 2"
-          v-for="link in essentialLinksUser"
-          :key="link.title"
-          v-bind="link"
-        />
         <q-item clickable tag="a" @click="Logout()">
           <q-item-section avatar>
             <q-icon name="logout" />
@@ -114,16 +102,6 @@
           :key="link.title"
           v-bind="link"
         />
-        <q-item clickable tag="a" @click="Logout()">
-          <q-item-section avatar>
-            <q-icon name="logout" />
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label>Salir</q-item-label>
-            <q-item-label caption>Cerar sesíon</q-item-label>
-          </q-item-section>
-        </q-item>
       </q-list>
     </q-drawer>
 
@@ -211,6 +189,12 @@ export default {
           link: "/seguimiento"
         },
         {
+          title: "Asistencias",
+          caption: "Control personal",
+          icon: "done_all",
+          link: "/asistenciaDetalle"
+        },
+        {
           title: "Usuarios",
           caption: "Administrar",
           icon: "group",
@@ -247,6 +231,12 @@ export default {
           caption: "Certificado",
           icon: "note_add",
           link: "/certificado"
+        },
+        {
+          title: "Asistencia",
+          caption: "Control personal",
+          icon: "done",
+          link: "/asistencia"
         }
       ]
     };

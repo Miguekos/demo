@@ -227,15 +227,15 @@ export default {
                 name: resp.name,
                 email: resp.email
               };
-              this.$q.notify({
-                // progress: true,
-                message: "¡Bienvenido!",
-                // icon: "favorite_border",
-                icon: "insert_emoticon",
-                color: "white",
-                textColor: "red-5",
-                position: "top"
-              });
+                this.$q.notify({
+                  // progress: true,
+                  message: "¡Bienvenido!",
+                  // icon: "favorite_border",
+                  icon: "insert_emoticon",
+                  color: "white",
+                  textColor: "red-5",
+                  position: "top"
+                });
               LocalStorage.set("UserDetalle", resp);
               // console.log("loguerado Correctamente");
               this.loadlogin = false;

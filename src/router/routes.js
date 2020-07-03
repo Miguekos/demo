@@ -38,6 +38,10 @@ const routes = [
         component: () => import("pages/Asistencia/Index.vue")
       },
       {
+        path: "/asistenciaDetalle",
+        component: () => import("pages/Asistencia/TablaAsist.vue")
+      },
+      {
         path: "/profile/:id",
         component: () => import("pages/Users/Profile.vue")
       },

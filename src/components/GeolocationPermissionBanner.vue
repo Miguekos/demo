@@ -1,23 +1,14 @@
 <template>
-  <q-banner
-    rounded
-    :class="classes"
-  >
+  <q-banner rounded :class="classes">
     <template v-slot:avatar>
-      <q-icon
-        :name="icon"
-        :color="iconColor"
-      />
+      <q-icon :name="icon" :color="iconColor" />
     </template>
     {{ label }}
-    <template
-      v-if="isPermissionDenied"
-      v-slot:action
-    >
+    <template v-if="isPermissionDenied" v-slot:action>
       <q-btn
         flat
         color="white"
-        label="How to share your location"
+        label="Cómo compartir tu ubicación"
         @click="openURL('https://support.google.com/chrome/answer/142065')"
       />
     </template>
@@ -25,56 +16,56 @@
 </template>
 
 <script>
-import { mapGeolocationGetters } from 'quasar-app-extension-geolocation/src/store'
+import { mapGeolocationGetters } from "quasar-app-extension-geolocation/src/store";
 
 export default {
   computed: {
-    classes () {
+    classes() {
       if (this.isPermissionGranted) {
-        return 'bg-primary text-white'
+        return "bg-primary text-white";
       } else if (this.isPermissionPrompt) {
-        return 'bg-grey-3'
+        return "bg-grey-3";
       } else if (this.isPermissionDenied) {
-        return 'text-white bg-red'
+        return "text-white bg-red";
       }
-      return null
+      return null;
     },
-    icon () {
+    icon() {
       if (this.isPermissionGranted) {
-        return 'done'
+        return "done";
       } else if (this.isPermissionPrompt) {
-        return 'info'
+        return "info";
       } else if (this.isPermissionDenied) {
-        return 'block'
+        return "block";
       }
-      return null
+      return null;
     },
-    iconColor () {
+    iconColor() {
       if (this.isPermissionGranted) {
-        return 'white'
+        return "white";
       } else if (this.isPermissionPrompt) {
-        return null
+        return null;
       } else if (this.isPermissionDenied) {
-        return 'white'
+        return "white";
       }
-      return null
+      return null;
     },
-    label () {
+    label() {
       if (this.isPermissionGranted) {
-        return 'Geolocation privileges granted'
+        return "Privilegios de geolocalización otorgados";
       } else if (this.isPermissionPrompt) {
-        return 'Need to ask for geolocation privileges'
+        return "Necesito pedir privilegios de geolocalización";
       } else if (this.isPermissionDenied) {
-        return 'Location sharing is blocked'
+        return "La ubicación compartida está bloqueada";
       }
-      return null
+      return null;
     },
     ...mapGeolocationGetters([
-      'isPermissionGranted',
-      'isPermissionPrompt',
-      'isPermissionDenied',
-      'hasPosition'
+      "isPermissionGranted",
+      "isPermissionPrompt",
+      "isPermissionDenied",
+      "hasPosition"
     ])
   }
-}
+};
 </script>
