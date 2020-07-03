@@ -92,7 +92,7 @@
           <q-item-section>
             <q-btn flat @click="llamar()" color="green">Llamar</q-btn>
           </q-item-section>
-          <q-item-section v-if="getDialogDetalleSeguiData.dealta == 0">
+          <q-item-section v-if="getDialogDetalleSeguiData.seguimiento == 1">
             <q-btn flat @click="irControl()" color="amber-5">Control</q-btn>
           </q-item-section>
         </q-item>

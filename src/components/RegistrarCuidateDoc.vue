@@ -39,6 +39,7 @@
         <q-item class="q-pb-xs">
           <q-item-section>
             <q-input
+              disable
               borderless
               v-model="dateReport"
               label="Fecha de reporte"
@@ -217,6 +218,7 @@ export default {
               medicacion: this.medicacion
             }
           ],
+          temp: this.temp,
           sintomas: this.sintomas,
           medicacion: this.medicacion,
           seguimiento: 1,

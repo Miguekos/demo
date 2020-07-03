@@ -27,9 +27,9 @@ const actions = {
     // return response.data;
   },
   async callUserOne({ commit }, payload) {
-    console.log("callUserOne");
+    // console.log("callUserOne");
     const response = await axiosInstance.get(`/user/${payload}`);
-    console.log(response.data);
+    // console.log(response.data);
     commit("setUsersOne", response.data);
     // return response.data;
   },

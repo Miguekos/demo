@@ -127,24 +127,6 @@
 
         <q-separator inset color="red-5" />
 
-        <!--        <q-item class="q-pr-xs">-->
-        <!--          <q-item-section>-->
-        <!--            <q-item-label class="text-left">-->
-        <!--              Todos los datos expresados en esta ficha constituyen declaración-->
-        <!--              jurada de mi parte. He sido informado(a) que de omitir o falsear-->
-        <!--              información puedo perjudicar la salud de mis compañeros(as), y la-->
-        <!--              mía propia, lo cual, de constituir una falta grave a la salud-->
-        <!--              pública, asumo sus consecuencias.-->
-        <!--            </q-item-label>-->
-        <!--            &lt;!&ndash; <q-item-label caption-->
-        <!--            >Allow notification when uploading images</q-item-label-->
-        <!--            >&ndash;&gt;-->
-        <!--          </q-item-section>-->
-        <!--          <q-item-section side center>-->
-        <!--            <q-checkbox v-model="terminos" val="blue" color="teal"/>-->
-        <!--          </q-item-section>-->
-        <!--        </q-item>-->
-
         <q-separator spaced />
 
         <q-item>
@@ -222,6 +204,7 @@ export default {
               medicacion: this.medicacion
             }
           ],
+          temp: this.temp,
           sintomas: this.sintomas,
           medicacion: this.medicacion,
           seguimiento: 1,
