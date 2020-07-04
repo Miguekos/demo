@@ -3,7 +3,7 @@
     <q-btn
       class="full-width"
       size="lg"
-      :="{ color, disable, label }"
+      v-bind="{ color, disable, label }"
       :label="_label"
       @click="onClick"
     />
