@@ -18,9 +18,8 @@
           </span>
         </q-toolbar-title>
 
-        <div v-if="role == 2" class="text-black">v{{ $q.version }}</div>
+        <div v-if="role == 3" class="text-black">v{{ $q.version }}</div>
         <q-btn
-          v-if="role == 1"
           flat
           dense
           round
