@@ -8,7 +8,6 @@
         src="~assets/17897-temperature-meter.gif"
       />
     </div>
-    <span>asd</span>
     <div class="full-width">
       <Listas />
     </div>
