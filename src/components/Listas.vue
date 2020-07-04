@@ -168,6 +168,30 @@
 
         <q-separator inset color="red-5" />
 
+        <q-item
+          transition-show="jump-down"
+          v-if="estados.notif5 == true"
+          class="q-pr-xs"
+          tag="label"
+          v-ripple
+        >
+          <q-item-section>
+            <q-input
+              borderless
+              dense
+              v-model="medicamentos"
+              label="Medicamentos"
+            />
+          </q-item-section>
+        </q-item>
+
+        <q-separator
+          transition-show="jump-down"
+          v-if="estados.notif5 == true"
+          inset
+          color="red-5"
+        />
+
         <q-item class="q-pr-xs" tag="label" v-ripple>
           <q-item-section>
             <q-item-label class="text-left">
@@ -237,6 +261,7 @@ const alerts = [
 export default {
   data() {
     return {
+      medicamentos: "",
       datosPersonales: false,
       correo: "",
       submitResult: [],

@@ -1,13 +1,14 @@
 <template>
   <!-- <q-page class="flex flex-center"> -->
   <q-page>
-    <div id="" class="flex flex-center">
+    <div class="flex flex-center">
       <q-img
         color="grey"
         style="height: 170px; max-width: 180px;"
         src="~assets/17897-temperature-meter.gif"
       />
     </div>
+    <span>asd</span>
     <div class="full-width">
       <Listas />
     </div>

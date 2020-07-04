@@ -16,19 +16,16 @@
       />
       <GmapCircle :center="center" :radius="info.accuracy" />
     </GmapMap>
-    <!--    {{ $data }}-->
   </div>
 </template>
 
 <script>
-// import { mapGeolocationGetters } from "quasar-app-extension-geolocation/src/store";
-import { mapGetters, mapActions } from "vuex";
 export default {
   props: ["info"],
   data() {
     return {
       coordsMaps: false,
-      coords: null,
+      coords: {},
       latitude: null,
       longitude: null
       // center: [],
@@ -49,18 +46,14 @@ export default {
     },
     markers() {
       return this.centerMapper ? [this.centerMapper] : [];
-    },
-    ...mapGetters("asist", ["getAsistOne"])
+    }
   },
-  methods: {
-    ...mapActions("asist", ["callAsistOne"])
-  },
+  methods: {},
   created() {
     this.coords = this.info.coords;
     this.latitude = this.info.latitude;
     this.longitude = this.info.longitude;
     this.coordsMaps = true;
-    // this.callAsistOne(this.info.id);
   }
 };
 </script>

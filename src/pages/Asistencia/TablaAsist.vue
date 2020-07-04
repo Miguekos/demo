@@ -45,14 +45,6 @@
           </q-td>
           <q-td key="email" :props="props">
             <div class="q-gutter-md">
-              <!--              <q-btn-->
-              <!--                size="xs"-->
-              <!--                round-->
-              <!--                color="indigo-5"-->
-              <!--                text-color="white"-->
-              <!--                icon="add"-->
-              <!--                @click="abrirDialogReg(props.row)"-->
-              <!--              />-->
               <q-btn
                 size="xs"
                 round
@@ -66,13 +58,6 @@
         </q-tr>
       </template>
     </q-table>
-
-    <!--    <q-page-sticky position="bottom-right" :offset="[18, 18]">-->
-    <!--      <q-btn @click="registro()" fab icon="add" color="green" />-->
-    <!--    </q-page-sticky>-->
-    <!--    <q-dialog persistent v-model="dialogRegistro">-->
-    <!--      <Registro @cerrarDialog="dialogRegistro = false" />-->
-    <!--    </q-dialog>-->
     <q-dialog v-model="detalleMaps">
       <q-card>
         <DetalleMaps :info="info" @cerrarDialogCu="registarCuidate = false" />
