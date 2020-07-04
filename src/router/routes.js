@@ -20,9 +20,39 @@ const routes = [
         path: "/misregistros",
         component: () => import("pages/Control/MisRegistros.vue")
       },
-      { path: '/usuarios', component: () => import('pages/Users/Index.vue') },
-      { path: "/profile/:id", component: () => import("pages/Users/Profile.vue") },
-      { path: "/dashboard", component: () => import("pages/Control/Index.vue") },
+      { path: "/usuarios", component: () => import("pages/Users/Index.vue") },
+      {
+        path: "/seguimiento",
+        component: () => import("pages/Seguimiento/Index.vue")
+      },
+      {
+        path: "/cuidate",
+        component: () => import("pages/Seguimiento/Cuidate.vue")
+      },
+      {
+        path: "/control/:id",
+        component: () => import("pages/Seguimiento/Control.vue")
+      },
+      {
+        path: "/asistencia",
+        component: () => import("pages/Asistencia/Index.vue")
+      },
+      {
+        path: "/asistenciaDetalle",
+        component: () => import("pages/Asistencia/TablaAsist.vue")
+      },
+      {
+        path: "/profile/:id",
+        component: () => import("pages/Users/Profile.vue")
+      },
+      {
+        path: "/dashboard",
+        component: () => import("pages/Control/Index.vue")
+      },
+      {
+        path: "/certificado",
+        component: () => import("pages/Documentos/Index.vue")
+      },
       { path: "/grafica", component: () => import("components/ApexCharts") }
     ]
   },

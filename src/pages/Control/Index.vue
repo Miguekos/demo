@@ -2,7 +2,9 @@
   <div class="q-pa-xs">
     <q-list>
       <q-item bordered>
-        <q-item-label class="text-left text-h6 q-pa-xs text-bold text-black">Reportes</q-item-label>
+        <q-item-label class="text-left text-h6 q-pa-xs text-bold text-black"
+          >Reportes</q-item-label
+        >
       </q-item>
       <q-separator />
       <q-item class="justify-around" style="height: 150px;">
@@ -16,7 +18,8 @@
             color="green"
             track-color="grey-3"
             class="q-ma-xs"
-          >{{ getClienteReport.clientes }}</q-circular-progress>
+            >{{ getClienteReport.clientes }}</q-circular-progress
+          >
         </q-item-section>
         <q-item-section
           style="align-items: center; font-size: 10px; text-align: center"
@@ -36,7 +39,8 @@
             color="indigo"
             track-color="grey-3"
             class="q-ma-xs"
-          >{{ getClienteReport.clientesCS }} %</q-circular-progress>
+            >{{ getClienteReport.clientesCS }} %</q-circular-progress
+          >
         </q-item-section>
         <q-item-section
           style="align-items: center; font-size: 10px; text-align: center"
@@ -56,13 +60,14 @@
             color="red"
             track-color="grey-3"
             class="q-ma-xs"
-          >{{ getClienteReport.clientesS }} %</q-circular-progress>
+            >{{ getClienteReport.clientesS }} %</q-circular-progress
+          >
         </q-item-section>
       </q-item>
     </q-list>
 
     <q-item>
-      <q-item-section>Reportes por áreas</q-item-section>
+      <q-item-section>Reportes por estados</q-item-section>
     </q-item>
     <q-separator />
     <q-list style="height: 280px;">
@@ -71,7 +76,9 @@
 
     <q-list separator>
       <q-item>
-        <q-item-section>Reportes por colaboradores en el últimos mes</q-item-section>
+        <q-item-section
+          >Reportes por colaboradores en el últimos mes</q-item-section
+        >
       </q-item>
       <q-separator />
       <q-table
@@ -93,11 +100,9 @@
                 </q-item-label>
               </q-item-section>
             </q-td>
-            <q-td
-              key="ultimaFecha.$date"
-              :props="props"
-              v-ripple:white
-            >{{ formatDate(props.row.ultimaFecha.$date) }}</q-td>
+            <q-td key="ultimaFecha.$date" :props="props" v-ripple:white>{{
+              formatDate(props.row.ultimaFecha.$date)
+            }}</q-td>
           </q-tr>
         </template>
       </q-table>

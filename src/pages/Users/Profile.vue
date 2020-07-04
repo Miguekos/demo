@@ -2,7 +2,7 @@
   <q-page>
     <q-list>
       <q-form @submit="onSubmit">
-        <q-item-label header class="text-grey-8">
+        <q-item-label class="text-grey-8">
           <q-item-label header class="text-center text-h6 q-pa-xs"
             >Editar perfil de {{ $store.state.users.UsersOne.name }}
           </q-item-label>
@@ -118,6 +118,13 @@
         </q-card-actions>-->
       </q-card>
     </q-dialog>
+    <q-dialog v-model="registarCuidate">
+      <q-card>
+        <registarCuidate :id="this.idRegitro" />
+      </q-card>
+    </q-dialog>
+
+    <!--    {{ $data }}-->
   </q-page>
 </template>
 <script>
@@ -126,15 +133,31 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import { LocalStorage } from "quasar";
 
 export default {
+  components: {
+    registarCuidate: () => import("../../components/RegistrarCuidateDoc")
+  },
   computed: {
     ...mapGetters("users", ["getUserOne"]),
     urlImagen() {
       // return `${this.infoUrl}/uploads/${profile}`;
       // return `https://api.apps.com.pe/fileserver/uploads/${this.$store.state.users.UsersOne.profile}`;
+    },
+    isUploading() {
+      return this.uploading !== null;
+    },
+    canUpload() {
+      return this.files !== null;
     }
   },
   data() {
     return {
+      idRegitro: null,
+      registarCuidate: false,
+      role: null,
+      files: null,
+      uploadProgress: [],
+      uploading: null,
+      certificado: null,
       infoUrl: "",
       alert: false,
       file: [],
@@ -154,8 +177,80 @@ export default {
   },
   methods: {
     ...mapActions("users", ["callUserOne", "updateUser", "updateImage"]),
+    abrirDialogReg() {
+      console.log(this.usersDetalle._id.$oid);
+      this.idRegitro = this.usersDetalle._id.$oid;
+      this.registarCuidate = true;
+    },
+    cancelFile(index) {
+      this.uploadProgress[index] = {
+        ...this.uploadProgress[index],
+        error: true,
+        color: "orange-2"
+      };
+    },
+    updateFiles(files) {
+      this.files = files;
+      this.uploadProgress = (files || []).map(file => ({
+        error: false,
+        color: "green-2",
+        percent: 0,
+        icon:
+          file.type.indexOf("video/") === 0
+            ? "movie"
+            : file.type.indexOf("image/") === 0
+            ? "photo"
+            : file.type.indexOf("audio/") === 0
+            ? "audiotrack"
+            : "insert_drive_file"
+      }));
+    },
+
+    upload() {
+      clearTimeout(this.uploading);
+
+      const allDone = this.uploadProgress.every(
+        progress => progress.percent === 1
+      );
+
+      this.uploadProgress = this.uploadProgress.map(progress => ({
+        ...progress,
+        error: false,
+        color: "green-2",
+        percent: allDone === true ? 0 : progress.percent
+      }));
+
+      this.__updateUploadProgress();
+    },
+
+    __updateUploadProgress() {
+      let done = true;
+
+      this.uploadProgress = this.uploadProgress.map(progress => {
+        if (progress.percent === 1 || progress.error === true) {
+          return progress;
+        }
+
+        const percent = Math.min(1, progress.percent + Math.random() / 10);
+        const error = percent < 1 && Math.random() > 0.95;
+
+        if (error === false && percent < 1 && done === true) {
+          done = false;
+        }
+
+        return {
+          ...progress,
+          error,
+          color: error === true ? "red-2" : "green-2",
+          percent
+        };
+      });
+
+      this.uploading =
+        done !== true ? setTimeout(this.__updateUploadProgress, 300) : null;
+    },
     Salir() {
-      this.$router.push("/");
+      this.$router.push("/usuarios");
     },
     async onSubmit() {
       let jsonUpdate = {
@@ -181,6 +276,8 @@ export default {
         });
     },
     async updateFoto(arg) {
+      // console.log("NOmbre de la imagen", arg);
+      this.usersDetalle.profile = arg;
       let idUser = LocalStorage.getAll().idUser;
       let jsonUpdate = {
         profile: arg,
@@ -197,6 +294,7 @@ export default {
             color: "green-5"
           });
           this.callUserOne(this.$route.params.id);
+          // await this.ordenarCampos();
           if (idUser == this.$route.params.id) {
             LocalStorage.remove("UserDetalle");
             setTimeout(() => {
@@ -249,8 +347,12 @@ export default {
     this._id = this.$route.params.id;
     // console.log(this.$route.params.id);
     await this.callUserOne(this.$route.params.id);
+    this.role = LocalStorage.getAll().role;
     await this.ordenarCampos();
     this.infoUrl = process.env.Imagen_URL;
+  },
+  beforeDestroy() {
+    clearTimeout(this.uploading);
   }
 };
 </script>

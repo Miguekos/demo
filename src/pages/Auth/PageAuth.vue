@@ -220,21 +220,22 @@ export default {
               LocalStorage.set("loggin", true);
               LocalStorage.set("role", resp.role);
               LocalStorage.set("idUser", resp.id.$oid);
+              LocalStorage.set("fechaInicioSession", new Date());
               this.$store.commit("auth/setAuth", true);
               this.$store.commit("auth/setRole", resp.role);
               const userDetalle = {
                 name: resp.name,
                 email: resp.email
               };
-              this.$q.notify({
-                // progress: true,
-                message: "¡Bienvenido!",
-                // icon: "favorite_border",
-                icon: "insert_emoticon",
-                color: "white",
-                textColor: "red-5",
-                position: "top"
-              });
+                this.$q.notify({
+                  // progress: true,
+                  message: "¡Bienvenido!",
+                  // icon: "favorite_border",
+                  icon: "insert_emoticon",
+                  color: "white",
+                  textColor: "red-5",
+                  position: "top"
+                });
               LocalStorage.set("UserDetalle", resp);
               // console.log("loguerado Correctamente");
               this.loadlogin = false;

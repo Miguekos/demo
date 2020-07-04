@@ -1,4 +1,5 @@
 import { axiosInstance } from "boot/axios";
+
 const state = {
   Users: [],
   UsersOne: "",
@@ -68,6 +69,14 @@ const actions = {
     // console.log("updateUser");
     // console.log(payload);
     const response = await axiosInstance.put(`/user/updateImage`, payload);
+    // console.log(response);
+    // commit("setUsers", response.data);
+    return response.data;
+  },
+  async updateCertificado({ commit }, payload) {
+    // console.log("updateUser");
+    // console.log(payload);
+    const response = await axiosInstance.put(`/user/certificado`, payload);
     // console.log(response);
     // commit("setUsers", response.data);
     return response.data;

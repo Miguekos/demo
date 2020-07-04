@@ -10,7 +10,7 @@
         ></q-item-section>
         <q-item-section>
           <q-item-label class="text-center text-h6">
-            Usuarios
+            Asistencias
           </q-item-label>
           <q-separator color="grey-4" inset />
         </q-item-section>
@@ -19,7 +19,7 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <Search />
+          <!--          <Search />-->
         </q-item-section>
       </q-item>
     </q-list>
@@ -27,7 +27,7 @@
       hide-bottom
       hide-header
       flat
-      :data="getUsers"
+      :data="getAsistAll"
       :columns="columns"
       row-key="created_at.$date"
       :pagination="pagination"
@@ -35,7 +35,7 @@
       <template v-slot:body="props">
         <q-tr :props="props" clickable>
           <q-td key="name" :props="props">
-            <q-item-section clickable @click="detalleCliente(props.row)">
+            <q-item-section clickable>
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption> {{ props.row.email }}</q-item-label>
             </q-item-section>
@@ -48,51 +48,19 @@
               <q-btn
                 size="xs"
                 round
-                color="indigo-5"
-                text-color="white"
-                icon="add"
-                @click="abrirDialogReg(props.row)"
-              />
-              <q-btn
-                size="xs"
-                round
                 color="red-5"
                 text-color="white"
-                icon="delete"
-                @click="eliminarUser(props.row)"
+                icon="map"
+                @click="dialogMapsDetalle(props.row)"
               />
             </div>
           </q-td>
         </q-tr>
       </template>
     </q-table>
-    <!-- <q-list separator>
-      <q-item
-        v-for="(item, index) in getUsers"
-        :key="index"
-        clickable
-        v-ripple
-      >
-        <q-item-section>
-          <q-item-label>{{ item.name }}</q-item-label>
-          <q-item-label caption>
-            <b class="text-grey-5">Cel:</b> {{ item.telf }}</q-item-label
-          >
-        </q-item-section>
-        <q-item-section side right>
-          <q-item-label>{{ item.email }}</q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list> -->
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn @click="registro()" fab icon="add" color="green" />
-    </q-page-sticky>
-    <q-dialog persistent v-model="dialogRegistro">
-      <Registro @cerrarDialog="dialogRegistro = false" />
-    </q-dialog>
-    <q-dialog v-model="registarCuidate">
+    <q-dialog v-model="detalleMaps">
       <q-card>
-        <registarCuidate :id="this.idRegitro" @cerrarDialogCu="registarCuidate = false"/>
+        <DetalleMaps :info="info" @cerrarDialogCu="registarCuidate = false" />
       </q-card>
     </q-dialog>
   </q-page>
@@ -114,16 +82,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("users", ["getUsers"])
+    ...mapGetters("asist", ["getAsistAll"])
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
-    Search: () => import("./Search"),
-    Registro: () => import("src/components/dielogRegistro"),
-    registarCuidate: () => import("../../components/RegistrarCuidateDoc")
+    DetalleMaps: () => import("../../components/DetalleAsist")
+    // Search: () => import("./Search"),
+    // Registro: () => import("src/components/dielogRegistro"),
+    // registarCuidate: () => import("../../components/RegistrarCuidateDoc")
   },
   data() {
     return {
+      detalleMaps: false,
+      info: null,
       idRegitro: null,
       registarCuidate: false,
       pagination: {
@@ -168,7 +139,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions("users", ["callUser", "deleteUser"]),
+    ...mapActions("asist", ["callAsist"]),
+    dialogMapsDetalle(val) {
+      this.info = val;
+      this.detalleMaps = true;
+    },
     abrirDialogReg(val) {
       console.log(val);
       console.log(val._id.$oid);
@@ -240,7 +215,7 @@ export default {
     },
     formatDate(arg) {
       // console.log("Formateando Fecha");
-      return Fechas.Corta(arg);
+      return Fechas.larga(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
     }
   },
@@ -258,7 +233,7 @@ export default {
     //   spinnerSize: 100,
     //   backgroundColor: "grey-4"
     // });
-    await this.callUser();
+    await this.callAsist();
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");
@@ -267,3 +242,5 @@ export default {
   }
 };
 </script>
+
+<style scoped></style>

@@ -168,6 +168,30 @@
 
         <q-separator inset color="red-5" />
 
+        <q-item
+          transition-show="jump-down"
+          v-if="estados.notif5 == true"
+          class="q-pr-xs"
+          tag="label"
+          v-ripple
+        >
+          <q-item-section>
+            <q-input
+              borderless
+              dense
+              v-model="medicamentos"
+              label="Medicamentos"
+            />
+          </q-item-section>
+        </q-item>
+
+        <q-separator
+          transition-show="jump-down"
+          v-if="estados.notif5 == true"
+          inset
+          color="red-5"
+        />
+
         <q-item class="q-pr-xs" tag="label" v-ripple>
           <q-item-section>
             <q-item-label class="text-left">
@@ -237,6 +261,7 @@ const alerts = [
 export default {
   data() {
     return {
+      medicamentos: "",
       datosPersonales: false,
       correo: "",
       submitResult: [],
@@ -325,7 +350,11 @@ export default {
           if (validacion == "00") {
             this.$q.notify({
               message: "!Sigue cuidándote! Que tengas buen día.",
-              color: "green-6",
+              // progress: true,
+              // icon: "favorite_border",
+              icon: "insert_emoticon",
+              color: "white",
+              textColor: "green-5",
               position: "top"
             });
             this.reset();

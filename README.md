@@ -29,6 +29,8 @@ See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 4.- Reporte por registro \
 5.- Modificar reportes por personal \
 
-
+docker-compose up -d --build quasardemo
 docker build -t cuidateappg4s:1.0 .
 docker-compose up -d
+
+

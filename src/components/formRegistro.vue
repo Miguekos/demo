@@ -93,6 +93,7 @@
 
 <script>
 import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
@@ -132,11 +133,13 @@ export default {
             this.loadBoton = false;
           } else {
             this.$q.notify({
-              color: "green",
-              textColor: "white",
+              // progress: true,
+              message: `¡ Se registro satisfactoriamente el usuario !`,
+              // icon: "favorite_border",
               icon: "cloud_done",
-              position: "top-right",
-              message: `!Se registro satisfactoriamente el usuario¡`
+              color: "white",
+              textColor: "green-5",
+              position: "top"
             });
             this.callUser();
             this.loadBoton = false;
