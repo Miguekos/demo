@@ -176,6 +176,12 @@ export default {
           icon: "note_add",
           link: "/certificado"
         },
+        {
+          title: "Asistencia",
+          caption: "Control personal",
+          icon: "done",
+          link: "/asistencia"
+        },
         // {
         //   title: "Personal con síntomas",
         //   caption: "Detalle",
