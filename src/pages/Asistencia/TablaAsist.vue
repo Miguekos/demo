@@ -40,7 +40,12 @@
               <q-item-label caption> {{ props.row.email }}</q-item-label>
             </q-item-section>
           </q-td>
-          <q-td key="asistenciaEntrada.created_at.$date" :props="props">
+          <q-td
+            v-if="props.row.asistenciaEntrada"
+            key="asistenciaEntrada.created_at"
+            :props="props"
+          >
+            <!--            {{ props.row }}-->
             {{ formatDate(props.row.asistenciaEntrada.created_at) }}
             <q-btn
               size="xs"
@@ -51,7 +56,11 @@
               @click="dialogMapsDetalle(props.row.asistenciaEntrada)"
             />
           </q-td>
-          <q-td key="asistenciaSalida.created_at.$date" :props="props">
+          <q-td
+            v-if="props.row.asistenciaSalida"
+            key="asistenciaSalida.created_at"
+            :props="props"
+          >
             <!--            {{ props.row.asistenciaSalida.created_at }}-->
             {{ formatDate(props.row.asistenciaSalida.created_at) }}
             <q-btn
@@ -140,17 +149,19 @@ export default {
           sortable: true
         },
         {
-          name: "asistenciaEntrada.created_at.$date",
+          name: "asistenciaEntrada.created_at",
           align: "right",
           label: "Ingreso",
           field: "asistenciaEntrada.created_at.$date",
+          format: val => (val ? val : null),
           sortable: true
         },
         {
-          name: "asistenciaSalida.created_at.$date",
+          name: "asistenciaSalida.created_at",
           align: "right",
           label: "Salida",
           field: "asistenciaSalida.created_at.$date",
+          format: val => (val ? val : null),
           sortable: true
         }
       ],
