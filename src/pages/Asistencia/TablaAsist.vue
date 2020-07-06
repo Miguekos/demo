@@ -24,8 +24,8 @@
       </q-item>
     </q-list>
     <q-table
+      v-if="DetalleMapsLoad"
       hide-bottom
-      hide-header
       flat
       :data="getAsistAll"
       :columns="columns"
@@ -40,21 +40,41 @@
               <q-item-label caption> {{ props.row.email }}</q-item-label>
             </q-item-section>
           </q-td>
-          <q-td key="created_at.$date" :props="props">
-            {{ formatDate(props.row.created_at.$date) }}
+          <q-td key="asistenciaEntrada.created_at.$date" :props="props">
+            {{ formatDate(props.row.asistenciaEntrada.created_at) }}
+            <q-btn
+              size="xs"
+              round
+              color="red-5"
+              text-color="white"
+              icon="map"
+              @click="dialogMapsDetalle(props.row.asistenciaEntrada)"
+            />
           </q-td>
-          <q-td key="email" :props="props">
-            <div class="q-gutter-md">
-              <q-btn
-                size="xs"
-                round
-                color="red-5"
-                text-color="white"
-                icon="map"
-                @click="dialogMapsDetalle(props.row)"
-              />
-            </div>
+          <q-td key="asistenciaSalida.created_at.$date" :props="props">
+            <!--            {{ props.row.asistenciaSalida.created_at }}-->
+            {{ formatDate(props.row.asistenciaSalida.created_at) }}
+            <q-btn
+              size="xs"
+              round
+              color="red-5"
+              text-color="white"
+              icon="map"
+              @click="dialogMapsDetalle(props.row.asistenciaSalida)"
+            />
           </q-td>
+          <!--          <q-td key="email" :props="props">-->
+          <!--            <div class="q-gutter-md">-->
+          <!--              <q-btn-->
+          <!--                size="xs"-->
+          <!--                round-->
+          <!--                color="red-5"-->
+          <!--                text-color="white"-->
+          <!--                icon="map"-->
+          <!--                @click="dialogMapsDetalle(props.row)"-->
+          <!--              />-->
+          <!--            </div>-->
+          <!--          </q-td>-->
         </q-tr>
       </template>
     </q-table>
@@ -93,6 +113,7 @@ export default {
   },
   data() {
     return {
+      DetalleMapsLoad: false,
       detalleMaps: false,
       info: null,
       idRegitro: null,
@@ -112,24 +133,24 @@ export default {
         {
           name: "name",
           required: true,
-          label: "Nombre",
+          label: "Colaborador",
           align: "left",
           field: row => row.name,
           format: val => `${val}`,
           sortable: true
         },
         {
-          name: "created_at.$date",
+          name: "asistenciaEntrada.created_at.$date",
           align: "right",
-          label: "Fecha",
-          field: "created_at.$date",
+          label: "Ingreso",
+          field: "asistenciaEntrada.created_at.$date",
           sortable: true
         },
         {
-          name: "email",
+          name: "asistenciaSalida.created_at.$date",
           align: "right",
-          label: "Email",
-          field: "email",
+          label: "Salida",
+          field: "asistenciaSalida.created_at.$date",
           sortable: true
         }
       ],
@@ -234,6 +255,7 @@ export default {
     //   backgroundColor: "grey-4"
     // });
     await this.callAsist();
+    this.DetalleMapsLoad = true;
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);
     // this.$q.addressbarColor.set("#0056a1");

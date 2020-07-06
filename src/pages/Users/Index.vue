@@ -90,7 +90,7 @@
     <q-dialog persistent v-model="dialogRegistro">
       <Registro @cerrarDialog="dialogRegistro = false" />
     </q-dialog>
-    <q-dialog v-model="registarCuidate">
+    <q-dialog persistent full-width v-model="registarCuidate">
       <q-card>
         <registarCuidate :id="this.idRegitro" @cerrarDialogCu="registarCuidate = false"/>
       </q-card>

@@ -17,50 +17,44 @@
             <b class="text-green">C</b>uid<b class="text-red">APP</b>te
           </span>
         </q-toolbar-title>
-
-        <div v-if="role == 3" class="text-black">v{{ $q.version }}</div>
+        <!--        <div v-if="role == 3" class="text-black">v{{ $q.version }}</div>-->
+        <!--        <span class="text-black"-->
+        <!--          ><q-item-label>{{ userdatil.name }}</q-item-label></span-->
+        <!--        >-->
+        <!--        <q-avatar>-->
+        <!--          <img-->
+        <!--            :src="urlImagen"-->
+        <!--            @click="(drawerRight = !drawerRight), actualizar()"-->
+        <!--          />-->
+        <!--        </q-avatar>-->
         <q-btn
           flat
           dense
           round
           size="sm"
           color="black"
-          icon="settings"
           aria-label="Menu"
           @click="(drawerRight = !drawerRight), actualizar()"
-        />
+        >
+          <img width="50px" :src="urlImagen" />
+        </q-btn>
+        <!--        <q-btn-->
+        <!--          flat-->
+        <!--          dense-->
+        <!--          round-->
+        <!--          size="17px"-->
+        <!--          icon="logout"-->
+        <!--          color="black"-->
+        <!--          aria-label="Menu"-->
+        <!--          @click="Logout()"-->
+        <!--        >-->
+        <!--        </q-btn>-->
       </q-toolbar>
     </q-header>
 
     <q-drawer
       side="right"
       v-model="drawerRight"
-      bordered
-      content-class="bg-grey-1"
-    >
-      <q-list>
-        <q-item-label header class="text-grey-8">
-          <q-item-label header class="text-center text-h6 q-pa-xs"
-            >Configuracion
-          </q-item-label>
-          <q-separator spaced />
-        </q-item-label>
-        <q-item clickable tag="a" @click="Logout()">
-          <q-item-section avatar>
-            <q-icon name="logout" />
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label>Salir</q-item-label>
-            <q-item-label caption>Cerar sesíon</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-drawer>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
       bordered
       content-class="bg-grey-1"
     >
@@ -88,6 +82,52 @@
               </q-item-section>
             </q-item>
           </q-list>
+        </q-item-label>
+      </q-list>
+      <q-list>
+        <q-item clickable tag="a" @click="Logout()">
+          <q-item-section avatar>
+            <q-icon name="logout" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Salir</q-item-label>
+            <q-item-label caption>Cerar sesíon</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-drawer>
+
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      content-class="bg-grey-1"
+    >
+      <q-list>
+        <q-item-label header class="text-grey-8">
+          <!--          <q-item-label header class="text-center text-h6 q-pa-xs"-->
+          <!--            >MENU-->
+          <!--          </q-item-label>-->
+          <!--          <q-separator spaced />-->
+          <!--          <q-list>-->
+          <!--            <q-item-->
+          <!--              @click="detalleCliente()"-->
+          <!--              clickable-->
+          <!--              v-ripple-->
+          <!--              class="justify-center"-->
+          <!--            >-->
+          <!--              <q-avatar size="100px" font-size="52px">-->
+          <!--                <img :src="urlImagen" />-->
+          <!--              </q-avatar>-->
+          <!--            </q-item>-->
+          <!--            <q-item clickable v-ripple class="justify-center">-->
+          <!--              <q-item-section class="text-center text-bold">-->
+          <!--                <q-item-label>{{ userdatil.name }}</q-item-label>-->
+          <!--                <q-item-label caption>{{ userdatil.email }}</q-item-label>-->
+          <!--              </q-item-section>-->
+          <!--            </q-item>-->
+          <!--          </q-list>-->
         </q-item-label>
         <EssentialLink
           v-if="role == 1"
@@ -187,12 +227,12 @@ export default {
         //   icon: "sentiment_very_dissatisfied",
         //   link: "/detallecs"
         // },
-        {
-          title: "Seguimiento",
-          caption: "Personal médico",
-          icon: "supervised_user_circle",
-          link: "/seguimiento"
-        },
+        // {
+        //   title: "Seguimiento",
+        //   caption: "Personal médico",
+        //   icon: "supervised_user_circle",
+        //   link: "/seguimiento"
+        // },
         {
           title: "Asistencias",
           caption: "Control personal",

@@ -17,6 +17,7 @@ import {
   mapGeolocationGetters
 } from "quasar-app-extension-geolocation/src/store";
 import { mapActions, mapGetters } from "vuex";
+
 export default {
   props: {
     label: {
@@ -100,10 +101,13 @@ export default {
           this.Varaccuracy = this.accuracy;
           this.addAsist({
             ...this.dataUser,
-            coords: this.coords,
-            latitude: this.latitude,
-            longitude: this.longitude,
-            accuracy: this.accuracy
+            asistencia: {
+              coords: this.coords,
+              latitude: this.latitude,
+              longitude: this.longitude,
+              accuracy: this.accuracy,
+              created_at: new Date()
+            }
           })
             .then(() => {
               this.$q.notify({

@@ -19,6 +19,11 @@
         <!--          </q-item-section>-->
       </q-item>
     </q-list>
+
+    <div v-for="(items, index) in getSeguiObservaOrden" :key="index">
+      {{ items }}
+      {{ index }}
+    </div>
     <q-list>
       <q-item class="q-pb-xs">
         <q-item-section>
@@ -58,7 +63,7 @@
           <q-input
             color="red-5"
             v-model="detalle"
-            label="Comentario"
+            label="Observación"
             filled
             autogrow
           />
@@ -77,7 +82,7 @@
       <q-item>
         <q-item-section class="text-center">
           <q-card
-            v-for="(items, index) in ordenar"
+            v-for="(items, index) in getSeguiObservaOrden"
             :key="index"
             style="margin: 10px 0px 10px 0px"
           >
@@ -147,22 +152,11 @@ export default {
   mixins: [MixinDefault],
   computed: {
     // ...mapState("segui", ["seguiObserva"]),
-    ...mapGetters("segui", ["getSeguiFilter", "getSeguiObserva"]),
-    ordenar() {
-      const unordered = this.getSeguiObserva.observa;
-      const ordered = {};
-      Object.keys(unordered.reverse())
-        .sort()
-        .forEach(function(key) {
-          console.log(key);
-          ordered[key] = unordered[key];
-        });
-
-      console.log(JSON.stringify(ordered));
-      // return unordered.sort((a, b) => a.fecha > b.fecha);
-      return ordered;
-      // return this.getSeguiObserva.observa;
-    }
+    ...mapGetters("segui", [
+      "getSeguiFilter",
+      "getSeguiObserva",
+      "getSeguiObservaOrden"
+    ])
   },
   data() {
     return {
@@ -177,13 +171,18 @@ export default {
     async dealta() {
       this.$q
         .dialog({
-          title: "Confirm",
-          message: "¿Estas seguro que quieres dar De Alta?",
+          title: "¿Estas seguro que quieres dar De Alta?",
+          message: "Comentario",
           cancel: true,
+          prompt: {
+            isValid: val => val.length > 2, // << here is the magic
+            model: "",
+            type: "text" // optional
+          },
           persistent: true,
           color: "red-5"
         })
-        .onOk(async () => {
+        .onOk(async data => {
           // console.log('>>>> OK')
           try {
             const updateResponse = await this.updateRegistroSegui({
@@ -191,7 +190,8 @@ export default {
                 $oid: this.$route.params.id
               },
               seguimiento: 0,
-              dealta: 1
+              dealta: 1,
+              comentariodealta: data
             });
             console.log(updateResponse);
             this.detalle = null;

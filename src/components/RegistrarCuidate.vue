@@ -9,12 +9,7 @@
 
         <q-item dense class="q-pb-xs">
           <q-item-section>
-            <q-input
-              borderless
-              v-model="dateDiag"
-              label="Fecha de diagnóstico"
-              mask="date"
-            >
+            <q-input borderless v-model="dateDiag" label="Fecha de diagnóstico">
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                   <q-popup-proxy
@@ -23,6 +18,8 @@
                     transition-hide="scale"
                   >
                     <q-date
+                      mask="DD/MM/YYYY"
+                      :locale="myLocale"
                       v-model="dateDiag"
                       @input="() => $refs.qDateProxyDiag.hide()"
                     />
@@ -42,7 +39,6 @@
               borderless
               v-model="dateReport"
               label="Fecha de reporte"
-              mask="date"
             >
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
@@ -52,6 +48,8 @@
                     transition-hide="scale"
                   >
                     <q-date
+                      mask="DD/MM/YYYY"
+                      :locale="myLocale"
                       v-model="dateReport"
                       @input="() => $refs.qDateProxyRep.hide()"
                     />
@@ -155,6 +153,9 @@
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
 import { LocalStorage } from "quasar";
+import { date } from "quasar";
+let timeStamp = Date.now();
+let formattedString = date.formatDate(timeStamp, "DD/MM/YYYY");
 
 export default {
   data() {
@@ -164,8 +165,19 @@ export default {
       observa: [],
       sintomas: null,
       medicacion: null,
-      dateDiag: new Date().toISOString().substr(0, 10),
-      dateReport: new Date().toISOString().substr(0, 10)
+      dateDiag: null,
+      dateReport: formattedString,
+      myLocale: {
+        /* starting with Sunday */
+        days: "Domingo_Lunes_Martes_Miércoles_Jueves_Viernes_Sábado".split("_"),
+        daysShort: "Dom_Lun_Mar_Mié_Jue_Vie_Sáb".split("_"),
+        months: "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
+          "_"
+        ),
+        monthsShort: "Ene_Feb_Mar_Abr_May_Jun_Jul_Ago_Sep_Oct_Nov_Dic".split(
+          "_"
+        )
+      }
     };
   },
   methods: {
@@ -175,8 +187,8 @@ export default {
       this.observa = null;
       this.sintomas = null;
       this.medicacion = null;
-      this.dateDiag = new Date().toISOString().substr(0, 10);
-      this.dateReport = new Date().toISOString().substr(0, 10);
+      this.dateDiag = formattedString;
+      this.dateReport = formattedString;
     },
     async onSubmit() {
       // console.log(this.observa.length);
@@ -271,7 +283,7 @@ export default {
     }
   },
   async created() {
-    console.log(new Date());
+    console.log(formattedString);
     this.$q.loading.show();
     const infoUser = await LocalStorage.getAll().UserDetalle;
     this.infoUser = infoUser;

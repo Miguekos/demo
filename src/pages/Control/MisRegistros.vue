@@ -27,6 +27,8 @@
           name="otro_user"
           label="Mi cuidado"
         />
+        <q-tab class="text-red-5" name="seguimiento" label="Seguimiento" />
+        <q-tab class="text-green-5" name="dealta" label="De Alta" />
       </q-tabs>
 
       <q-separator />
@@ -175,6 +177,14 @@
         <q-tab-panel v-if="role === 2" name="otro_user">
           <DetallesCuidateOne />
         </q-tab-panel>
+
+        <q-tab-panel name="seguimiento">
+          <Seguimiento />
+        </q-tab-panel>
+
+        <q-tab-panel name="dealta">
+          <DeAlta />
+        </q-tab-panel>
       </q-tab-panels>
     </q-card>
   </q-page>
@@ -224,7 +234,9 @@ export default {
     DetallesConSintomas: () => import("./DetallesConSintomas"),
     DetallesSanos: () => import("./DetallesSanos"),
     DetallesCuidate: () => import("./DetallesCuidate"),
-    DetallesCuidateOne: () => import("./DetallesCuidateOne")
+    DetallesCuidateOne: () => import("./DetallesCuidateOne"),
+    Seguimiento: () => import("../Seguimiento/Seguimiento"),
+    DeAlta: () => import("../Seguimiento//DeAlta")
   },
   data() {
     return {
