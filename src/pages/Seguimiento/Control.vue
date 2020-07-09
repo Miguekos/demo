@@ -70,7 +70,7 @@
           />
         </q-item-section>
       </q-item>
-      <q-item>
+      <q-item v-if="role === 3">
         <q-item-section>
           <q-btn @click="dealta" color="green-5">Dar de Alta</q-btn>
         </q-item-section>
@@ -78,70 +78,12 @@
           <q-btn @click="update" color="red-5">Confirmar</q-btn>
         </q-item-section>
       </q-item>
+      <q-item v-if="role !== 3">
+        <q-item-section>
+          <q-btn @click="update" color="red-5">Confirmar</q-btn>
+        </q-item-section>
+      </q-item>
     </q-list>
-    <!--    <q-list separator>-->
-    <!--      <q-item>-->
-    <!--        <q-item-section class="text-center">-->
-    <!--          <q-card-->
-    <!--            v-for="(items, index) in getSeguiObservaOrden"-->
-    <!--            :key="index"-->
-    <!--            style="margin: 10px 0px 10px 0px"-->
-    <!--          >-->
-    <!--            <q-list bordered separator>-->
-    <!--              <q-card-section class="text-center">-->
-    <!--                <q-item-label class="text-bold">{{-->
-    <!--                  items.nombre-->
-    <!--                }}</q-item-label>-->
-    <!--                <q-item-label caption>{{-->
-    <!--                  formatFecha(items.fecha)-->
-    <!--                }}</q-item-label>-->
-    <!--              </q-card-section>-->
-    <!--              &lt;!&ndash;              {{ ordenar }}&ndash;&gt;-->
-    <!--              &lt;!&ndash;              <q-item clickable v-ripple>&ndash;&gt;-->
-    <!--              &lt;!&ndash;                <q-item-section>&ndash;&gt;-->
-    <!--              &lt;!&ndash;                  <q-item-label>{{ items.nombre }}</q-item-label>&ndash;&gt;-->
-    <!--              &lt;!&ndash;                </q-item-section>&ndash;&gt;-->
-    <!--              &lt;!&ndash;                <q-item-section>&ndash;&gt;-->
-    <!--              &lt;!&ndash;                  <q-item-label caption>{{&ndash;&gt;-->
-    <!--              &lt;!&ndash;                    formatFecha(items.fecha)&ndash;&gt;-->
-    <!--              &lt;!&ndash;                  }}</q-item-label>&ndash;&gt;-->
-    <!--              &lt;!&ndash;                </q-item-section>&ndash;&gt;-->
-    <!--              &lt;!&ndash;              </q-item>&ndash;&gt;-->
-    <!--              <q-item clickable v-ripple>-->
-    <!--                <q-item-section class="text-left">-->
-    <!--                  <q-item-label class="text-bold">Síntomas:</q-item-label>-->
-    <!--                </q-item-section>-->
-    <!--                <q-item-section class="text-left">-->
-    <!--                  <q-item-label class="text-bold">Medicación:</q-item-label>-->
-    <!--                </q-item-section>-->
-    <!--              </q-item>-->
-    <!--              <q-item clickable v-ripple>-->
-    <!--                <q-item-section class="text-left">-->
-    <!--                  <q-item-label-->
-    <!--                    v-for="(sintoma, index) in items.sintomas"-->
-    <!--                    :key="index"-->
-    <!--                  >-->
-    <!--                    - {{ sintoma }}</q-item-label-->
-    <!--                  >-->
-    <!--                </q-item-section>-->
-    <!--                <q-item-section class="text-left">-->
-    <!--                  <q-item-label-->
-    <!--                    v-for="(medicamentos, index) in items.medicacion"-->
-    <!--                    :key="index"-->
-    <!--                  >-->
-    <!--                    - {{ medicamentos }}</q-item-label-->
-    <!--                  >-->
-    <!--                </q-item-section>-->
-    <!--              </q-item>-->
-    <!--            </q-list>-->
-    <!--            <q-card-section class="text-center">-->
-    <!--              <q-item-label class="text-bold">Observación:</q-item-label>-->
-    <!--              {{ items.detalle }}-->
-    <!--            </q-card-section>-->
-    <!--          </q-card>-->
-    <!--        </q-item-section>-->
-    <!--      </q-item>-->
-    <!--    </q-list>-->
     <q-list>
       <q-item>
         <q-item-section>
@@ -167,6 +109,7 @@ export default {
   },
   data() {
     return {
+      role: null,
       sintomas: null,
       medicacion: null,
       detalle: null,
@@ -227,7 +170,8 @@ export default {
             detalle: this.detalle,
             color: "red-5",
             sintomas: this.sintomas,
-            medicacion: this.medicacion
+            medicacion: this.medicacion,
+            role: this.role
           },
           sintomas: this.sintomas,
           medicacion: this.medicacion
@@ -251,6 +195,7 @@ export default {
     console.log(this.$route.params.id);
     await this.callRegistroSegui(this.$route.params.id);
     // this.$store.commit("segui/addSeguiObserva", this.getSeguiFilter);
+    this.role = this.$q.localStorage.getAll().role;
     const dataSG = await this.getSeguiFilter;
     this.arrayObserva = dataSG;
     this.sintomas = dataSG.sintomas;

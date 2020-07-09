@@ -10,7 +10,7 @@
     >
       <template v-slot:item="props">
         <div class="q-pa-xs col-xs-12 cursor-pointer">
-          <q-card>
+          <q-card :class="colorRole(props.row.role)">
             <!--            <q-card-section class="text-center">-->
             <!--              <strong>{{ props.row.nombre }}</strong>-->
             <!--              <br />-->
@@ -35,7 +35,10 @@
                   </q-list>
                 </q-item-section>
                 <q-item-section class="text-center">
-                  <q-item-label class="text-bold">Observacion</q-item-label>
+                  <q-item-label class="text-bold"
+                    >Observacion: <span v-if="props.row.role !== 3">Colaborador</span
+                    ><span v-if="props.row.role === 3">Medico</span>
+                  </q-item-label>
                   <q-item-label caption>{{ props.row.detalle }}</q-item-label>
                 </q-item-section>
               </q-item>
@@ -44,11 +47,11 @@
             <q-separator />
             <q-list class="text-center">
               <q-item>
-                <q-item-section>
-                  Sintomas
+                <q-item-section class="text-bold">
+                  <u>Sintomas</u>
                 </q-item-section>
-                <q-item-section>
-                  Medicamentos
+                <q-item-section class="text-bold">
+                  <u>Medicamentos</u>
                 </q-item-section>
               </q-item>
               <q-item>
@@ -159,6 +162,14 @@ export default {
     };
   },
   methods: {
+    colorRole(val) {
+      console.log(val);
+      if (val !== 3) {
+        return "bg-indigo-2";
+      } else if (val === 3) {
+        return "bg-green-2";
+      }
+    },
     verPdf(val) {
       console.log(val.documento);
       this.visorPdf = val.documento;

@@ -160,6 +160,7 @@ let formattedString = date.formatDate(timeStamp, "DD/MM/YYYY");
 export default {
   data() {
     return {
+      role: null,
       infoUser: null,
       temp: null,
       observa: [],
@@ -213,7 +214,8 @@ export default {
               detalle: this.observa,
               temp: this.temp,
               sintomas: this.sintomas,
-              medicacion: this.medicacion
+              medicacion: this.medicacion,
+              role: this.role
             }
           ],
           temp: this.temp,
@@ -287,6 +289,7 @@ export default {
     this.$q.loading.show();
     const infoUser = await LocalStorage.getAll().UserDetalle;
     this.infoUser = infoUser;
+    this.role = this.$q.localStorage.getAll().role;
     // console.log(infoUser.name);
     // this.nombre = infoUser.name;
     // this.dni = infoUser.dni;

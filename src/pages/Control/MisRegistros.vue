@@ -27,8 +27,8 @@
           name="otro_user"
           label="Mi cuidado"
         />
-        <q-tab class="text-red-5" name="seguimiento" label="Seguimiento" />
-        <q-tab class="text-green-5" name="dealta" label="De Alta" />
+        <q-tab v-if="role === 3" class="text-red-5" name="seguimiento" label="Seguimiento" />
+        <q-tab v-if="role === 3" class="text-green-5" name="dealta" label="De Alta" />
       </q-tabs>
 
       <q-separator />

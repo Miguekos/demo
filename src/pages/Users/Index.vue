@@ -54,6 +54,7 @@
                 @click="abrirDialogReg(props.row)"
               />
               <q-btn
+                v-if="role == 1"
                 size="xs"
                 round
                 color="red-5"
@@ -84,7 +85,7 @@
         </q-item-section>
       </q-item>
     </q-list> -->
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-page-sticky v-if="role == 1" position="bottom-right" :offset="[18, 18]">
       <q-btn @click="registro()" fab icon="add" color="green" />
     </q-page-sticky>
     <q-dialog persistent v-model="dialogRegistro">
@@ -92,7 +93,10 @@
     </q-dialog>
     <q-dialog persistent full-width v-model="registarCuidate">
       <q-card>
-        <registarCuidate :id="this.idRegitro" @cerrarDialogCu="registarCuidate = false"/>
+        <registarCuidate
+          :id="this.idRegitro"
+          @cerrarDialogCu="registarCuidate = false"
+        />
       </q-card>
     </q-dialog>
   </q-page>
@@ -107,7 +111,7 @@ export default {
   preFetch({ store, redirect }) {
     let logginIn = LocalStorage.getAll().loggin;
     let role = LocalStorage.getAll().role;
-    if (logginIn && role == 1) {
+    if (logginIn && (role == 1 || role == 3)) {
       // console.log("WELCOME");
     } else {
       redirect("/");
@@ -124,6 +128,7 @@ export default {
   },
   data() {
     return {
+      role: null,
       idRegitro: null,
       registarCuidate: false,
       pagination: {
@@ -255,6 +260,7 @@ export default {
     // this.$q.loading.show({
     //   spinner: QSpinnerGears,
     //   spinnerColor: "blue",
+    this.role = this.$q.localStorage.getAll().role;
     //   spinnerSize: 100,
     //   backgroundColor: "grey-4"
     // });

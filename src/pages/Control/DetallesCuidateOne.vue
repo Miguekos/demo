@@ -94,7 +94,7 @@
                 {{ props.row.temp }}°
               </q-item-label>
             </q-item-section>
-            <q-item-section v-if="role == 2" v-ripple:white clickable>
+            <q-item-section v-if="role == 2" v-ripple:white clickable @click="detalleSeguimientoOne(props.row)">
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
                 <b class="text-red-5">temp:</b>
@@ -124,7 +124,8 @@
           </q-td>
         </q-tr>
       </template>
-    </q-table>
+    </q-table
+      hide-bottom>
   </div>
 </template>
 

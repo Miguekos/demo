@@ -169,6 +169,7 @@ export default {
   },
   data() {
     return {
+      role: null,
       infoUser: null,
       temp: null,
       observa: [],
@@ -227,7 +228,8 @@ export default {
               detalle: this.observa,
               temp: this.temp,
               sintomas: this.sintomas,
-              medicacion: this.medicacion
+              medicacion: this.medicacion,
+              role: this.role
             }
           ],
           temp: this.temp,
@@ -302,6 +304,7 @@ export default {
     // const infoUser = await LocalStorage.getAll().UserDetalle;
     await this.callUserOne(this.id);
     this.infoUser = await this.getUserOne;
+    this.role = this.$q.localStorage.getAll().role;
     // console.log(infoUser.name);
     // this.nombre = infoUser.name;
     // this.dni = infoUser.dni;

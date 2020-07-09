@@ -138,6 +138,12 @@
           :key="link.title"
           v-bind="link"
         />
+        <EssentialLink
+          v-if="role == 3"
+          v-for="link in essentialLinksMedic"
+          :key="link.title"
+          v-bind="link"
+        />
       </q-list>
     </q-drawer>
 
@@ -183,6 +189,12 @@ export default {
       leftDrawerOpen: false,
       essentialLinks: [
         {
+          title: "Asistencia",
+          caption: "Repórtate",
+          icon: "done",
+          link: "/asistencia"
+        },
+        {
           title: "Reportes",
           caption: "Estadísticas",
           icon: "assessment",
@@ -208,15 +220,9 @@ export default {
         },
         {
           title: "Documentos",
-          caption: "Certificado",
+          caption: "Certificados",
           icon: "note_add",
           link: "/certificado"
-        },
-        {
-          title: "Asistencia",
-          caption: "Control personal",
-          icon: "done",
-          link: "/asistencia"
         },
         // {
         //   title: "Personal con síntomas",
@@ -232,8 +238,14 @@ export default {
         // },
         {
           title: "Asistencias",
-          caption: "Control personal",
+          caption: "Control de personal",
           icon: "done_all",
+          link: "/asistenciaDetalle"
+        },
+        {
+          title: "Comunicados",
+          caption: "Difunde",
+          icon: "record_voice_over",
           link: "/asistenciaDetalle"
         },
         {
@@ -245,10 +257,54 @@ export default {
       ],
       essentialLinksUser: [
         {
-          title: "Inicio",
+          title: "Home",
           caption: "Inicio",
           icon: "dashboard",
           link: "/"
+        },
+        {
+          title: "Asistencia",
+          caption: "Control personal",
+          icon: "done",
+          link: "/asistencia"
+        },
+        {
+          title: "Mis registros",
+          caption: "Evaluaciones",
+          icon: "scatter_plot",
+          link: "/misregistros"
+        },
+        {
+          title: "Evalúate",
+          caption: "Evaluación",
+          icon: "local_hospital",
+          link: "/registro"
+        },
+        {
+          title: "Cuídate",
+          caption: "Lleva tu control",
+          icon: "favorite",
+          link: "/cuidate"
+        },
+        {
+          title: "Documentos",
+          caption: "Certificado",
+          icon: "note_add",
+          link: "/certificado"
+        }
+      ],
+      essentialLinksMedic: [
+        {
+          title: "Home",
+          caption: "Inicio",
+          icon: "dashboard",
+          link: "/"
+        },
+        {
+          title: "Asistencia",
+          caption: "Control personal",
+          icon: "done",
+          link: "/asistencia"
         },
         {
           title: "Mis registros",
@@ -275,10 +331,10 @@ export default {
           link: "/certificado"
         },
         {
-          title: "Asistencia",
-          caption: "Control personal",
-          icon: "done",
-          link: "/asistencia"
+          title: "Usuarios",
+          caption: "Administrar",
+          icon: "group",
+          link: "/usuarios"
         }
       ]
     };
