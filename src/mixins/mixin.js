@@ -142,8 +142,7 @@ const myMixin = {
 
 const MixinDefault = {
   data() {
-    return {
-    };
+    return {};
   },
   created: function() {
     // this.hello();
@@ -185,6 +184,12 @@ const MixinDefault = {
     },
     formatFecha(val) {
       return Fechas.larga(val);
+    },
+    formatFechaCorta(val) {
+      return Fechas.Corta(val);
+    },
+    formatFechaCustom(val) {
+      return Fechas.Custom(val);
     }
   }
 };

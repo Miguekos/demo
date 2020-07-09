@@ -1,15 +1,41 @@
 <template>
-  <div>
+  <div class="my-font">
     <form @submit.prevent="submitForm">
-      <q-list style="padding-top: 80px">
+      <q-list>
         <q-item class="q-pb-lg">
           <q-item-section class="flex flex-center">
-            <q-img
-              color="grey"
-              style="height: 110px; max-width: 120px;"
-              alt="Roseline logo"
-              src="~assets/lococorazon.png"
-            />
+            <q-carousel
+              animated
+              v-model="slide"
+              navigation
+              infinite
+              autoplay
+              transition-prev="fade"
+              transition-next="fade"
+            >
+              <q-carousel-slide
+                :name="1"
+                img-src="~assets/17192-coronavirus-blood-health-heart-hypertension-medical-pressure-pulse.gif"
+              ></q-carousel-slide>
+              <q-carousel-slide
+                :name="2"
+                img-src="~assets/14916-prueba-doctores-freepik.gif"
+              ></q-carousel-slide>
+              <q-carousel-slide
+                :name="3"
+                img-src="~assets/18389-social-distancing.gif"
+              ></q-carousel-slide>
+              <q-carousel-slide
+                :name="4"
+                img-src="~assets/17899-hand-sanitizer.gif"
+              ></q-carousel-slide>
+            </q-carousel>
+            <!--            <q-img-->
+            <!--              color="grey"-->
+            <!--              style="height: 110px; max-width: 120px;"-->
+            <!--              alt="Roseline logo"-->
+            <!--              src="~assets/17192-coronavirus-blood-health-heart-hypertension-medical-pressure-pulse.gif"-->
+            <!--            />-->
             <q-item-label header class="q-pt-xs text-grey text-h6 text-bold">
               <b class="text-green">C</b>uid<b class="text-red">APP</b>te
             </q-item-label>
@@ -126,6 +152,7 @@ export default {
   // },
   data() {
     return {
+      slide: 1,
       loadlogin: false,
       val: false,
       text: "",
@@ -227,15 +254,15 @@ export default {
                 name: resp.name,
                 email: resp.email
               };
-                this.$q.notify({
-                  // progress: true,
-                  message: "¡Bienvenido!",
-                  // icon: "favorite_border",
-                  icon: "insert_emoticon",
-                  color: "white",
-                  textColor: "red-5",
-                  position: "top"
-                });
+              this.$q.notify({
+                // progress: true,
+                message: "¡Bienvenido!",
+                // icon: "favorite_border",
+                icon: "insert_emoticon",
+                color: "white",
+                textColor: "red-5",
+                position: "top"
+              });
               LocalStorage.set("UserDetalle", resp);
               // console.log("loguerado Correctamente");
               this.loadlogin = false;
@@ -267,3 +294,13 @@ export default {
   }
 };
 </script>
+<style>
+.q-carousel {
+  background-color: #fff;
+  height: 197px;
+  width: 184px;
+}
+#q-app > div > form > div:nth-child(1) > div > div > div.q-carousel.q-panel-parent.q-carousel--without-padding.q-carousel--navigation-bottom > div.q-carousel__control.q-carousel__navigation.no-wrap.absolute.flex.q-carousel__navigation--buttons.q-carousel__navigation--bottom {
+  display: none;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHr LpR lFf">
+  <q-layout class="my-font" view="lHr LpR lFf">
     <q-header>
       <q-toolbar class="bg-white">
         <q-btn
@@ -36,7 +36,9 @@
           aria-label="Menu"
           @click="(drawerRight = !drawerRight), actualizar()"
         >
-          <img width="50px" :src="urlImagen" />
+          <q-avatar>
+            <img width="50px" :src="urlImagen" />
+          </q-avatar>
         </q-btn>
         <!--        <q-btn-->
         <!--          flat-->
@@ -98,12 +100,7 @@
       </q-list>
     </q-drawer>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-1"
-    >
+    <q-drawer v-model="leftDrawerOpen" bordered content-class="bg-grey-1">
       <q-list>
         <q-item-label header class="text-grey-8">
           <!--          <q-item-label header class="text-center text-h6 q-pa-xs"-->

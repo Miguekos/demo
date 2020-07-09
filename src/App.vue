@@ -24,7 +24,7 @@ export default {
   async created() {
     console.log("App - 4");
     this.$q.addressbarColor.set("#FFFFFF");
-    console.log("CuidAPPte CAYMAN");
+    console.log("CuidAPPte v2.1");
     // await this.callClienteReport();
     // #004d40
   }

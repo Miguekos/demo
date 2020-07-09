@@ -1,8 +1,8 @@
 <template>
-  <q-page id="corazon" class="flex flex-center">
+  <q-page id="" class="flex flex-center">
     <img
       alt="Quasar logo"
-      src="~assets/lococorazon.png"
+      src="~assets/4565-heartbeat-medical.gif"
       style="width: 350px; height: 350px"
     />
     <!-- {{ info }} -->

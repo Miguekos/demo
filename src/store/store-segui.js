@@ -109,27 +109,6 @@ const actions = {
 };
 
 const getters = {
-  ordenarObserva: state => {
-    let ordenarObserva = {},
-      keysOrdenar = Object.keys(state.seguiObserva.observa);
-
-    keysOrdenar.sort((a, b) => {
-      let taskAProp = state.seguiObserva.observa[a].fecha,
-        taskBProp = state.seguiObserva.observa[b].fecha;
-      console.log("taskAProp", taskAProp);
-      console.log("taskBProp", taskBProp);
-
-      if (taskAProp > taskBProp) return 1;
-      else if (taskAProp < taskBProp) return -1;
-      else return 0;
-    });
-
-    keysOrdenar.forEach(key => {
-      ordenarObserva[key] = state.seguiObserva.observa[key];
-    });
-
-    return ordenarObserva;
-  },
   getSeguimientos(state) {
     return state.Seguimientos;
   },
@@ -142,19 +121,6 @@ const getters = {
   },
   getSeguiObserva(state) {
     return state.seguiObserva;
-  },
-  getSeguiObservaOrden(state, getters) {
-    let tasksFiltered = getters.ordenarObserva;
-    console.log(tasksFiltered);
-    let tasks = {};
-    Object.keys(tasksFiltered).forEach(function(key) {
-      let task = tasksFiltered[key];
-      if (!task.completed) {
-        tasks[key] = task;
-      }
-    });
-    console.log(tasks);
-    return tasks;
   },
   getSeguiFilter(state) {
     return state.SeguimientosFilter;

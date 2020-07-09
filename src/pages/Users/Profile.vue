@@ -75,6 +75,66 @@
                   color="red-5"
                   filled
                   disabled
+                  v-model="usersDetalle.edad"
+                  label="Edad"
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-input
+                  dense
+                  color="red-5"
+                  filled
+                  disabled
+                  v-model="usersDetalle.sexo"
+                  label="Sexo"
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-input
+                  dense
+                  color="red-5"
+                  filled
+                  disabled
+                  v-model="usersDetalle.departamento"
+                  label="Departamento"
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-input
+                  dense
+                  color="red-5"
+                  filled
+                  disabled
+                  v-model="usersDetalle.cargo"
+                  label="Cargo"
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-input
+                  dense
+                  color="red-5"
+                  filled
+                  disabled
+                  v-model="usersDetalle.sueldo"
+                  label="Sueldo"
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-input
+                  dense
+                  color="red-5"
+                  filled
+                  disabled
                   v-model="usersDetalle.email"
                   value="miguekos1233@gmail.com"
                   label="Correo"

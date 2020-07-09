@@ -24,13 +24,13 @@
       </q-item>
     </q-list>
     <q-table
-      hide-bottom
       hide-header
       flat
       :data="getUsers"
       :columns="columns"
       row-key="created_at.$date"
       :pagination="pagination"
+      rows-per-page-label="Cant. P/P"
     >
       <template v-slot:body="props">
         <q-tr :props="props" clickable>
@@ -130,7 +130,7 @@ export default {
         sortBy: "created_at.$date",
         descending: false,
         page: 1,
-        rowsPerPage: 0
+        rowsPerPage: 8
         // rowsNumber: xx if getting data from a server
       },
       dialogRegistro: false,

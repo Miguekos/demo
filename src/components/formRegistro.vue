@@ -52,6 +52,61 @@
         ]"
       />
 
+      <q-input
+        dense
+        v-model="edad"
+        label="Edad *"
+        lazy-rules
+        counter
+        :rules="[
+          val => (val && val.length > 0) || 'Por favor no puede estar vacio'
+        ]"
+      />
+
+      <q-input
+        dense
+        v-model="sexo"
+        label="Sexo *"
+        lazy-rules
+        counter
+        :rules="[
+          val => (val && val.length > 0) || 'Por favor no puede estar vacio'
+        ]"
+      />
+
+      <q-input
+        dense
+        v-model="departamento"
+        label="Departamento *"
+        lazy-rules
+        counter
+        :rules="[
+          val => (val && val.length > 0) || 'Por favor no puede estar vacio'
+        ]"
+      />
+
+      <q-input
+        dense
+        v-model="cargo"
+        label="Cargo *"
+        lazy-rules
+        counter
+        :rules="[
+          val => (val && val.length > 0) || 'Por favor no puede estar vacio'
+        ]"
+      />
+
+      <q-input
+        dense
+        v-model="sueldo"
+        label="Sueldo *"
+        lazy-rules
+        counter
+        :rules="[
+          val => (val && val.length > 0) || 'Por favor no puede estar vacio'
+        ]"
+      />
+
       <q-select
         color="red-5"
         name="area"
@@ -101,6 +156,11 @@ export default {
       name: null,
       dni: null,
       email: null,
+      edad: null,
+      sexo: null,
+      departamento: null,
+      cargo: null,
+      sueldo: null,
       telefono: null,
       area: "",
       options: ["Producción", "Ventas", "Administración", "Gerencia"]
@@ -117,6 +177,11 @@ export default {
         name: this.name,
         dni: this.dni,
         email: this.email,
+        edad: this.edad,
+        sexo: this.sexo,
+        departamento: this.departamento,
+        cargo: this.cargo,
+        sueldo: this.sueldo,
         telefono: this.telefono,
         area: this.area,
         temp: "00",
@@ -161,6 +226,11 @@ export default {
       this.dni = null;
       this.email = null;
       this.telefono = null;
+      this.edad = null;
+      this.sexo = null;
+      this.departamento = null;
+      this.cargo = null;
+      this.sueldo = null;
     }
   }
 };
