@@ -1,23 +1,53 @@
 <template>
   <q-page id="" class="flex flex-center">
+    <!--    {{ getDocs[0].docs }}-->
     <img
-      alt="Quasar logo"
+      v-if="!getDocs[0]"
+      alt="Logo Principal"
       src="~assets/4565-heartbeat-medical.gif"
       style="width: 350px; height: 350px"
     />
+    <q-list v-if="getDocs[0]">
+      <q-item class="text-center">
+        <q-item-section>
+          <q-item-label header class="text-bold text-h5"
+            ><u>Comunicado</u></q-item-label
+          >
+          {{ getDocs[0].comentario }}
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <embed
+            alt="Comunicado Imagen"
+            :src="vercomunicado"
+            style="height: 500px"
+          />
+        </q-item-section>
+      </q-item>
+    </q-list>
     <!-- {{ info }} -->
   </q-page>
 </template>
 
 <script>
+import { mapActions, mapGetters, mapState } from "vuex";
 export default {
   name: "PageIndex",
-  data () {
+  data() {
     return {
+      infoUser: null,
       info: ""
+    };
+  },
+  computed: {
+    ...mapGetters("comuni", ["getDocs", "getFile"]),
+    vercomunicado() {
+      return `https://api.apps.com.pe/fileserver/uploads/${this.getDocs[0].docs}`;
     }
   },
   methods: {
+    ...mapActions("comuni", ["addDoc", "callDocs", "addFiles"]),
     showLoading() {
       this.$q.loading.show();
 
@@ -36,9 +66,13 @@ export default {
     }
   },
 
-  created() {
+  async created() {
+    const infoUser = await this.$q.localStorage.getAll().UserDetalle;
+    this.infoUser = infoUser;
+    this.idUser = this.$q.localStorage.getAll().idUser;
+    await this.callDocs(this.idUser);
     // this.showLoading();
-    this.info = process.env.API_URL
+    this.info = process.env.API_URL;
   }
 };
 </script>

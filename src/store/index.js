@@ -8,6 +8,7 @@ import users from "./store-users";
 import segui from "./store-segui";
 import asist from "./store-asist";
 import doc from "./store-doc";
+import comuni from "./store-comuni";
 
 Vue.use(Vuex);
 
@@ -28,7 +29,8 @@ export default function(/* { ssrContext } */) {
       auth,
       segui,
       asist,
-      doc
+      doc,
+      comuni
     },
 
     // enable strict mode (adds overhead!)

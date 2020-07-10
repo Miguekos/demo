@@ -246,7 +246,7 @@ export default {
           title: "Comunicados",
           caption: "Difunde",
           icon: "record_voice_over",
-          link: "/asistenciaDetalle"
+          link: "/comunicados"
         },
         {
           title: "Usuarios",

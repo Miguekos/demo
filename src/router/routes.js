@@ -53,7 +53,11 @@ const routes = [
         path: "/certificado",
         component: () => import("pages/Documentos/Index.vue")
       },
-      { path: "/grafica", component: () => import("components/ApexCharts") }
+      { path: "/grafica", component: () => import("components/ApexCharts") },
+      {
+        path: "/comunicados",
+        component: () => import("pages/comunicados/Index.vue")
+      }
     ]
   },
   {
