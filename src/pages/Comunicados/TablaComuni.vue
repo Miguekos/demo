@@ -16,7 +16,7 @@
           </q-td>
           <q-td key="comentario" :props="props">
             <div class="wrap-md">
-            {{ props.row.comentario }}
+              {{ props.row.comentario }}
             </div>
           </q-td>
           <q-td key="fecha" :props="props">
@@ -38,16 +38,14 @@
                 color="red-5"
                 text-color="white"
                 icon="delete"
+                @click="delPdf(props.row)"
               />
             </div>
           </q-td>
         </q-tr>
       </template>
       <template v-slot:item="props">
-        <div
-          @click="verPdf(props.row)"
-          class="q-pa-xs col-xs-12 cursor-pointer"
-        >
+        <div class="q-pa-xs col-xs-12 cursor-pointer">
           <q-card>
             <q-card-section class="text-center">
               <strong>{{ props.row.comentario }}</strong>
@@ -69,7 +67,7 @@
                     icon="visibility"
                   />
                 </q-item-section>
-                <q-item-section>
+                <q-item-section @click="delPdf(props.row)">
                   <q-btn
                     v-ripple
                     size="sm"
@@ -116,6 +114,7 @@
 
 <script>
 import { MixinDefault } from "../../mixins/mixin";
+import { mapActions } from "vuex";
 export default {
   props: {
     info: {
@@ -169,6 +168,37 @@ export default {
     };
   },
   methods: {
+    ...mapActions("doc", ["delDoc", "callDocs"]),
+    delPdf(val) {
+      console.log(val._id.$oid);
+      this.$q
+        .dialog({
+          title: "Confirmar",
+          message: "¿Esta seguro que desea borrar este documento?",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(() => {
+          // console.log('>>>> OK')
+          this.delDoc(val._id.$oid)
+            .then(async resp => {
+              console.log(resp);
+              await this.callDocs(val.idUser);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        })
+        .onOk(() => {
+          // console.log('>>>> second OK catcher')
+        })
+        .onCancel(() => {
+          // console.log('>>>> Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
+    },
     verPdf(val) {
       console.log(val.documento);
       this.visorPdf = val.documento;
@@ -183,4 +213,14 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.textwrap {
+  margin: 0 auto;
+  max-width: 300px;
+  /* border: solid 2px #ccc; */
+  /* padding: 12px; */
+  /* overflow-wrap: break-word; */
+  word-wrap: break-word;
+  hyphens: auto;
+}
+</style>

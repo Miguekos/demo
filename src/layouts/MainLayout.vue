@@ -189,6 +189,12 @@ export default {
       leftDrawerOpen: false,
       essentialLinks: [
         {
+          title: "Home",
+          caption: "Inicio",
+          icon: "dashboard",
+          link: "/"
+        },
+        {
           title: "Asistencia",
           caption: "Repórtate",
           icon: "done",

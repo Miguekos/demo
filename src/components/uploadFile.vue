@@ -1,24 +1,15 @@
 <template>
   <div>
-    <q-list>
-      <q-item>
-        <q-item-section>
-          <q-file
-            @input="factoryFn()"
-            color="red-12"
-            v-model="nameFile"
-            label="Archivo"
-          >
-            <template v-slot:prepend>
-              <q-icon name="attach_file" />
-            </template>
-          </q-file>
-        </q-item-section>
-        <!--        <q-item-section side>-->
-        <!--          <q-btn size="sm" @click="" rounded label="subir"></q-btn>-->
-        <!--        </q-item-section>-->
-      </q-item>
-    </q-list>
+    <q-file
+      @input="factoryFn()"
+      color="red-12"
+      v-model="nameFile"
+      label="Archivo"
+    >
+      <template v-slot:prepend>
+        <q-icon name="attach_file" />
+      </template>
+    </q-file>
   </div>
 </template>
 

@@ -30,6 +30,11 @@ const actions = {
     const response = await axiosInstance.post(`/documentos`, payload);
     return response.data;
   },
+  async delDoc({ commit }, payload) {
+    console.log("payload", payload);
+    const response = await axiosInstance.delete(`/documentos/${payload}`);
+    return response.data;
+  },
   addFileName({ commit }, payload) {
     console.log("setFile", payload);
     commit("setFile", payload);

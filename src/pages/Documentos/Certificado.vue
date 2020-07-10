@@ -1,6 +1,27 @@
 <template>
   <div class="q-pa-md">
-    <q-list>
+    <q-list v-if="$q.screen.lt.md">
+      <q-item>
+        <q-item-section>
+          <q-input v-model="comentario" label="Comentario"></q-input>
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <UploadFile />
+        </q-item-section>
+        <q-item-section side>
+          <q-btn
+            :loading="fileload"
+            color="green"
+            rounded
+            @click="uploadDoc()"
+            label="guardar"
+          ></q-btn>
+        </q-item-section>
+      </q-item>
+    </q-list>
+    <q-list v-else>
       <q-item>
         <q-item-section>
           <q-input v-model="comentario" label="Comentario"></q-input>

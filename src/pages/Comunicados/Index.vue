@@ -6,7 +6,7 @@
         color="grey"
         style="height: 170px; max-width: 180px;"
         alt="Roseline logo"
-        src="~assets/5144-copied.gif"
+        src="~assets/19602-contract.gif"
       />
     </div>
     <div class="full-width">
