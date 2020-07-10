@@ -36,7 +36,6 @@ import { LocalStorage } from "quasar";
 import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
-  name: "Certificado",
   components: {
     UploadFile: () => import("components/uploadFileComuni"),
     TablaDocs: () => import("./TablaComuni")

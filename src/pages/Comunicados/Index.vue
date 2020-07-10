@@ -17,7 +17,7 @@
 
 <script>
     export default {
-        name: "PageIndex",
+        name: "comunicadoIndex",
         components: {
             Certificado: () => import("./Comunicado")
         },
