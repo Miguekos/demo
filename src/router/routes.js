@@ -47,7 +47,7 @@ const routes = [
       },
       {
         path: "/comunicados",
-        component: () => import("pages/comunicados/Index.vue")
+        component: () => import("pages/Comunicados/Index")
       },
       {
         path: "/dashboard",
