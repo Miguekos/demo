@@ -1,8 +1,8 @@
 # docker-compose.yml
 version: "2"
 services:
-  cuidapptevb:
-    #    image: cuidapptevb:1.0
+  cuidapptelaprotectora:
+    #    image: cuidapptelaprotectora:1.0
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,8 +13,8 @@ services:
       # - /Users/kbs/git/peladonerd/varios/1/www:/usr/share/nginx/html:ro
       # - //d/storeDocker/html:/usr/share/nginx/html:ro
     environment:
-      - VIRTUAL_HOST=vb.apps.com.pe,www.vb.apps.com.pe
-      - LETSENCRYPT_HOST=vb.apps.com.pe,www.vb.apps.com.pe
+      - VIRTUAL_HOST=laprotectora.apps.com.pe,www.laprotectora.apps.com.pe
+      - LETSENCRYPT_HOST=laprotectora.apps.com.pe,www.laprotectora.apps.com.pe
       - LETSENCRYPT_EMAIL=kevin.silva.095@gmail.com
 networks:
   default:
