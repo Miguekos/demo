@@ -46,6 +46,10 @@ const routes = [
         component: () => import("pages/Users/Profile.vue")
       },
       {
+        path: "/comunicados",
+        component: () => import("pages/comunicados/Index.vue")
+      },
+      {
         path: "/dashboard",
         component: () => import("pages/Control/Index.vue")
       },
@@ -53,11 +57,7 @@ const routes = [
         path: "/certificado",
         component: () => import("pages/Documentos/Index.vue")
       },
-      { path: "/grafica", component: () => import("components/ApexCharts") },
-      {
-        path: "/comunicados",
-        component: () => import("pages/comunicados/Index.vue")
-      }
+      { path: "/grafica", component: () => import("components/ApexCharts") }
     ]
   },
   {
