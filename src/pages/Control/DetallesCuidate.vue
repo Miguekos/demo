@@ -55,7 +55,27 @@
             <q-icon name="search" />
           </template>
         </q-input>-->
-          <Search />
+          <q-input
+            dense
+            standout="bg-indigo-4 text-white"
+            type="search"
+            placeholder="Buscar por nombre"
+            v-model="filter"
+          >
+            <!--      <template v-slot:before>-->
+            <!--        <q-icon name="search" />-->
+            <!--      </template>-->
+            <template v-slot:append>
+              <q-icon
+                v-if="filter !== ''"
+                name="close"
+                @click="filter = ''"
+                class="cursor-pointer"
+              />
+              <q-icon name="search" />
+            </template>
+          </q-input>
+          <!--          <Search />-->
         </q-item-section>
       </q-item>
     </q-list>
@@ -69,6 +89,7 @@
       :columns="columnsOne"
       row-key="created_at.$date"
       :pagination.sync="pagination"
+      :filter="filter"
     >
       <!-- <template v-slot:top-right>
       <q-btn
@@ -149,10 +170,11 @@ export default {
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
-    Search: () => import("./SearchCU")
+    // Search: () => import("./SearchCU")
   },
   data() {
     return {
+      filter: "",
       tab: "mails",
       pagination: {
         sortBy: "created_at.$date",

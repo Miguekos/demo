@@ -15,7 +15,7 @@
             {{ props.row.comentario }}
           </q-td>
           <q-td key="documento" :props="props">
-            {{ props.row.documento }}
+            {{ props.row.docs }}
           </q-td>
           <q-td key="fecha" :props="props">
             {{ formatFecha(props.row.created_at.$date) }}
@@ -65,7 +65,7 @@
                     icon="visibility"
                   />
                 </q-item-section>
-                <q-item-section @click="delPdf(props)">
+                <q-item-section @click="delPdf(props.row)">
                   <q-btn
                     v-ripple
                     size="sm"
@@ -166,7 +166,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("doc", ["delDoc"]),
+    ...mapActions("doc", ["delDoc", "callDocs"]),
     delPdf(val) {
       console.log(val);
       this.$q
@@ -177,6 +177,14 @@ export default {
           persistent: true
         })
         .onOk(() => {
+          this.delDoc(val._id.$oid)
+            .then(resp => {
+              console.log(resp);
+              this.callDocs(val.idUser);
+            })
+            .catch(err => {
+              console.log(err);
+            });
           // console.log('>>>> OK')
         })
         .onOk(() => {

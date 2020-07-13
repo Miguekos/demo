@@ -19,7 +19,26 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <!--          <Search />-->
+          <q-input
+            dense
+            standout="bg-red-4 text-white"
+            type="search"
+            placeholder="Buscar por nombre"
+            v-model="filter"
+          >
+            <!--      <template v-slot:before>-->
+            <!--        <q-icon name="search" />-->
+            <!--      </template>-->
+            <template v-slot:append>
+              <q-icon
+                v-if="filter !== ''"
+                name="close"
+                @click="filter = ''"
+                class="cursor-pointer"
+              />
+              <q-icon name="search" />
+            </template>
+          </q-input>
         </q-item-section>
       </q-item>
     </q-list>
@@ -31,6 +50,7 @@
       :columns="columns"
       row-key="created_at.$date"
       :pagination="pagination"
+      :filter="filter"
     >
       <template v-slot:body="props">
         <q-tr :props="props" clickable>
@@ -122,6 +142,7 @@ export default {
   },
   data() {
     return {
+      filter: "",
       DetalleMapsLoad: false,
       detalleMaps: false,
       info: null,

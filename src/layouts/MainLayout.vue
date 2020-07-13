@@ -313,8 +313,8 @@ export default {
           link: "/asistencia"
         },
         {
-          title: "Mis registros",
-          caption: "Evaluaciones",
+          title: "Control",
+          caption: "Control",
           icon: "scatter_plot",
           link: "/misregistros"
         },

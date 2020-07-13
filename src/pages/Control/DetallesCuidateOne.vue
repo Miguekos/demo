@@ -44,6 +44,17 @@
       <!--        </q-item>-->
       <q-item>
         <q-item-section>
+          <q-input
+            borderless
+            dense
+            debounce="300"
+            color="primary"
+            v-model="filter"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
           <!-- <q-input
           v-model="search"
           dense
@@ -55,7 +66,7 @@
             <q-icon name="search" />
           </template>
         </q-input>-->
-          <Search />
+<!--          <Search />-->
         </q-item-section>
       </q-item>
     </q-list>
@@ -69,6 +80,7 @@
       :columns="columnsOne"
       row-key="created_at.$date"
       :pagination.sync="pagination"
+      :filter="filter"
     >
       <!-- <template v-slot:top-right>
       <q-btn
@@ -94,7 +106,12 @@
                 {{ props.row.temp }}°
               </q-item-label>
             </q-item-section>
-            <q-item-section v-if="role == 2" v-ripple:white clickable @click="detalleSeguimientoOne(props.row)">
+            <q-item-section
+              v-if="role == 2"
+              v-ripple:white
+              clickable
+              @click="detalleSeguimientoOne(props.row)"
+            >
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
                 <b class="text-red-5">temp:</b>
@@ -124,8 +141,7 @@
           </q-td>
         </q-tr>
       </template>
-    </q-table
-      hide-bottom>
+    </q-table>
   </div>
 </template>
 
@@ -163,6 +179,7 @@ export default {
   },
   data() {
     return {
+      filter: "",
       role: null,
       userData: [],
       tab: "mails",

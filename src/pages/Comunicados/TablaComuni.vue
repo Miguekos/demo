@@ -169,9 +169,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions("doc", ["delDoc", "callDocs"]),
+    ...mapActions("comuni", ["delDoc", "callDocs"]),
     delPdf(val) {
-      console.log(val._id.$oid);
+      console.log(val);
       this.$q
         .dialog({
           title: "Confirmar",
@@ -180,11 +180,10 @@ export default {
           persistent: true
         })
         .onOk(() => {
-          // console.log('>>>> OK')
           this.delDoc(val._id.$oid)
-            .then(async resp => {
+            .then(resp => {
               console.log(resp);
-              await this.callDocs(val.idUser);
+              this.callDocs(val.idUser);
             })
             .catch(err => {
               console.log(err);

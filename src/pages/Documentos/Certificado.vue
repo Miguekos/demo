@@ -44,7 +44,7 @@
     <q-list>
       <q-item>
         <q-item-section>
-          <TablaDocs v-if="getDocs" :info="getDocs.archivos" />
+          <TablaDocs v-if="getDocs" :info="getDocs" />
         </q-item-section>
       </q-item>
     </q-list>

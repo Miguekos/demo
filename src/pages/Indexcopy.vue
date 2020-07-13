@@ -1,30 +1,33 @@
 <template>
   <q-page id="" class="flex flex-center">
     <!--    {{ getDocs[0].docs }}-->
+    <!--    {{ getDocs }}-->
     <img
       v-if="!getDocs[0]"
       alt="Logo Principal"
       src="~assets/4565-heartbeat-medical.gif"
       style="width: 350px; height: 350px"
     />
-    <q-list v-if="getDocs[0]">
+
+    <q-list v-if="getDocs[0]" class="full-width full-height">
       <q-item class="text-center">
         <q-item-section>
-          <q-item-label header class="text-bold text-h5"
-            >Comunicado</q-item-label
-          >
-          {{ getDocs[0].comentario }}
+          <!--          <q-item-label header class="text-bold text-h5"-->
+          <!--            >Comunicado</q-item-label-->
+          <!--          >-->
+          <!--          {{ getDocs[0].comentario }}-->
+          <Comunicados :info="getDocs" />
         </q-item-section>
       </q-item>
-      <q-item>
-        <q-item-section>
-          <embed
-            alt="Comunicado Imagen"
-            :src="vercomunicado"
-            style="height: 500px"
-          />
-        </q-item-section>
-      </q-item>
+      <!--      <q-item>-->
+      <!--        <q-item-section>-->
+      <!--          <embed-->
+      <!--            alt="Comunicado Imagen"-->
+      <!--            :src="vercomunicado"-->
+      <!--            style="height: 500px"-->
+      <!--          />-->
+      <!--        </q-item-section>-->
+      <!--      </q-item>-->
     </q-list>
     <!-- {{ info }} -->
   </q-page>
@@ -39,6 +42,9 @@ export default {
       infoUser: null,
       info: ""
     };
+  },
+  components: {
+    Comunicados: () => import("./Carousel")
   },
   computed: {
     ...mapGetters("comuni", ["getDocs", "getFile"]),
