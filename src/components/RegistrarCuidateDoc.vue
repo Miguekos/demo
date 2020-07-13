@@ -106,6 +106,9 @@
               color="red-5"
               borderless
               label="Temperatura"
+              mask="#.##"
+              fill-mask="0"
+              reverse-fill-mask
             />
           </q-item-section>
         </q-item>
@@ -212,9 +215,9 @@ export default {
       // console.log(this.dateReport.length);
       if (
         this.observa.length > 0 &&
-        this.sintomas.length > 0 &&
-        this.temp.length > 0 &&
-        this.medicacion.length > 0
+        this.sintomas != null &&
+        this.dateDiag != null &&
+        this.medicacion != null
       ) {
         this.$q.loading.show();
         // let validacion = this.valdairEstados();
