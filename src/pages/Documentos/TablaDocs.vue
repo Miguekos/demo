@@ -11,11 +11,11 @@
     >
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td key="documento" :props="props">
-            {{ props.row.documento }}
-          </q-td>
           <q-td key="comentario" :props="props">
             {{ props.row.comentario }}
+          </q-td>
+          <q-td key="documento" :props="props">
+            {{ props.row.documento }}
           </q-td>
           <q-td key="fecha" :props="props">
             {{ formatFecha(props.row.created_at.$date) }}
@@ -134,19 +134,19 @@ export default {
 
       columns: [
         {
-          name: "documento",
-          required: true,
-          label: "Nombre",
+          name: "comentario",
           align: "left",
-          field: row => row.documento,
+          label: "Nombre del documento",
+          field: row => row.comentario,
           format: val => `${val}`,
           sortable: true
         },
         {
-          name: "comentario",
+          name: "documento",
+          required: true,
+          label: "Nombre del archivo",
           align: "center",
-          label: "Comentario",
-          field: row => row.comentario,
+          field: row => row.documento,
           format: val => `${val}`,
           sortable: true
         },

@@ -35,7 +35,11 @@
       <template v-slot:body="props">
         <q-tr :props="props" clickable>
           <q-td key="name" :props="props">
-            <q-item-section clickable @click="detalleCliente(props.row)">
+            <q-item-section v-if="role == 1" clickable @click="detalleCliente(props.row)">
+              <q-item-label>{{ props.row.name }}</q-item-label>
+              <q-item-label caption> {{ props.row.email }}</q-item-label>
+            </q-item-section>
+            <q-item-section v-if="role == 2 || role == 3" clickable>
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption> {{ props.row.email }}</q-item-label>
             </q-item-section>

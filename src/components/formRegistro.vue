@@ -63,15 +63,15 @@
         ]"
       />
 
-      <q-input
+      <q-select
         dense
+        options-dense
         v-model="sexo"
-        label="Sexo *"
-        lazy-rules
-        counter
-        :rules="[
-          val => (val && val.length > 0) || 'Por favor no puede estar vacio'
-        ]"
+        :options="optionsSexo"
+        label="Sexo"
+        emit-value
+        map-options
+        :rules="[val => !!val || 'Campo obligatorio']"
       />
 
       <q-input
@@ -114,7 +114,7 @@
         v-model="area"
         :options="options"
         label="Área"
-        :rules="[val => !!val || 'Compo obligatorio']"
+        :rules="[val => !!val || 'Campo obligatorio']"
       />
 
       <q-separator />
@@ -163,7 +163,17 @@ export default {
       sueldo: null,
       telefono: null,
       area: "",
-      options: ["Producción", "Ventas", "Administración", "Gerencia"]
+      options: ["Producción", "Ventas", "Administración", "Gerencia"],
+      optionsSexo: [
+        {
+          label: "MASCULINO",
+          value: 1
+        },
+        {
+          label: "FEMENINO",
+          value: 2
+        }
+      ]
     };
   },
   methods: {

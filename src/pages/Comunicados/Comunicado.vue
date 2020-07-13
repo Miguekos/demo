@@ -86,7 +86,7 @@ export default {
         {
           name: "documento",
           required: true,
-          label: "Nombre",
+          label: "Nombre del documento",
           align: "left",
           field: row => row.documento,
           format: val => `${val}`,
@@ -95,7 +95,7 @@ export default {
         {
           name: "calories",
           align: "center",
-          label: "Comentario",
+          label: "Nombre del archivo",
           field: row => row.comentario,
           format: val => `${val}`,
           sortable: true

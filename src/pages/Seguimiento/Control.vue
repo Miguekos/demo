@@ -59,6 +59,20 @@
           />
         </q-item-section>
       </q-item>
+      <q-item class="q-pb-xs">
+        <q-item-section>
+          <q-input
+            v-model="temp"
+            color="red-5"
+            borderless
+            filled
+            label="Temperatura"
+            mask="#.##"
+            fill-mask="0"
+            reverse-fill-mask
+          />
+        </q-item-section>
+      </q-item>
       <q-item>
         <q-item-section>
           <q-input
@@ -110,6 +124,7 @@ export default {
   data() {
     return {
       role: null,
+      temp: null,
       sintomas: null,
       medicacion: null,
       detalle: null,
@@ -121,7 +136,7 @@ export default {
     async dealta() {
       this.$q
         .dialog({
-          title: "¿Estas seguro que quieres dar De Alta?",
+          title: "¿Estas seguro que quieres dar de alta?",
           message: "Comentario",
           cancel: true,
           prompt: {
@@ -171,7 +186,8 @@ export default {
             color: "red-5",
             sintomas: this.sintomas,
             medicacion: this.medicacion,
-            role: this.role
+            role: this.role,
+            temp: this.temp
           },
           sintomas: this.sintomas,
           medicacion: this.medicacion

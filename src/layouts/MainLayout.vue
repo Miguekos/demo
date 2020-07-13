@@ -12,7 +12,7 @@
           @click="(leftDrawerOpen = !leftDrawerOpen), actualizar()"
         />
 
-        <q-toolbar-title class="text-black">
+        <q-toolbar-title class="text-black my-roboto">
           <span v-ripple:white class="cursor-pointer" @click="home()">
             <b class="text-green">C</b>uid<b class="text-red">APP</b>te
           </span>

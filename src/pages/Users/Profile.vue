@@ -82,13 +82,15 @@
             </q-item>
             <q-item class="justify-center">
               <q-item-section class="text-center text-bold">
-                <q-input
-                  dense
-                  color="red-5"
+                <q-select
                   filled
-                  disabled
+                  dense
+                  options-dense
                   v-model="usersDetalle.sexo"
+                  :options="optionsSexo"
                   label="Sexo"
+                  emit-value
+                  map-options
                 />
               </q-item-section>
             </q-item>
@@ -116,7 +118,7 @@
                 />
               </q-item-section>
             </q-item>
-            <q-item class="justify-center">
+            <q-item v-if="roleUser == 1" class="justify-center">
               <q-item-section class="text-center text-bold">
                 <q-input
                   dense
@@ -131,6 +133,7 @@
             <q-item class="justify-center">
               <q-item-section class="text-center text-bold">
                 <q-input
+                  disable
                   dense
                   color="red-5"
                   filled
@@ -145,6 +148,8 @@
               <q-item-section class="text-center text-bold">
                 <q-select
                   filled
+                  dense
+                  options-dense
                   v-model="usersDetalle.role"
                   :options="options"
                   label="Role"
@@ -240,6 +245,16 @@ export default {
         {
           label: "Medico",
           value: 3
+        }
+      ],
+      optionsSexo: [
+        {
+          label: "MASCULINO",
+          value: 1
+        },
+        {
+          label: "FEMENINO",
+          value: 2
         }
       ],
       idRegitro: null,

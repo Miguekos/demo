@@ -4,13 +4,13 @@
       <q-tabs v-model="tab" dense align="justify">
         <q-tab class="text-amber-5" name="mails" label="Mis evaluaciones" />
         <q-tab
-          v-if="role === 1"
+          v-if="role === 1 || role === 3"
           class="text-green-5"
           name="alarms"
           label="Sanos"
         />
         <q-tab
-          v-if="role === 1"
+          v-if="role === 1 || role === 3"
           class="text-red-5"
           name="movies"
           label="Con sintomas"

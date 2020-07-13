@@ -11,7 +11,7 @@
       <q-item class="text-center">
         <q-item-section>
           <q-item-label header class="text-bold text-h5"
-            ><u>Comunicado</u></q-item-label
+            >Comunicado</q-item-label
           >
           {{ getDocs[0].comentario }}
         </q-item-section>

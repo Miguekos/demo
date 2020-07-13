@@ -36,7 +36,7 @@
             <!--              alt="Roseline logo"-->
             <!--              src="~assets/17192-coronavirus-blood-health-heart-hypertension-medical-pressure-pulse.gif"-->
             <!--            />-->
-            <q-item-label header class="q-pt-xs text-grey text-h6 text-bold">
+            <q-item-label header class="q-pt-xs text-grey text-h6 text-bold my-roboto">
               <b class="text-green">C</b>uid<b class="text-red">APP</b>te
             </q-item-label>
           </q-item-section>

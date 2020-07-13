@@ -465,7 +465,7 @@ export default {
     const role = LocalStorage.getAll().role;
     // console.log(role);
     if (role == 1) {
-      this.datosPersonales = true;
+      this.datosPersonales = false;
     } else {
       this.datosPersonales = false;
     }

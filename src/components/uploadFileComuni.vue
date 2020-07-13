@@ -4,6 +4,8 @@
     color="red-12"
     v-model="nameFile"
     label="Archivo"
+    accept=".pdf, .jpg, image/*"
+    @rejected="onRejected"
   >
     <template v-slot:prepend>
       <q-icon name="attach_file" />
@@ -36,6 +38,14 @@ export default {
 
   methods: {
     ...mapActions("comuni", ["addFiles"]),
+    onRejected(rejectedEntries) {
+      // Notify plugin needs to be installed
+      // https://quasar.dev/quasar-plugins/notify#Installation
+      this.$q.notify({
+        type: "negative",
+        message: `El tipo de archivo no es soportado`
+      });
+    },
     factoryFn() {
       this.$store.commit("comuni/setFileload", true);
       console.log(this.files);

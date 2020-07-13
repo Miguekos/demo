@@ -105,6 +105,9 @@
               color="red-5"
               borderless
               label="Temperatura"
+              mask="#.##"
+              fill-mask="0"
+              reverse-fill-mask
             />
           </q-item-section>
         </q-item>
@@ -199,7 +202,7 @@ export default {
       if (
         this.observa.length > 0 &&
         this.sintomas != null &&
-        this.temp != null &&
+        this.dateDiag != null &&
         this.medicacion != null
       ) {
         this.$q.loading.show();
