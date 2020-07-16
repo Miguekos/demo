@@ -1,21 +1,41 @@
 <template>
   <div class="q-pa-md">
-    <!--    {{ urls }}-->
+    <!--    {{ info }}-->
     <q-carousel
       swipeable
       animated
+      arrows
+      navigation-icon="radio_button_unchecked"
+      control-type="regular"
+      control-color="red"
+      control-text-color="white-8"
       v-model="slide"
       :autoplay="autoplay"
       ref="carousel"
+      height="550px"
       infinite
     >
       <q-carousel-slide
         v-for="(items, index) in urls"
         :key="index"
         :name="items.name"
-        :img-src="`https://api.apps.com.pe/fileserver/uploads/${items.url}`"
-      />
+      >
+        <div class="full-width">
+          <!--          <embed-->
+          <!--            :src="`https://api.apps.com.pe/fileserver/uploads/${items.url}`"-->
+          <!--            type="application/pdf"-->
+          <!--            width="100%"-->
+          <!--            height="500"-->
+          <!--          />-->
 
+          <iframe
+            :src="`https://api.apps.com.pe/fileserver/uploads/${items.url}`"
+            width="100%"
+            height="500"
+          >
+          </iframe>
+        </div>
+      </q-carousel-slide>
       <!--      <template v-slot:control>-->
       <!--        <q-carousel-control-->
       <!--          position="bottom-right"-->
@@ -51,10 +71,9 @@ export default {
   props: ["info"],
   data() {
     return {
-      slide: 1,
-      autoplay: true,
+      slide: 0,
+      autoplay: false,
       urls: [],
-      slide: "style",
       lorem: "Lorem ipsum "
     };
   },
@@ -63,7 +82,7 @@ export default {
       const asd = this.info[i];
       console.log("asd", asd.docs);
       this.urls.push({
-        name: i + 1,
+        name: i,
         url: asd.docs
       });
     }

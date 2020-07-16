@@ -236,7 +236,7 @@ export default {
     DetallesCuidate: () => import("./DetallesCuidate"),
     DetallesCuidateOne: () => import("./DetallesCuidateOne"),
     Seguimiento: () => import("../Seguimiento/Seguimiento"),
-    DeAlta: () => import("../Seguimiento//DeAlta")
+    DeAlta: () => import("../Seguimiento/DeAlta")
   },
   data() {
     return {

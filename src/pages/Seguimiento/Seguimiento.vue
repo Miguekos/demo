@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <div>
     <q-list>
       <q-item
         @click="exportTable()"
@@ -113,7 +113,7 @@
         </q-item-section>
       </q-item>
     </q-list>-->
-  </q-page>
+  </div>
 </template>
 
 <script>

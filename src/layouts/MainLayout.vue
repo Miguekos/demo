@@ -38,6 +38,7 @@
         >
           <q-avatar>
             <img width="50px" :src="urlImagen" />
+            <q-badge color="green" floating>22</q-badge>
           </q-avatar>
         </q-btn>
         <!--        <q-btn-->
@@ -87,6 +88,24 @@
         </q-item-label>
       </q-list>
       <q-list>
+        <q-item clickable tag="a" @click="Alertas()">
+          <q-item-section avatar>
+            <q-icon name="announcement" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Notificaciones</q-item-label>
+            <q-item-label caption>
+              Alertas
+            </q-item-label>
+          </q-item-section>
+          <q-badge color="green">22</q-badge>
+        </q-item>
+        <EssentialLink
+          v-if="role == 1"
+          v-for="link in essentialLinksRight"
+          :key="link.title"
+          v-bind="link"
+        />
         <q-item clickable tag="a" @click="Logout()">
           <q-item-section avatar>
             <q-icon name="logout" />
@@ -259,6 +278,14 @@ export default {
           caption: "Administrar",
           icon: "group",
           link: "/usuarios"
+        }
+      ],
+      essentialLinksRight: [
+        {
+          title: "Mantenimiento",
+          caption: "Mantenimiento",
+          icon: "dashboard",
+          link: "/cargo"
         }
       ],
       essentialLinksUser: [
