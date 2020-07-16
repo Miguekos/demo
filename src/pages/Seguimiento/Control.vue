@@ -177,7 +177,7 @@ export default {
         });
     },
     async update() {
-      if (this.detalle != null) {
+      if (this.detalle != null || this.temp != null) {
         this.$store.commit("segui/addObserva", {
           observa: {
             nombre: this.arrayObserva.name,
