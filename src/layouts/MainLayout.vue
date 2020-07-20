@@ -9,7 +9,11 @@
           color="black"
           icon="menu"
           aria-label="Menu"
-          @click="(leftDrawerOpen = !leftDrawerOpen), actualizar()"
+          @click="
+            (leftDrawerOpen = !leftDrawerOpen),
+              (drawerRight = false),
+              actualizar()
+          "
         />
 
         <q-toolbar-title class="text-black my-roboto">
@@ -34,7 +38,9 @@
           size="sm"
           color="black"
           aria-label="Menu"
-          @click="(drawerRight = !drawerRight), actualizar()"
+          @click="
+            (drawerRight = !drawerRight), (leftDrawerOpen = false), actualizar()
+          "
         >
           <q-avatar>
             <img width="50px" :src="urlImagen" />
