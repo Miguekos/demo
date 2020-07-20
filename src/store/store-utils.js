@@ -2,7 +2,9 @@ import { axiosInstance } from "boot/axios";
 
 const state = {
   Cargo: null,
-  Area: null
+  Area: null,
+  NotiCS: [],
+  NotiCuidate: []
 };
 
 const mutations = {
@@ -17,6 +19,12 @@ const mutations = {
   },
   setUsersOne(state, payload) {
     state.UsersOne = payload;
+  },
+  setNotiCS(state, payload) {
+    state.NotiCS = payload;
+  },
+  setNotiCuidate(state, payload) {
+    state.NotiCuidate = payload;
   }
 };
 
@@ -53,6 +61,22 @@ const actions = {
   },
   setSearch({ commit }, payload) {
     commit("setSearch", payload);
+  },
+  async notificacionesConSintomas({ commit }) {
+    const response = await axiosInstance.get(`/notifications/1`);
+    commit("setNotiCS", response.data);
+  },
+  async notificacionesCuidate({ commit }) {
+    const response = await axiosInstance.get(`/notifications/2`);
+    commit("setNotiCuidate", response.data);
+  },
+  async delNotiConSintomas({ commit }, payload) {
+    const response = await axiosInstance.delete(`/notifications/1/${payload}`);
+    return response.data;
+  },
+  async delNotiCuidate({ commit }, payload) {
+    const response = await axiosInstance.delete(`/notifications/2/${payload}`);
+    return response.data;
   }
 };
 
@@ -106,6 +130,12 @@ const getters = {
   },
   getCargo(state) {
     return state.Cargo;
+  },
+  getNotiCS(state) {
+    return state.NotiCS;
+  },
+  getNotiCuidate(state) {
+    return state.NotiCuidate;
   }
 };
 
