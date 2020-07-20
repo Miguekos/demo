@@ -4,12 +4,12 @@
       <q-item bordered>
         <q-item-section>
           <q-item-label class="text-left text-h6 q-pa-xs text-bold text-black"
-            >Sintomatologia COVID</q-item-label
+            >Sintomatologia COVID (Acumulado)</q-item-label
           >
         </q-item-section>
         <q-item-section>
           <q-item-label class="text-left text-h6 q-pa-xs text-bold text-black"
-            >Pacientes COVID</q-item-label
+            >Pacientes COVID (Acumulado)</q-item-label
           >
         </q-item-section>
       </q-item>
@@ -109,8 +109,8 @@
     </q-list>
     <!--    <q-separator />-->
     <q-item>
-      <q-item-section>Reportes por estados</q-item-section>
-      <q-item-section>Reportes por estados</q-item-section>
+      <q-item-section>Reportes por estados (Última semana)</q-item-section>
+      <q-item-section>Reportes por estados (Última semana)</q-item-section>
     </q-item>
     <q-separator />
     <q-list style="height: 280px;">

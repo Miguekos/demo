@@ -99,10 +99,15 @@
     <div>
       <q-dialog v-model="ver">
         <q-card>
+          <!--          <q-pdfviewer-->
+          <!--            v-model="visible"-->
+          <!--            :src="`https://api.apps.com.pe/fileserver/uploads/${visorPdf}`"-->
+          <!--            type="html5"-->
+          <!--          />-->
           <embed
             :src="`https://api.apps.com.pe/fileserver/uploads/${visorPdf}`"
             width="600px"
-            height="600px"
+            height="550px"
           />
         </q-card>
       </q-dialog>
@@ -122,6 +127,7 @@ export default {
   mixins: [MixinDefault],
   data() {
     return {
+      visible: true,
       ver: false,
       visorPdf: "",
       pagination: {
@@ -205,8 +211,8 @@ export default {
       //   });
     },
     verPdf(val) {
-      console.log(val.documento);
-      this.visorPdf = val.documento;
+      console.log(val.docs);
+      this.visorPdf = val.docs;
       this.ver = true;
     }
   },

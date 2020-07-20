@@ -1,5 +1,5 @@
 <template>
-  <div id="">
+  <div id="" class="flex flex-center">
     <!--    {{ getDocs[0].docs }}-->
     <!--    {{ getDocs }}-->
     <img
@@ -9,7 +9,7 @@
       style="width: 350px; height: 350px"
     />
 
-    <q-list v-if="getDocs[0]">
+    <q-list v-if="getDocs[0]" class="full-width full-height">
       <q-item class="text-center">
         <q-item-section>
           <!--          <q-item-label header class="text-bold text-h5"-->
