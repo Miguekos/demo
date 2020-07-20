@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <q-list>
-      <q-item dense clickable v-ripple>
+      <q-item @click="exportTable()" dense clickable v-ripple>
         <q-item-section
           class="text-grey text-bold"
           side
@@ -14,7 +14,8 @@
           </q-item-label>
           <q-separator color="grey-4" inset />
         </q-item-section>
-        <q-item-section class="text-grey text-bold" side top right>
+        <q-item-section class="text-red-5 text-bold" side top right>
+          <q-icon name="archive" />
         </q-item-section>
       </q-item>
       <q-item>
@@ -119,7 +120,23 @@
 import { Fechas } from "src/directives/formatFecha";
 import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
-import { date, LocalStorage } from "quasar";
+import { date, exportFile, LocalStorage } from "quasar";
+function wrapCsvValue(val, formatFn) {
+  let formatted = formatFn !== void 0 ? formatFn(val) : val;
+
+  formatted =
+    formatted === void 0 || formatted === null ? "" : String(formatted);
+
+  formatted = formatted.split('"').join('""');
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+
+  return `"${formatted}"`;
+}
 export default {
   preFetch({ store, redirect }) {
     let logginIn = LocalStorage.getAll().loggin;
@@ -159,6 +176,31 @@ export default {
       fabLeft: true,
       fabCenter: true,
       fabRight: true,
+      columnsexport: [
+        {
+          name: "nombre",
+          label: "Nombre",
+          field: row => row.name
+        },
+        {
+          name: "ingreso",
+          label: "Ingreso",
+          field: row => row,
+          format: val =>
+            val.asistenciaEntrada
+              ? val.asistenciaEntrada.created_at
+              : "No marco asistencia"
+        },
+        {
+          name: "salida",
+          label: "Salida",
+          field: row => row,
+          format: val =>
+            val.asistenciaSalida
+              ? val.asistenciaSalida.created_at
+              : "No marco asistencia"
+        }
+      ],
       columns: [
         {
           name: "name",
@@ -193,6 +235,56 @@ export default {
   },
   methods: {
     ...mapActions("asist", ["callAsist"]),
+    crearDataExport() {
+      const arraysJson = this.getAsistAll[0];
+      let keys = [];
+      let values = [];
+      keys.push(Object.keys(arraysJson));
+      // console.log(keys[0].length);
+      // console.log(typeof keys[0].length);
+
+      for (let index = 0; index < keys[0].length; index++) {
+        // console.log(index);
+        const element = keys[0][index];
+        values.push({
+          name: element,
+          label: element,
+          field: element
+        });
+        // console.log(element);
+      }
+      console.log(values);
+      this.columnsexport = values;
+    },
+    exportTable() {
+      // naive encoding to csv format
+      const content = [this.columnsexport.map(col => wrapCsvValue(col.label))]
+        .concat(
+          this.getAsistAll.map(row =>
+            this.columnsexport
+              .map(col =>
+                wrapCsvValue(
+                  typeof col.field === "function"
+                    ? col.field(row)
+                    : row[col.field === void 0 ? col.name : col.field],
+                  col.format
+                )
+              )
+              .join(",")
+          )
+        )
+        .join("\r\n");
+
+      const status = exportFile("table-asistencia.csv", content, "text/csv");
+
+      if (status !== true) {
+        this.$q.notify({
+          message: "Tu navegador no permite descargar...",
+          color: "negative",
+          icon: "warning"
+        });
+      }
+    },
     dialogMapsDetalle(val) {
       this.info = val;
       this.detalleMaps = true;

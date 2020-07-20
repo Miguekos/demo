@@ -113,7 +113,24 @@ import { Fechas } from "src/directives/formatFecha";
 import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { date, exportFile, LocalStorage } from "quasar";
+var normalize = (function() {
+  var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
+    to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+    mapping = {};
 
+  for (var i = 0, j = from.length; i < j; i++)
+    mapping[from.charAt(i)] = to.charAt(i);
+
+  return function(str) {
+    var ret = [];
+    for (var i = 0, j = str.length; i < j; i++) {
+      var c = str.charAt(i);
+      if (mapping.hasOwnProperty(str.charAt(i))) ret.push(mapping[c]);
+      else ret.push(c);
+    }
+    return ret.join("");
+  };
+})();
 function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0 ? formatFn(val) : val;
 
@@ -128,7 +145,7 @@ function wrapCsvValue(val, formatFn) {
   // .split('\n').join('\\n')
   // .split('\r').join('\\r')
 
-  return `"${formatted}"`;
+  return `"${normalize(formatted)}"`;
 }
 export default {
   preFetch({ store, redirect }) {

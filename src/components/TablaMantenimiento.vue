@@ -17,7 +17,13 @@
             </q-badge>
           </q-td>
           <q-td key="fecha" :props="props">
-            <!--            <q-btn icon="delete" color="red" round size="xs"></q-btn>-->
+            <!--            <q-btn-->
+            <!--              @click="eliminar(props.row)"-->
+            <!--              icon="delete"-->
+            <!--              color="red"-->
+            <!--              round-->
+            <!--              size="xs"-->
+            <!--            ></q-btn>-->
             {{ formatFecha(props.row.created_at.$date) }}
           </q-td>
           <!--          <q-td key="fecha" :props="props">-->
@@ -32,6 +38,7 @@
 
 <script>
 import { MixinDefault } from "src/mixins/mixin";
+import { mapActions } from "vuex";
 export default {
   props: {
     info: Array
@@ -66,6 +73,12 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    eliminar(val) {
+      this.$emit("click", val);
+      // console.log(val);
+    }
   }
 };
 </script>

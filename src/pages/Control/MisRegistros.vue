@@ -237,21 +237,46 @@ import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { date, exportFile, LocalStorage } from "quasar";
 import { myMixin } from "../../mixins/mixin.js";
+var normalize = (function() {
+  var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
+    to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+    mapping = {};
+
+  for (var i = 0, j = from.length; i < j; i++)
+    mapping[from.charAt(i)] = to.charAt(i);
+
+  return function(str) {
+    var ret = [];
+    for (var i = 0, j = str.length; i < j; i++) {
+      var c = str.charAt(i);
+      if (mapping.hasOwnProperty(str.charAt(i))) ret.push(mapping[c]);
+      else ret.push(c);
+    }
+    return ret.join("");
+  };
+})();
 function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0 ? formatFn(val) : val;
 
   formatted =
     formatted === void 0 || formatted === null ? "" : String(formatted);
 
-  formatted = formatted.split('"').join('""');
-  /**
-   * Excel accepts \n and \r in strings, but some other CSV parsers do not
-   * Uncomment the next two lines to escape new lines
-   */
-  // .split('\n').join('\\n')
-  // .split('\r').join('\\r')
+  formatted = formatted
+    .split('"')
+    .join('""')
+    /**
+     * Excel accepts \n and \r in strings, but some other CSV parsers do not
+     * Uncomment the next two lines to escape new lines
+     */
 
-  return `"${formatted}"`;
+    .split("\n")
+    .join("\\n")
+    .split("\r")
+    .join("\\r");
+
+  // console.log(normalize(formatted));
+
+  return `"${normalize(formatted)}"`;
 }
 
 export default {
@@ -389,6 +414,8 @@ export default {
           )
         )
         .join("\r\n");
+
+      // console.log(content);
 
       const status = exportFile(
         "table-misevaluaciones.csv",

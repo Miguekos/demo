@@ -44,7 +44,7 @@
         >
           <q-avatar>
             <img width="50px" :src="urlImagen" />
-            <q-badge color="green" floating>22</q-badge>
+            <q-badge v-if="role == 4" color="green" floating>22</q-badge>
           </q-avatar>
         </q-btn>
         <!--        <q-btn-->
@@ -104,7 +104,7 @@
               Alertas
             </q-item-label>
           </q-item-section>
-          <q-badge color="green">22</q-badge>
+          <q-badge v-if="role == 4" color="green">22</q-badge>
         </q-item>
         <EssentialLink
           v-if="role == 1"

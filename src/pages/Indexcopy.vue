@@ -17,7 +17,7 @@
           <!--          >-->
           <!--          {{ getDocs[0].comentario }}-->
           <!--          <Comunicados :info="getDocs" />-->
-          <PdfViewer />
+          <PdfViewer :info="getDocs" />
         </q-item-section>
       </q-item>
       <!--      <q-item>-->

@@ -325,8 +325,7 @@ export default {
       if (
         this.nombre.length > 0 &&
         this.dni.length > 0 &&
-        this.telf.length > 0 &&
-        this.area.length > 0
+        this.telf.length > 0
       ) {
         this.$q.loading.show();
         let validacion = this.valdairEstados();

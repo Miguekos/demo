@@ -235,7 +235,7 @@ export default {
     },
     formatDate(arg) {
       // console.log("Formateando Fecha");
-      return Fechas.larga(arg);
+      return Fechas.Corta(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
     },
     onLeft() {},

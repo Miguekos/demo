@@ -24,7 +24,11 @@
       </q-form>
       <q-item>
         <q-item-section>
-          <TablaMantenimiento :info="getArea" v-if="seeTable" />
+          <TablaMantenimiento
+            @click="eliminar"
+            :info="getArea"
+            v-if="seeTable"
+          />
         </q-item-section>
       </q-item>
     </q-list>
@@ -50,7 +54,33 @@ export default {
     TablaMantenimiento: () => import("components/TablaMantenimiento")
   },
   methods: {
-    ...mapActions("utils", ["callArea", "addArea"]),
+    ...mapActions("utils", ["callArea", "addArea", "delArea"]),
+    async eliminar(val) {
+      console.log("eliinar", val._id.$oid);
+      try {
+        const resp = await this.delArea(val._id.$oid);
+        this.$q.notify({
+          // progress: true,
+          message: "¡Se elimino correctamente!",
+          // icon: "favorite_border",
+          icon: "close",
+          color: "white",
+          textColor: "red-5",
+          position: "top"
+        });
+      } catch (e) {
+        console.log(e);
+        this.$q.notify({
+          // progress: true,
+          message: "¡Oh oh, tenemos un error!",
+          // icon: "favorite_border",
+          icon: "insert_emoticon",
+          color: "white",
+          textColor: "red-5",
+          position: "top"
+        });
+      }
+    },
     async insertArea() {
       this.loadboton = true;
       try {

@@ -24,7 +24,11 @@
       </q-form>
       <q-item>
         <q-item-section>
-          <TablaMantenimiento :info="getCargo" v-if="seeTable" />
+          <TablaMantenimiento
+            @click="eliminar"
+            :info="getCargo"
+            v-if="seeTable"
+          />
         </q-item-section>
       </q-item>
     </q-list>
@@ -50,7 +54,33 @@ export default {
     TablaMantenimiento: () => import("components/TablaMantenimiento")
   },
   methods: {
-    ...mapActions("utils", ["callCargo", "addCargo"]),
+    ...mapActions("utils", ["callCargo", "addCargo", "delCargo"]),
+    async eliminar(val) {
+      console.log("eliinar", val.registro);
+      try {
+        const resp = await this.delCargo(val.registro);
+        this.$q.notify({
+          // progress: true,
+          message: "¡Se elimino correctamente!",
+          // icon: "favorite_border",
+          icon: "close",
+          color: "white",
+          textColor: "red-5",
+          position: "top"
+        });
+      } catch (e) {
+        console.log(e);
+        this.$q.notify({
+          // progress: true,
+          message: "¡Oh oh, tenemos un error!",
+          // icon: "favorite_border",
+          icon: "insert_emoticon",
+          color: "white",
+          textColor: "red-5",
+          position: "top"
+        });
+      }
+    },
     async insertCargo() {
       this.loadboton = true;
       try {

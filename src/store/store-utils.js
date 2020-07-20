@@ -43,6 +43,14 @@ const actions = {
     const response = await axiosInstance.post(`/utils/2`, payload);
     return response.data;
   },
+  async delCargo({ commit }, payload) {
+    const response = await axiosInstance.delete(`/utils/1/${payload}`);
+    return response.data;
+  },
+  async delArea({ commit }, payload) {
+    const response = await axiosInstance.delete(`/utils/2/${payload}`);
+    return response.data;
+  },
   setSearch({ commit }, payload) {
     commit("setSearch", payload);
   }

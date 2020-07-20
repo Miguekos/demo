@@ -200,8 +200,8 @@ export default {
         });
     },
     verPdf(val) {
-      console.log(val.documento);
-      this.visorPdf = val.documento;
+      console.log(val.docs);
+      this.visorPdf = val.docs;
       this.ver = true;
     }
   },

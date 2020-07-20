@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  props: ["info"],
   name: "pdfviewer",
   computed: {
     url() {
@@ -14,7 +15,7 @@ export default {
         "https://api.apps.com.pe/fileserver/uploads/GRISEL_AGUILERA.pdf"
       ];
       //
-      return comunicados[1];
+      return `https://api.apps.com.pe/fileserver/uploads/${this.info[0].docs}`;
     }
   },
   data() {

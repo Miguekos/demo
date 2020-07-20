@@ -13,27 +13,27 @@ const myMixin = {
       columnsexport: [
         {
           name: "notif1",
-          label: "¿Sensación de alza térmica o fiebre?",
+          label: "Sensacion de alza termica o fiebre?",
           field: row => (row.notif1 ? "Si" : "No")
         },
         {
           name: "notif2",
-          label: "¿Tos, estornudos o dificultad para respirar?",
+          label: "Tos, estornudos o dificultad para respirar?",
           field: row => (row.notif2 ? "Si" : "No")
         },
         {
           name: "notif3",
-          label: "¿Expectoración o flema amarilla o verdosa?",
+          label: "Expectoracion o flema amarilla o verdosa?",
           field: row => (row.notif3 ? "Si" : "No")
         },
         {
           name: "notif4",
-          label: "¿Contacto con persona(s) con un caso confirmado de COVID-19?",
+          label: "Contacto con persona(s) con un caso confirmado de COVID-19?",
           field: row => (row.notif4 ? "Si" : "No")
         },
         {
           name: "notif5",
-          label: "¿Estás tomando alguna medicación?",
+          label: "Estas tomando alguna medicacion?",
           field: row => (row.notif5 ? "Si" : "No")
         },
         {
@@ -59,7 +59,7 @@ const myMixin = {
         {
           name: "area",
           label: "Area",
-          field: "area"
+          field: row => row.area
         },
         {
           name: "temp",
