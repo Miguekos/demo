@@ -160,8 +160,9 @@ export default {
             });
             console.log(updateResponse);
             this.detalle = null;
+            this.temp = null;
             await this.callRegistroSegui(this.$route.params.id);
-            this.$router.push(`/seguimiento`);
+            this.$router.push(`/misregistros`);
           } catch (e) {
             console.log(e);
           }
@@ -203,7 +204,14 @@ export default {
           console.log(e);
         }
       } else {
-        console.log("No pueden existir campos vacios");
+        this.$q.notify({
+          // progress: true,
+          message: "¡No pueden existir campos vacios!",
+          // icon: "favorite_border",
+          color: "white",
+          textColor: "red-5",
+          position: "top"
+        });
       }
     }
   },

@@ -85,15 +85,18 @@
         ]"
       />
 
-      <q-input
+      <q-select
+        color="red-5"
+        name="cargo"
         dense
         v-model="cargo"
-        label="Cargo *"
-        lazy-rules
-        counter
-        :rules="[
-          val => (val && val.length > 0) || 'Por favor no puede estar vacio'
-        ]"
+        :options="getCargo"
+        option-label="name"
+        option-value="registro"
+        emit-value
+        map-options
+        label="Cargo"
+        :rules="[val => !!val || 'Campo obligatorio']"
       />
 
       <q-input
@@ -112,10 +115,30 @@
         name="area"
         dense
         v-model="area"
-        :options="options"
+        :options="getArea"
+        option-label="name"
+        option-value="registro"
+        emit-value
+        map-options
         label="Área"
         :rules="[val => !!val || 'Campo obligatorio']"
       />
+
+      <q-select
+        color="red-5"
+        name="jefeDirecto"
+        dense
+        v-model="jefeDirecto"
+        :options="getUsers"
+        option-label="name"
+        option-value="dni"
+        emit-value
+        map-options
+        label="Jefe Directo"
+        :rules="[val => !!val || 'Campo obligatorio']"
+      />
+
+<!--      {{ jefeDirecto }}-->
 
       <q-separator />
 
@@ -147,11 +170,16 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
+  computed: {
+    ...mapGetters("users", ["getUsers"]),
+    ...mapGetters("utils", ["getArea", "getCargo"])
+  },
   data() {
     return {
+      jefeDirecto: null,
       loadBoton: false,
       name: null,
       dni: null,
@@ -178,6 +206,7 @@ export default {
   },
   methods: {
     ...mapActions("users", ["addUser", "callUser"]),
+    ...mapActions("utils", ["callCargo", "callArea"]),
     cerrar() {
       // console.log("Se preciono Cerrar");
     },
@@ -195,6 +224,7 @@ export default {
         telefono: this.telefono,
         area: this.area,
         temp: "00",
+        jefeDirecto: this.jefeDirecto,
         role: 2
       })
         .then(resp => {
@@ -241,7 +271,13 @@ export default {
       this.departamento = null;
       this.cargo = null;
       this.sueldo = null;
+      this.jefeDirecto = null;
     }
+  },
+  async created() {
+    await this.callCargo();
+    await this.callArea();
+    await this.callUser();
   }
 };
 </script>

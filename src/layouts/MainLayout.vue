@@ -163,6 +163,12 @@
           :key="link.title"
           v-bind="link"
         />
+        <EssentialLink
+          v-if="role == 4"
+          v-for="link in essentialLinksJefe"
+          :key="link.title"
+          v-bind="link"
+        />
       </q-list>
     </q-drawer>
 
@@ -369,10 +375,51 @@ export default {
           icon: "group",
           link: "/usuarios"
         }
+      ],
+      essentialLinksJefe: [
+        {
+          title: "Home",
+          caption: "Inicio",
+          icon: "dashboard",
+          link: "/"
+        },
+        {
+          title: "Asistencia",
+          caption: "Control personal",
+          icon: "done",
+          link: "/asistencia"
+        },
+        {
+          title: "Control",
+          caption: "Control",
+          icon: "scatter_plot",
+          link: "/misregistros"
+        },
+        {
+          title: "Evalúate",
+          caption: "Evaluación",
+          icon: "local_hospital",
+          link: "/registro"
+        },
+        {
+          title: "Cuídate",
+          caption: "Lleva tu control",
+          icon: "favorite",
+          link: "/cuidate"
+        },
+        {
+          title: "Documentos",
+          caption: "Certificado",
+          icon: "note_add",
+          link: "/certificado"
+        }
       ]
     };
   },
   methods: {
+    Alertas() {
+      this.$router.push("/notificaciones");
+    },
     actualizar() {
       this.userdatil = LocalStorage.getAll().UserDetalle;
       // console.log(this.userdatil);

@@ -1,86 +1,68 @@
 <template>
-  <q-page>
-    <template>
-      <div class="q-pa-md">
-        <q-table :data="data" :columns="columns" row-key="name">
-          <template v-slot:body="props">
-            <q-tr :props="props">
-              <q-td key="name" :props="props">
-                {{ props.row.name }}
-              </q-td>
-              <q-td key="calories" :props="props">
-                <q-badge color="green">
-                  {{ props.row.calories }}
-                </q-badge>
-              </q-td>
-              <q-td key="fat" :props="props">
-                <q-btn icon="delete" color="red" round size="xs"></q-btn>
-              </q-td>
-            </q-tr>
-          </template>
-        </q-table>
-      </div>
-    </template>
-  </q-page>
+  <div>
+    <q-table
+      :data="info"
+      :columns="columns"
+      row-key="fecha"
+      :pagination="initialPagination"
+    >
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td key="name" :props="props">
+            {{ props.row.name }}
+          </q-td>
+          <q-td key="calories" :props="props">
+            <q-badge color="green">
+              {{ props.row.calories }}
+            </q-badge>
+          </q-td>
+          <q-td key="fecha" :props="props">
+            <!--            <q-btn icon="delete" color="red" round size="xs"></q-btn>-->
+            {{ formatFecha(props.row.created_at.$date) }}
+          </q-td>
+          <!--          <q-td key="fecha" :props="props">-->
+          <!--            <q-btn icon="delete" color="red" round size="xs"></q-btn>-->
+          <!--            {{ props.row.calories }}-->
+          <!--          </q-td>-->
+        </q-tr>
+      </template>
+    </q-table>
+  </div>
 </template>
 
 <script>
+import { MixinDefault } from "src/mixins/mixin";
 export default {
   props: {
     info: Array
   },
+  mixins: [MixinDefault],
   name: "TablaMantenimiento",
   data() {
     return {
+      initialPagination: {
+        sortBy: "fecha",
+        descending: true,
+        page: 1,
+        rowsPerPage: 5
+        // rowsNumber: xx if getting data from a server
+      },
       columns: [
         {
           name: "name",
           required: true,
-          label: "ID",
+          label: "Nombre",
           align: "left",
           field: row => row.name,
           format: val => `${val}`,
           sortable: true
         },
         {
-          name: "calories",
-          align: "center",
-          label: "Nombre",
-          field: "calories",
+          name: "fecha",
+          label: "Fecha",
+          field: row => row.registro,
+          format: val => `${val}`,
           sortable: true
-        },
-        { name: "fat", label: "Accion", field: "fat", sortable: true }
-      ],
-      data: [
-        {
-          name: "1",
-          calories: "Administracion",
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          sodium: 87,
-          calcium: "14%",
-          iron: "1%"
-        },
-        {
-          name: "2",
-          calories: "Ventas",
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          sodium: 87,
-          calcium: "14%",
-          iron: "1%"
-        },
-        {
-          name: "3",
-          calories: "RRHH",
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          sodium: 87,
-          calcium: "14%",
-          iron: "1%"
         }
       ]
     };

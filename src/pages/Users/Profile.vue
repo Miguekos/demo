@@ -106,18 +106,6 @@
                 />
               </q-item-section>
             </q-item>
-            <q-item class="justify-center">
-              <q-item-section class="text-center text-bold">
-                <q-input
-                  dense
-                  color="red-5"
-                  filled
-                  disabled
-                  v-model="usersDetalle.cargo"
-                  label="Cargo"
-                />
-              </q-item-section>
-            </q-item>
             <q-item v-if="roleUser == 1" class="justify-center">
               <q-item-section class="text-center text-bold">
                 <q-input
@@ -139,8 +127,55 @@
                   filled
                   disabled
                   v-model="usersDetalle.email"
-                  value="miguekos1233@gmail.com"
                   label="Correo"
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-select
+                  filled
+                  dense
+                  options-dense
+                  v-model="usersDetalle.cargo"
+                  :options="getCargo"
+                  option-label="name"
+                  option-value="registro"
+                  label="Cargo"
+                  emit-value
+                  map-options
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-select
+                  filled
+                  dense
+                  options-dense
+                  v-model="usersDetalle.area"
+                  :options="getArea"
+                  option-label="name"
+                  option-value="registro"
+                  label="Área"
+                  emit-value
+                  map-options
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-select
+                  filled
+                  dense
+                  options-dense
+                  v-model="usersDetalle.jefeDirecto"
+                  :options="getUsers"
+                  option-label="name"
+                  option-value="dni"
+                  label="Jefe Directo"
+                  emit-value
+                  map-options
                 />
               </q-item-section>
             </q-item>
@@ -219,7 +254,8 @@ export default {
     registarCuidate: () => import("../../components/RegistrarCuidateDoc")
   },
   computed: {
-    ...mapGetters("users", ["getUserOne"]),
+    ...mapGetters("users", ["getUserOne", "getUsers"]),
+    ...mapGetters("utils", ["getArea", "getCargo"]),
     urlImagen() {
       // return `${this.infoUrl}/uploads/${profile}`;
       // return `https://api.apps.com.pe/fileserver/uploads/${this.$store.state.users.UsersOne.profile}`;
@@ -282,7 +318,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions("users", ["callUserOne", "updateUser", "updateImage"]),
+    ...mapActions("users", [
+      "callUserOne",
+      "updateUser",
+      "updateImage",
+      "callUser"
+    ]),
+    ...mapActions("utils", ["callCargo", "callArea"]),
     abrirDialogReg() {
       console.log(this.usersDetalle._id.$oid);
       this.idRegitro = this.usersDetalle._id.$oid;
@@ -390,6 +432,9 @@ export default {
     this.roleUser = LocalStorage.getAll().role;
     await this.ordenarCampos();
     this.infoUrl = process.env.Imagen_URL;
+    await this.callCargo();
+    await this.callArea();
+    await this.callUser();
   },
   beforeDestroy() {
     clearTimeout(this.uploading);

@@ -8,7 +8,8 @@ const state = {
   setSeguimientosOne: [],
   seguiObserva: [],
   SeguimientosCuidate: [],
-  SeguimientosDealta: []
+  SeguimientosDealta: [],
+  SeguimientosJefe: []
 };
 
 const mutations = {
@@ -42,6 +43,9 @@ const mutations = {
   },
   setDialogDetalleSeguiData(state, payload) {
     state.dialogDetalleSeguiData = payload;
+  },
+  setSeguimientosJefe(state, payload) {
+    state.SeguimientosJefe = payload;
   }
 };
 
@@ -64,6 +68,14 @@ const actions = {
     const response = await axiosInstance.get(`/seguimiento/seguimiento`);
     // console.log(response.data);
     commit("setSeguimientosCuidate", response.data);
+    // return response.data;
+  },
+  async callSeguiCuidateJefe({ commit }, payload) {
+    // console.log("Login");
+    // console.log(payload);
+    const response = await axiosInstance.post(`/seguimientoJefe`, payload);
+    // console.log(response.data);
+    commit("setSeguimientosJefe", response.data);
     // return response.data;
   },
   async callSeguiDealta({ commit }) {
@@ -130,6 +142,9 @@ const getters = {
   },
   getSeguiDealta(state) {
     return state.SeguimientosDealta;
+  },
+  getSeguimientosJefe(state) {
+    return state.SeguimientosJefe;
   }
 };
 

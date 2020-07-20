@@ -76,6 +76,7 @@ export default {
     ])
   },
   async created() {
+    this.$q.loading.show();
     this.queryPermission();
     this.idUser = this.$q.localStorage.getItem("idUser");
     console.log(this.idUser);
@@ -143,6 +144,7 @@ export default {
         position: "top"
       });
     }
+    this.$q.loading.hide();
   },
   methods: {
     ...mapActions("users", ["callUserOne"]),

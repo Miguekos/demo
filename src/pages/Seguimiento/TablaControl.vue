@@ -26,7 +26,7 @@
                       <q-item-section>
                         <q-item-label class="text-bold">{{
                           props.row.nombre
-                        }}</q-item-label>
+                        }} - Temp: {{props.row.temp}}°</q-item-label>
                         <q-item-label caption>{{
                           formatFecha(props.row.fecha)
                         }}</q-item-label>

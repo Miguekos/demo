@@ -59,7 +59,7 @@ const routes = [
       },
       { path: "/grafica", component: () => import("components/ApexCharts") },
       { path: "/cargo", component: () => import("pages/Mantenimiento/Index") },
-      { path: "/area", component: () => import("pages/Area/Index") }
+      { path: "/notificaciones", component: () => import("pages/Notificaciones/Index") }
     ]
   },
   {

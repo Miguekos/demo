@@ -9,6 +9,7 @@ import segui from "./store-segui";
 import asist from "./store-asist";
 import doc from "./store-doc";
 import comuni from "./store-comuni";
+import utils from "./store-utils";
 
 Vue.use(Vuex);
 
@@ -30,7 +31,8 @@ export default function(/* { ssrContext } */) {
       segui,
       asist,
       doc,
-      comuni
+      comuni,
+      utils
     },
 
     // enable strict mode (adds overhead!)

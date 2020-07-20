@@ -10,9 +10,21 @@
           label="Sanos"
         />
         <q-tab
+          v-if="role === 4"
+          class="text-green-5"
+          name="sanosUser"
+          label="Sanos"
+        />
+        <q-tab
           v-if="role === 1 || role === 3"
           class="text-red-5"
           name="movies"
+          label="Con sintomas"
+        />
+        <q-tab
+          v-if="role === 4"
+          class="text-red-5"
+          name="conSintomasUser"
           label="Con sintomas"
         />
         <q-tab
@@ -21,14 +33,31 @@
           name="otro"
           label="En cuidate"
         />
+
+        <q-tab
+          v-if="role === 4"
+          class="text-indigo-5"
+          name="otroUser"
+          label="En cuidate"
+        />
         <q-tab
           v-if="role === 2"
           class="text-indigo-5"
           name="otro_user"
           label="Mi cuidado"
         />
-        <q-tab v-if="role === 3" class="text-red-5" name="seguimiento" label="Seguimiento" />
-        <q-tab v-if="role === 3" class="text-green-5" name="dealta" label="De Alta" />
+        <q-tab
+          v-if="role === 3"
+          class="text-red-5"
+          name="seguimiento"
+          label="Seguimiento"
+        />
+        <q-tab
+          v-if="role === 3"
+          class="text-green-5"
+          name="dealta"
+          label="De Alta"
+        />
       </q-tabs>
 
       <q-separator />
@@ -162,6 +191,14 @@
           </div>
         </q-tab-panel>
 
+        <q-tab-panel name="sanosUser">
+          <DetallesSanosUser />
+        </q-tab-panel>
+
+        <q-tab-panel name="conSintomasUser">
+          <DetallesConSintomasUser />
+        </q-tab-panel>
+
         <q-tab-panel name="alarms">
           <DetallesSanos />
         </q-tab-panel>
@@ -172,6 +209,10 @@
 
         <q-tab-panel v-if="role === 1" name="otro">
           <DetallesCuidate />
+        </q-tab-panel>
+
+        <q-tab-panel v-if="role === 4" name="otroUser">
+          <DetallesCuidateUser />
         </q-tab-panel>
 
         <q-tab-panel v-if="role === 2" name="otro_user">
@@ -233,7 +274,10 @@ export default {
     Search: () => import("./SearchMR"),
     DetallesConSintomas: () => import("./DetallesConSintomas"),
     DetallesSanos: () => import("./DetallesSanos"),
+    DetallesSanosUser: () => import("./DetallesSanosUser"),
+    DetallesConSintomasUser: () => import("./DetallesConSintomasUser"),
     DetallesCuidate: () => import("./DetallesCuidate"),
+    DetallesCuidateUser: () => import("./DetallesCuidateUser"),
     DetallesCuidateOne: () => import("./DetallesCuidateOne"),
     Seguimiento: () => import("../Seguimiento/Seguimiento"),
     DeAlta: () => import("../Seguimiento/DeAlta")

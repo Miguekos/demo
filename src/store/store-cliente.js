@@ -13,7 +13,9 @@ const state = {
   searchS: "",
   dialogDetalle: false,
   dialogDetalleData: "",
-  ClienteValidar: ""
+  ClienteValidar: "",
+  ClientesSUser: [],
+  ClientesCSUser: []
 };
 
 const mutations = {
@@ -53,6 +55,12 @@ const mutations = {
   },
   setClienteValidar(state, payload) {
     state.ClienteValidar = payload;
+  },
+  setClientesSUser(state, payload) {
+    state.ClientesSUser = payload;
+  },
+  setClientesCSUser(state, payload) {
+    state.ClientesCSUser = payload;
   }
 };
 
@@ -73,9 +81,7 @@ const actions = {
   },
   async callClienteValidar({ commit }, payload) {
     // console.log("callCliente");
-    const response = await axiosInstance.get(
-      `/cliente/validar/${payload}`
-    );
+    const response = await axiosInstance.get(`/cliente/validar/${payload}`);
     // console.log(response.data);
     commit("setClienteValidar", response.data);
     // return response.data;
@@ -87,11 +93,25 @@ const actions = {
     commit("setClientesCS", response.data);
     // return response.data;
   },
+  async callClienteCSUser({ commit }, payload) {
+    // console.log("callCliente");
+    const response = await axiosInstance.post(`/clientesCSUser`, payload);
+    // console.log(response.data);
+    commit("setClientesCSUser", response.data);
+    // return response.data;
+  },
   async callClienteS({ commit }) {
     // console.log("callCliente");
     const response = await axiosInstance.get(`/clientesS`);
     // console.log(response.data);
     commit("setClientesS", response.data);
+    // return response.data;
+  },
+  async callClienteSUser({ commit }, payload) {
+    // console.log("callCliente");
+    const response = await axiosInstance.post(`/clientesSUser`, payload);
+    // console.log(response.data);
+    commit("setClientesSUser", response.data);
     // return response.data;
   },
   async callClienteOne({ commit }, payload) {
@@ -261,6 +281,12 @@ const getters = {
   },
   getClienteValidar(state) {
     return state.ClienteValidar;
+  },
+  getClientesSUser(state) {
+    return state.ClientesSUser;
+  },
+  getClientesCSUser(state) {
+    return state.ClientesCSUser;
   }
 };
 
