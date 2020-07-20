@@ -42,6 +42,10 @@ const routes = [
         component: () => import("pages/Asistencia/TablaAsist.vue")
       },
       {
+        path: "/asistenciaUser",
+        component: () => import("pages/Asistencia/TablaAsistUser.vue")
+      },
+      {
         path: "/profile/:id",
         component: () => import("pages/Users/Profile.vue")
       },

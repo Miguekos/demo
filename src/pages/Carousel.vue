@@ -20,20 +20,24 @@
         :key="index"
         :name="items.name"
       >
-        <div class="full-width">
+        <div style="width: 100%; height: 500px">
           <!--          <embed-->
           <!--            :src="`https://api.apps.com.pe/fileserver/uploads/${items.url}`"-->
           <!--            type="application/pdf"-->
           <!--            width="100%"-->
           <!--            height="500"-->
           <!--          />-->
-
-          <iframe
+          <q-pdfviewer
+            v-model="visible"
             :src="`https://api.apps.com.pe/fileserver/uploads/${items.url}`"
-            width="100%"
-            height="500"
-          >
-          </iframe>
+            type="html5"
+          />
+          <!--          <iframe-->
+          <!--            :src="`https://api.apps.com.pe/fileserver/uploads/${items.url}`"-->
+          <!--            width="100%"-->
+          <!--            height="500"-->
+          <!--          >-->
+          <!--          </iframe>-->
         </div>
       </q-carousel-slide>
       <!--      <template v-slot:control>-->
@@ -71,6 +75,7 @@ export default {
   props: ["info"],
   data() {
     return {
+      visible: true,
       slide: 0,
       autoplay: false,
       urls: [],

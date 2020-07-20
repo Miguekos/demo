@@ -281,6 +281,10 @@ export default {
         {
           label: "Medico",
           value: 3
+        },
+        {
+          label: "Jefe",
+          value: 4
         }
       ],
       optionsSexo: [

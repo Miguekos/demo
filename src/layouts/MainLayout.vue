@@ -408,6 +408,12 @@ export default {
           link: "/cuidate"
         },
         {
+          title: "Asistencias",
+          caption: "Control de personal",
+          icon: "done_all",
+          link: "/asistenciaUser"
+        },
+        {
           title: "Documentos",
           caption: "Certificado",
           icon: "note_add",

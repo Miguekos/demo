@@ -1,5 +1,5 @@
 <template>
-  <q-page id="" class="flex flex-center">
+  <div id="">
     <!--    {{ getDocs[0].docs }}-->
     <!--    {{ getDocs }}-->
     <img
@@ -9,14 +9,15 @@
       style="width: 350px; height: 350px"
     />
 
-    <q-list v-if="getDocs[0]" class="full-width full-height">
+    <q-list v-if="getDocs[0]">
       <q-item class="text-center">
         <q-item-section>
           <!--          <q-item-label header class="text-bold text-h5"-->
           <!--            >Comunicado</q-item-label-->
           <!--          >-->
           <!--          {{ getDocs[0].comentario }}-->
-          <Comunicados :info="getDocs" />
+          <!--          <Comunicados :info="getDocs" />-->
+          <PdfViewer />
         </q-item-section>
       </q-item>
       <!--      <q-item>-->
@@ -30,7 +31,7 @@
       <!--      </q-item>-->
     </q-list>
     <!-- {{ info }} -->
-  </q-page>
+  </div>
 </template>
 
 <script>
@@ -44,7 +45,8 @@ export default {
     };
   },
   components: {
-    Comunicados: () => import("./Carousel")
+    Comunicados: () => import("./Carousel"),
+    PdfViewer: () => import("components/Pdfviewer")
   },
   computed: {
     ...mapGetters("comuni", ["getDocs", "getFile"]),

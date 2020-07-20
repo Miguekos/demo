@@ -106,7 +106,6 @@
             <q-item-section
               v-ripple:white
               clickable
-              @click="detalleSeguimientoOne(props.row)"
             >
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>

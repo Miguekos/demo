@@ -2,7 +2,8 @@ import { axiosInstance } from "boot/axios";
 
 const state = {
   Asist: null,
-  AsistOne: null
+  AsistOne: null,
+  AsistUser: null
 };
 
 const mutations = {
@@ -17,6 +18,9 @@ const mutations = {
   },
   setUsersOne(state, payload) {
     state.UsersOne = payload;
+  },
+  setAsistUser(state, payload) {
+    state.AsistUser = payload;
   }
 };
 
@@ -26,6 +30,13 @@ const actions = {
     const response = await axiosInstance.get(`/asistencia`);
     // console.log(response.data);
     commit("setAsist", response.data);
+    // return response.data;
+  },
+  async callAsistUser({ commit }, payload) {
+    // console.log("callUser");
+    const response = await axiosInstance.post(`/asistenciaUser`, payload);
+    // console.log(response.data);
+    commit("setAsistUser", response.data);
     // return response.data;
   },
   async callAsistOne({ commit }, payload) {
@@ -88,6 +99,9 @@ const getters = {
   getAsistOne(state) {
     // console.log(state.UsersOne);
     return state.AsistOne;
+  },
+  getAsistUser(state) {
+    return state.AsistUser;
   }
 };
 
