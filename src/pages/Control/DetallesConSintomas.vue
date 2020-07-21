@@ -72,12 +72,12 @@
     >
       <template v-slot:body="props">
         <q-tr :props="props" clickable @click="detalleCliente(props.row)">
-          <q-td key="nombre" v-ripple:white :props="props">
+          <q-td key="name" v-ripple:white :props="props">
             <q-item-section>
-              <q-item-label>{{ props.row.nombre }}</q-item-label>
+              <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
                 <b class="text-green-5">Cel:</b>
-                {{ props.row.telf }}
+                {{ props.row.telefono }}
               </q-item-label>
             </q-item-section>
           </q-td>
@@ -95,9 +95,9 @@
         v-ripple
       >
         <q-item-section>
-          <q-item-label>{{ item.nombre }}</q-item-label>
+          <q-item-label>{{ item.name }}</q-item-label>
           <q-item-label caption>
-            <b class="text-red-5">Cel:</b> {{ item.telf }}</q-item-label
+            <b class="text-red-5">Cel:</b> {{ item.telefono }}</q-item-label
           >
         </q-item-section>
         <q-item-section side right>
@@ -176,27 +176,27 @@ export default {
       columnsexport: [
         {
           name: "notif1",
-          label: "¿Sensación de alza térmica o fiebre?",
+          label: "Sensación de alza térmica o fiebre?",
           field: row => (row.notif1 ? "Si" : "No")
         },
         {
           name: "notif2",
-          label: "¿Tos, estornudos o dificultad para respirar?",
+          label: "Tos, estornudos o dificultad para respirar?",
           field: row => (row.notif2 ? "Si" : "No")
         },
         {
           name: "notif3",
-          label: "¿Expectoración o flema amarilla o verdosa?",
+          label: "Expectoración o flema amarilla o verdosa?",
           field: row => (row.notif3 ? "Si" : "No")
         },
         {
           name: "notif4",
-          label: "¿Contacto con persona(s) con un caso confirmado de COVID-19?",
+          label: "Contacto con persona(s) con un caso confirmado de COVID-19?",
           field: row => (row.notif4 ? "Si" : "No")
         },
         {
           name: "notif5",
-          label: "¿Estás tomando alguna medicación?",
+          label: "Estás tomando alguna medicación?",
           field: row => (row.notif5 ? "Si" : "No")
         },
         {
@@ -207,7 +207,7 @@ export default {
         {
           name: "nombre",
           label: "Nombre",
-          field: row => row.nombre
+          field: row => row.name
         },
         {
           name: "dni",
@@ -215,14 +215,9 @@ export default {
           field: "dni"
         },
         {
-          name: "telf",
+          name: "telefono",
           label: "Celular",
-          field: "telf"
-        },
-        {
-          name: "area",
-          label: "Area",
-          field: "area"
+          field: "telefono"
         },
         {
           name: "temp",
@@ -230,9 +225,37 @@ export default {
           field: "temp"
         },
         {
-          name: "correo",
+          name: "email",
           label: "Correo",
-          field: "correo"
+          field: "email"
+        },
+        {
+          name: "sexo",
+          label: "Sexo",
+          field: "sexo"
+        },
+        {
+          name: "area",
+          label: "Area",
+          field: "area"
+        },
+        {
+          name: "edad",
+          label: "Edad",
+          field: "edad"
+        },
+        {
+          name: "departamento",
+          label: "Departamento",
+          field: "departamento"
+        },
+        {
+          name: "sueldo",
+          label: "Sueldo",
+          field: row =>
+            this.$q.localStorage.getAll().idUser == 1
+              ? row.sueldo
+              : "No permitido"
         },
         {
           name: "created_at.$date",
@@ -243,11 +266,11 @@ export default {
       ],
       columns: [
         {
-          name: "nombre",
+          name: "name",
           required: true,
           label: "Nombre",
           align: "left",
-          field: row => row.nombre,
+          field: row => row.name,
           format: val => `${val}`,
           sortable: true
         },

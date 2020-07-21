@@ -59,7 +59,7 @@
             dense
             standout="bg-indigo-4 text-white"
             type="search"
-            placeholder="Buscar por nombre"
+            placeholder="Buscar por name"
             v-model="filter"
           >
             <!--      <template v-slot:before>-->
@@ -231,6 +231,34 @@ export default {
           name: "email",
           label: "Correo",
           field: "email"
+        },
+        {
+          name: "sexo",
+          label: "Sexo",
+          field: "sexo"
+        },
+        {
+          name: "area",
+          label: "Area",
+          field: "area"
+        },
+        {
+          name: "edad",
+          label: "Edad",
+          field: "edad"
+        },
+        {
+          name: "departamento",
+          label: "Departamento",
+          field: "departamento"
+        },
+        {
+          name: "sueldo",
+          label: "Sueldo",
+          field: row =>
+            this.$q.localStorage.getAll().idUser == 1
+              ? row.sueldo
+              : "No permitido"
         },
         {
           name: "observa",

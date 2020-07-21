@@ -72,9 +72,9 @@ const actions = {
   },
   async callSeguiCuidateJefe({ commit }, payload) {
     // console.log("Login");
-    // console.log(payload);
+    console.log(payload);
     const response = await axiosInstance.post(`/seguimientoJefe`, payload);
-    // console.log(response.data);
+    console.log(response.data);
     commit("setSeguimientosJefe", response.data);
     // return response.data;
   },

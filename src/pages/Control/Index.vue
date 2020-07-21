@@ -113,7 +113,7 @@
       <q-item-section>Reportes por estados (Última semana)</q-item-section>
     </q-item>
     <q-separator />
-    <q-list style="height: 280px;">
+    <q-list class="row" style="height: 280px;">
       <q-item>
         <q-item-section>
           <Graficas :info="getClienteReport" />
@@ -142,9 +142,9 @@
       >
         <template v-slot:body="props">
           <q-tr :props="props" clickable>
-            <q-td key="nombre" v-ripple:white :props="props">
+            <q-td key="name" v-ripple:white :props="props">
               <q-item-section>
-                <q-item-label>{{ props.row.nombre }}</q-item-label>
+                <q-item-label>{{ props.row.name }}</q-item-label>
                 <q-item-label caption>
                   <b class="text-grey-5">Cantidad:</b>
                   {{ props.row.count }}
@@ -190,11 +190,11 @@ export default {
       },
       columns: [
         {
-          name: "nombre",
+          name: "name",
           required: true,
           label: "Nombre",
           align: "left",
-          field: row => row.nombre,
+          field: row => row.name,
           format: val => `${val}`,
           sortable: true
         },

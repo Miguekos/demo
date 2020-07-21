@@ -154,13 +154,13 @@
             </template>-->
               <template v-slot:body="props">
                 <q-tr :props="props">
-                  <q-td key="nombre" :props="props">
+                  <q-td key="name" :props="props">
                     <q-item-section
                       v-ripple:white
                       clickable
                       @click="detalleCliente(props.row)"
                     >
-                      <q-item-label>{{ props.row.nombre }}</q-item-label>
+                      <q-item-label>{{ props.row.name }}</q-item-label>
                       <q-item-label caption>
                         <b class="text-red-5">temp:</b>
                         {{ props.row.temp }}°

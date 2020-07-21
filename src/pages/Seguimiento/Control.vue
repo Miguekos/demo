@@ -133,6 +133,7 @@ export default {
   },
   methods: {
     ...mapActions("segui", ["updateRegistroSegui", "callRegistroSegui"]),
+    ...mapActions("utils", ["addAlertas"]),
     async dealta() {
       this.$q
         .dialog({
@@ -157,6 +158,10 @@ export default {
               seguimiento: 0,
               dealta: 1,
               comentariodealta: data
+            });
+            const alertaResponse = await this.addAlertas({
+              dni: this.getSeguiFilter.dni,
+              comentario: data
             });
             console.log(updateResponse);
             this.detalle = null;

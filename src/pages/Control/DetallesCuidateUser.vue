@@ -103,10 +103,7 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <q-item-section
-              v-ripple:white
-              clickable
-            >
+            <q-item-section v-ripple:white clickable>
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
                 <b class="text-red-5">temp:</b>
@@ -212,6 +209,31 @@ export default {
           name: "email",
           label: "Correo",
           field: "email"
+        },
+        {
+          name: "sexo",
+          label: "Sexo",
+          field: "sexo"
+        },
+        {
+          name: "area",
+          label: "Area",
+          field: "area"
+        },
+        {
+          name: "edad",
+          label: "Edad",
+          field: "edad"
+        },
+        {
+          name: "departamento",
+          label: "Departamento",
+          field: "departamento"
+        },
+        {
+          name: "sueldo",
+          label: "Sueldo",
+          field: row => (this.$q.localStorage.getAll().idUser == 1 ? row.sueldo : "No permitido")
         },
         {
           name: "observa",

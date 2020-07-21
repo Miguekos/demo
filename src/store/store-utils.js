@@ -4,7 +4,8 @@ const state = {
   Cargo: null,
   Area: null,
   NotiCS: [],
-  NotiCuidate: []
+  NotiCuidate: [],
+  Alertas: []
 };
 
 const mutations = {
@@ -25,6 +26,9 @@ const mutations = {
   },
   setNotiCuidate(state, payload) {
     state.NotiCuidate = payload;
+  },
+  setAlertas(state, payload) {
+    state.Alertas = payload;
   }
 };
 
@@ -69,6 +73,19 @@ const actions = {
   async notificacionesCuidate({ commit }) {
     const response = await axiosInstance.get(`/notifications/2`);
     commit("setNotiCuidate", response.data);
+  },
+  async callAlertas({ commit }, payload) {
+    const response = await axiosInstance.get(
+      `/notifications/alertas/${payload}`
+    );
+    commit("setAlertas", response.data);
+  },
+  async addAlertas({ commit }, payload) {
+    const response = await axiosInstance.post(
+      `/notifications/alertas`,
+      payload
+    );
+    return response.data;
   },
   async delNotiConSintomas({ commit }, payload) {
     const response = await axiosInstance.delete(`/notifications/1/${payload}`);
@@ -136,6 +153,9 @@ const getters = {
   },
   getNotiCuidate(state) {
     return state.NotiCuidate;
+  },
+  getAlertas(state) {
+    return state.Alertas;
   }
 };
 

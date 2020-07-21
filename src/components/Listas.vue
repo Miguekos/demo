@@ -6,6 +6,7 @@
           <q-item-label header class="text-center text-h6 q-pb-xs text-bold"
             >Datos personales</q-item-label
           >
+          {{ getUserOne }}
           <q-separator spaced />
           <q-item>
             <q-item-section>
@@ -259,6 +260,9 @@ const alerts = [
   }
 ];
 export default {
+  computed: {
+    ...mapGetters("users", ["getUserOne"])
+  },
   data() {
     return {
       medicamentos: "",
@@ -291,11 +295,12 @@ export default {
   },
   methods: {
     ...mapActions("client", ["addCliente"]),
+    ...mapActions("users", ["callUserOne"]),
     reset() {
-      this.nombre = "";
-      this.dni = "";
-      this.telf = "";
-      this.area = "";
+      // this.nombre = "";
+      // this.dni = "";
+      // this.telf = "";
+      // this.area = "";
       this.terminos = false;
       this.estados.notif1 = false;
       this.estados.notif2 = false;
@@ -322,124 +327,47 @@ export default {
       // console.log(this.telf.length);
       // console.log(this.area.length);
       // console.log(typeof this.area);
-      if (
-        this.nombre.length > 0 &&
-        this.dni.length > 0 &&
-        this.telf.length > 0
-      ) {
-        this.$q.loading.show();
-        let validacion = this.valdairEstados();
-        if (this.terminos) {
-          // console.log(validacion);
-          const JsonEnviar = {
-            ...this.estados,
-            estados: validacion,
-            nombre: this.nombre,
-            dni: this.dni,
-            telf: this.telf,
-            area: this.area,
-            url: this.url,
-            temp: "00",
-            profile: this.profile,
-            correo: this.correo
-          };
-          // console.log(JsonEnviar);
-          const respAddClient = await this.addCliente(JsonEnviar);
-          // console.log(respAddClient);
-          if (validacion == "00") {
-            this.$q.notify({
-              message: "!Sigue cuidándote! Que tengas buen día.",
-              // progress: true,
-              // icon: "favorite_border",
-              icon: "insert_emoticon",
-              color: "white",
-              textColor: "green-5",
-              position: "top"
-            });
-            this.reset();
-          } else if (validacion == "01") {
-            this.$q.notify({
-              message: "Quédate en casa. Llama a tu jefe.",
-              color: "red-6",
-              position: "top"
-            });
-            this.reset();
-          }
-          this.$router.push("/misregistros");
-        } else {
+      this.$q.loading.show();
+      let validacion = this.valdairEstados();
+      if (this.terminos) {
+        // console.log(validacion);
+        const JsonEnviar = {
+          ...this.getUserOne,
+          ...this.estados,
+          estados: validacion,
+          temp: "00"
+        };
+        // console.log(JsonEnviar);
+        const respAddClient = await this.addCliente(JsonEnviar);
+        // console.log(respAddClient);
+        if (validacion == "00") {
           this.$q.notify({
-            message: "Debe aceptar los términos y condiciones",
-            color: "blue-6",
+            message: "!Sigue cuidándote! Que tengas buen día.",
+            // progress: true,
+            // icon: "favorite_border",
+            icon: "insert_emoticon",
+            color: "white",
+            textColor: "green-5",
             position: "top"
           });
+          this.reset();
+        } else if (validacion == "01") {
+          this.$q.notify({
+            message: "Quédate en casa. Llama a tu jefe.",
+            color: "red-6",
+            position: "top"
+          });
+          this.reset();
         }
-        this.$q.loading.hide();
+        this.$router.push("/misregistros");
       } else {
         this.$q.notify({
-          message: "No dejear campos vacíos",
-          color: "red-6",
+          message: "Debe aceptar los términos y condiciones",
+          color: "blue-6",
           position: "top"
         });
       }
-    },
-    showLoading() {
-      // this.$q.loading.show();
-
-      // hiding in 2s
-      this.timer = setTimeout(() => {
-        this.$q.loading.show();
-        // this.$q.loading.hide();
-        this.timer = void 0;
-        this.showNotif("center");
-      }, 2000);
-    },
-    showNotif(position) {
-      const { color, textColor, multiLine, icon, message, avatar } = alerts[
-        Math.floor(Math.random(alerts.length) * 10) % alerts.length
-      ];
-      const random = Math.random() * 100;
-
-      const twoActions = random > 70;
-      const buttonColor = color ? "white" : void 0;
-
-      this.$q.notify({
-        color,
-        textColor,
-        icon: random > 30 ? icon : null,
-        message,
-        position,
-        avatar,
-        multiLine,
-        actions: twoActions
-          ? [
-              {
-                label: "Responder",
-                color: buttonColor,
-                handler: () => {
-                  /* // console.log('wooow') */
-                }
-              },
-              {
-                label: "Omitir",
-                color: "yellow",
-                handler: () => {
-                  /* // console.log('wooow') */
-                }
-              }
-            ]
-          : random > 40
-          ? [
-              {
-                label: "Responder",
-                color: buttonColor,
-                handler: () => {
-                  /* // console.log('wooow') */
-                }
-              }
-            ]
-          : null,
-        timeout: Math.random() * 5000 + 3000
-      });
+      this.$q.loading.hide();
     }
   },
 
@@ -468,6 +396,7 @@ export default {
     } else {
       this.datosPersonales = false;
     }
+    this.callUserOne(this.$q.localStorage.getAll().idUser);
     this.$q.loading.hide();
   }
 };

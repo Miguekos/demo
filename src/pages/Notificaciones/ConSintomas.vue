@@ -6,9 +6,10 @@
       dense
       class="bg-primary text-white"
     >
-      {{ items.nombre }} <span class="text-bold">Registro que tiene SINTOMAS</span>
+      {{ items.nombre }}
+      <span class="text-bold">Registro que tiene SINTOMAS</span>
       <template v-slot:action>
-        <q-btn flat color="white" label="Descartar" />
+        <q-btn flat color="white" @click="Descartar(items)" label="Descartar" />
         <q-btn flat color="white" label="Llamar" />
       </template>
     </q-banner>
@@ -18,7 +19,12 @@
 <script>
 export default {
   props: ["info"],
-  name: "ConSintomas"
+  name: "ConSintomas",
+  methods: {
+    Descartar(val) {
+      this.$emit("delCS", val);
+    }
+  }
 };
 </script>
 

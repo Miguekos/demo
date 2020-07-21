@@ -44,7 +44,7 @@
         >
           <q-avatar>
             <img width="50px" :src="urlImagen" />
-            <q-badge v-if="role == 4" color="green" floating>22</q-badge>
+            <!--            <q-badge color="green" floating>22</q-badge>-->
           </q-avatar>
         </q-btn>
         <!--        <q-btn-->
@@ -104,7 +104,7 @@
               Alertas
             </q-item-label>
           </q-item-section>
-          <q-badge v-if="role == 4" color="green">22</q-badge>
+          <!--          <q-badge v-if="role == 4" color="green">22</q-badge>-->
         </q-item>
         <EssentialLink
           v-if="role == 1"
@@ -314,8 +314,8 @@ export default {
           link: "/asistencia"
         },
         {
-          title: "Mis registros",
-          caption: "Evaluaciones",
+          title: "Control",
+          caption: "Control",
           icon: "scatter_plot",
           link: "/misregistros"
         },

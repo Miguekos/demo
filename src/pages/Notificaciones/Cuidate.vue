@@ -8,7 +8,7 @@
     >
       {{ items.name }} <span class="text-bold">Registro un CUIDATE</span>
       <template v-slot:action>
-        <q-btn flat color="white" label="Descartar" />
+        <q-btn flat color="white" @click="Descartar(items)" label="Descartar" />
         <q-btn flat color="white" label="Llamar" />
       </template>
     </q-banner>
@@ -18,7 +18,12 @@
 <script>
 export default {
   props: ["info"],
-  name: "Cuidate"
+  name: "Cuidate",
+  methods: {
+    Descartar(val) {
+      this.$emit("click", val);
+    }
+  }
 };
 </script>
 

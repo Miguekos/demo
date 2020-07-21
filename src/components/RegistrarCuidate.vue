@@ -161,6 +161,9 @@ let timeStamp = Date.now();
 let formattedString = date.formatDate(timeStamp, "DD/MM/YYYY");
 
 export default {
+  computed: {
+    ...mapGetters("users", ["getUserOne"])
+  },
   data() {
     return {
       role: null,
@@ -186,6 +189,7 @@ export default {
   },
   methods: {
     ...mapActions("segui", ["addRegistroSegui"]),
+    ...mapActions("users", ["callUserOne"]),
     reset() {
       this.temp = null;
       this.observa = null;
@@ -209,10 +213,10 @@ export default {
         // let validacion = this.valdairEstados();
         // console.log(validacion);
         const JsonEnviar = {
-          ...this.infoUser,
+          ...this.getUserOne,
           observa: [
             {
-              nombre: this.infoUser.name,
+              nombre: this.getUserOne.name,
               fecha: new Date(),
               detalle: this.observa,
               temp: this.temp,
@@ -309,6 +313,7 @@ export default {
     // } else {
     //   this.datosPersonales = false;
     // }
+    this.callUserOne(this.$q.localStorage.getAll().idUser);
     this.$q.loading.hide();
   }
 };

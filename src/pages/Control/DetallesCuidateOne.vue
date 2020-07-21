@@ -66,7 +66,7 @@
             <q-icon name="search" />
           </template>
         </q-input>-->
-<!--          <Search />-->
+          <!--          <Search />-->
         </q-item-section>
       </q-item>
     </q-list>
@@ -220,6 +220,34 @@ export default {
           name: "email",
           label: "Correo",
           field: "email"
+        },
+        {
+          name: "sexo",
+          label: "Sexo",
+          field: "sexo"
+        },
+        {
+          name: "area",
+          label: "Area",
+          field: "area"
+        },
+        {
+          name: "edad",
+          label: "Edad",
+          field: "edad"
+        },
+        {
+          name: "departamento",
+          label: "Departamento",
+          field: "departamento"
+        },
+        {
+          name: "sueldo",
+          label: "Sueldo",
+          field: row =>
+            this.$q.localStorage.getAll().idUser == 1
+              ? row.sueldo
+              : "No permitido"
         },
         {
           name: "observa",

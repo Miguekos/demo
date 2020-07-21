@@ -42,9 +42,9 @@ const myMixin = {
           field: row => (row.estados === "00" ? "Sano" : "Con Sintomas")
         },
         {
-          name: "nombre",
+          name: "name",
           label: "Nombre",
-          field: row => row.nombre
+          field: row => row.name
         },
         {
           name: "dni",
@@ -52,9 +52,9 @@ const myMixin = {
           field: "dni"
         },
         {
-          name: "telf",
+          name: "telefono",
           label: "Celular",
-          field: "telf"
+          field: "telefono"
         },
         {
           name: "area",
@@ -67,9 +67,37 @@ const myMixin = {
           field: "temp"
         },
         {
-          name: "correo",
+          name: "email",
           label: "Correo",
-          field: "correo"
+          field: "email"
+        },
+        {
+          name: "sexo",
+          label: "Sexo",
+          field: "sexo"
+        },
+        {
+          name: "area",
+          label: "Area",
+          field: "area"
+        },
+        {
+          name: "edad",
+          label: "Edad",
+          field: "edad"
+        },
+        {
+          name: "departamento",
+          label: "Departamento",
+          field: "departamento"
+        },
+        {
+          name: "sueldo",
+          label: "Sueldo",
+          field: row =>
+            this.$q.localStorage.getAll().idUser == 1
+              ? row.sueldo
+              : "No permitido"
         },
         {
           name: "created_at.$date",
@@ -80,11 +108,11 @@ const myMixin = {
       ],
       columns: [
         {
-          name: "nombre",
+          name: "name",
           required: true,
           label: "Nombre",
           align: "left",
-          field: row => row.nombre,
+          field: row => row.name,
           format: val => `${val}`,
           sortable: true
         },

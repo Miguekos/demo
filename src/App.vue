@@ -21,7 +21,8 @@ export default {
   methods: {
     ...mapActions("utils", [
       "notificacionesConSintomas",
-      "notificacionesCuidate"
+      "notificacionesCuidate",
+      "callAlertas"
     ])
   },
   async created() {
@@ -29,8 +30,8 @@ export default {
     this.$q.addressbarColor.set("#FFFFFF");
     console.log("CuidAPPte v2.1");
     if (this.$q.localStorage.getAll().role == 3) {
-      await this.notificacionesConSintomas();
-      await this.notificacionesCuidate();
+      // await this.notificacionesConSintomas();
+      // await this.notificacionesCuidate();
     }
     // await this.callClienteReport();
     // #004d40

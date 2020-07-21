@@ -1,7 +1,8 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
-    <ConSintomas :info="getNotiCS" />
-    <Cuidate :info="getNotiCuidate" />
+    <ConSintomas v-if="role == 3" @click="delCS" :info="getNotiCS" />
+    <Cuidate v-if="role == 3" @click="delCuidate" :info="getNotiCuidate" />
+    <Alertas v-if="role != 3" @click="delAlerta" :info="getAlertas" />
   </div>
 </template>
 
@@ -9,8 +10,13 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Index",
+  data() {
+    return {
+      role: null
+    };
+  },
   computed: {
-    ...mapGetters("utils", ["getNotiCS", "getNotiCuidate"])
+    ...mapGetters("utils", ["getNotiCS", "getNotiCuidate", "getAlertas"])
   },
   components: {
     ConSintomas: () => import("./ConSintomas"),
@@ -20,14 +26,28 @@ export default {
     ...mapActions("utils", [
       "notificacionesConSintomas",
       "notificacionesCuidate",
-        "delNotiConSintomas",
-        "delNotiCuidate"
-    ])
+      "delNotiConSintomas",
+      "delNotiCuidate",
+      "callAlertas"
+    ]),
+    delCS(val) {
+      console.log(val);
+    },
+    delCuidate(val) {
+      console.log(val);
+    },
+    delAlerta(val) {
+      console.log(val);
+    }
   },
   async created() {
-    if (this.$q.localStorage.getAll().role == 3) {
-      // await this.notificacionesConSintomas();
-      // await this.notificacionesCuidate();
+    this.role = this.$q.localStorage.getAll().role;
+    if (this.role == 3) {
+      await this.notificacionesConSintomas();
+      await this.notificacionesCuidate();
+    }
+    if (this.role != 3) {
+      await this.callAlertas();
     }
   }
 };

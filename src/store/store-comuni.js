@@ -1,6 +1,7 @@
 import { axiosInstance } from "boot/axios";
 const state = {
   Archivos: [],
+  ArchivosAll: [],
   file: "",
   files: [],
   fileload: false
@@ -18,6 +19,9 @@ const mutations = {
   },
   setFileload(state, payload) {
     state.fileload = payload;
+  },
+  setArchivosAll(state, payload) {
+    state.ArchivosAll = payload;
   }
 };
 
@@ -25,6 +29,10 @@ const actions = {
   async callDocs({ commit }, payload) {
     const response = await axiosInstance.get(`/comunicados/${payload}`);
     commit("setArchivos", response.data);
+  },
+  async callComunicados({ commit }) {
+    const response = await axiosInstance.get(`/comunicados`);
+    commit("setArchivosAll", response.data);
   },
   async addDoc({ commit }, payload) {
     console.log("payload", payload);
@@ -52,6 +60,9 @@ const getters = {
   },
   getDocs(state) {
     return state.Archivos;
+  },
+  getDocsAll(state) {
+    return state.ArchivosAll;
   }
 };
 
