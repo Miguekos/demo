@@ -87,6 +87,12 @@ const actions = {
     );
     return response.data;
   },
+  async updateAlertas({ commit }, payload) {
+    const response = await axiosInstance.put(
+      `/notifications/alertas/${payload}`
+    );
+    return response.data;
+  },
   async delNotiConSintomas({ commit }, payload) {
     const response = await axiosInstance.delete(`/notifications/1/${payload}`);
     return response.data;

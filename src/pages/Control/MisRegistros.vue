@@ -117,18 +117,18 @@
               </q-item>
               <q-item>
                 <q-item-section>
-                  <!-- <q-input
-                  v-model="search"
-                  dense
-                  standout="bg-amber-4 text-white"
-                  type="search"
-                  placeholder="Buscar"
-                >
-                  <template v-slot:append>
-                    <q-icon name="search" />
-                  </template>
-                </q-input>-->
-                  <Search />
+                  <q-input
+                    v-model="filter"
+                    dense
+                    standout="bg-amber-4 text-white"
+                    type="search"
+                    placeholder="Buscar"
+                  >
+                    <template v-slot:append>
+                      <q-icon name="search" />
+                    </template>
+                  </q-input>
+                  <!--                  <Search />-->
                 </q-item-section>
               </q-item>
             </q-list>
@@ -142,6 +142,7 @@
               :columns="columns"
               row-key="created_at.$date"
               :pagination.sync="pagination"
+              :filter="filter"
             >
               <!-- <template v-slot:top-right>
               <q-btn
@@ -309,6 +310,7 @@ export default {
   },
   data() {
     return {
+      filter: "",
       role: null,
       tab: "mails",
       pagination: {

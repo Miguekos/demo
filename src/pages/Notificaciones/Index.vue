@@ -20,7 +20,8 @@ export default {
   },
   components: {
     ConSintomas: () => import("./ConSintomas"),
-    Cuidate: () => import("./Cuidate")
+    Cuidate: () => import("./Cuidate"),
+    Alertas: () => import("./Alertas")
   },
   methods: {
     ...mapActions("utils", [
@@ -47,7 +48,8 @@ export default {
       await this.notificacionesCuidate();
     }
     if (this.role != 3) {
-      await this.callAlertas();
+      const dataUser = this.$q.localStorage.getAll().UserDetalle;
+      await this.callAlertas(dataUser.dni);
     }
   }
 };

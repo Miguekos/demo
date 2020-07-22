@@ -177,9 +177,9 @@ const getters = {
       // console.log("state.searchCS", state.searchCS);
       Object.keys(state.ClientesCS).forEach(function(key) {
         let task = state.ClientesCS[key],
-          taskNameLowerCase = task.nombre.toLowerCase(),
+          taskNameLowerCase = task.name.toLowerCase(),
           searchLowerCase = state.searchCS.toLowerCase();
-        // console.log("task.nombre.toLowerCase", task.nombre.toLowerCase);
+        // console.log("task.name.toLowerCase", task.name.toLowerCase);
         if (taskNameLowerCase.includes(searchLowerCase)) {
           taskFiltered[key] = task;
         }
@@ -193,7 +193,7 @@ const getters = {
     if (state.searchS) {
       Object.keys(state.ClientesS).forEach(function(key) {
         let task = state.ClientesS[key],
-          taskNameLowerCase = task.nombre.toLowerCase(),
+          taskNameLowerCase = task.name.toLowerCase(),
           searchLowerCase = state.searchS.toLowerCase();
         if (taskNameLowerCase.includes(searchLowerCase)) {
           taskFiltered[key] = task;

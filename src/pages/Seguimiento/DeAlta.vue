@@ -43,18 +43,26 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <!-- <q-input
-            v-model="search"
+          <q-input
             dense
             standout="bg-green-4 text-white"
             type="search"
-            placeholder="Buscar"
+            placeholder="Buscar por name"
+            v-model="filter"
           >
+            <!--      <template v-slot:before>-->
+            <!--        <q-icon name="search" />-->
+            <!--      </template>-->
             <template v-slot:append>
+              <q-icon
+                v-if="filter !== ''"
+                name="close"
+                @click="filter = ''"
+                class="cursor-pointer"
+              />
               <q-icon name="search" />
             </template>
-          </q-input>-->
-          <Search />
+          </q-input>
         </q-item-section>
       </q-item>
     </q-list>
@@ -69,6 +77,7 @@
       :columns="columns"
       row-key="created_at.$date"
       :pagination.sync="pagination"
+      :filter="filter"
     >
       <!-- <template v-slot:top-right>
         <q-btn
@@ -81,7 +90,7 @@
       </template>-->
       <template v-slot:body="props">
         <q-tr :props="props" clickable @click="detalleCliente(props.row)">
-          <q-td key="nombre" v-ripple:white :props="props">
+          <q-td key="name" v-ripple:white :props="props">
             <q-item-section>
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
@@ -160,6 +169,7 @@ export default {
   },
   data() {
     return {
+      filter: "",
       pagination: {
         sortBy: "created_at.$date",
         descending: false,
@@ -233,11 +243,11 @@ export default {
       ],
       columns: [
         {
-          name: "nombre",
+          name: "name",
           required: true,
           label: "Nombre",
           align: "left",
-          field: row => row.nombre,
+          field: row => row.name,
           format: val => `${val}`,
           sortable: true
         },

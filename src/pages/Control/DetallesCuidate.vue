@@ -44,17 +44,17 @@
       <!--        </q-item>-->
       <q-item>
         <q-item-section>
-          <!-- <q-input
-          v-model="search"
-          dense
-          standout="bg-amber-4 text-white"
-          type="search"
-          placeholder="Buscar"
-        >
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>-->
+          <!--          <q-input-->
+          <!--            v-model="search"-->
+          <!--            dense-->
+          <!--            standout="bg-amber-4 text-white"-->
+          <!--            type="search"-->
+          <!--            placeholder="Buscar"-->
+          <!--          >-->
+          <!--            <template v-slot:append>-->
+          <!--              <q-icon name="search" />-->
+          <!--            </template>-->
+          <!--          </q-input>-->
           <q-input
             dense
             standout="bg-indigo-4 text-white"

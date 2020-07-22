@@ -160,8 +160,10 @@ export default {
               comentariodealta: data
             });
             const alertaResponse = await this.addAlertas({
-              dni: this.getSeguiFilter.dni,
-              comentario: data
+              de: this.$q.localStorage.getAll().UserDetalle.dni,
+              para: this.getSeguiFilter.dni,
+              comentario: data,
+              color: "green"
             });
             console.log(updateResponse);
             this.detalle = null;

@@ -44,7 +44,9 @@
         >
           <q-avatar>
             <img width="50px" :src="urlImagen" />
-            <!--            <q-badge color="green" floating>22</q-badge>-->
+            <q-badge v-if="$store.state.utils.Alertas.length != 0" color="green" floating>{{
+              $store.state.utils.Alertas.length
+            }}</q-badge>
           </q-avatar>
         </q-btn>
         <!--        <q-btn-->
@@ -104,7 +106,11 @@
               Alertas
             </q-item-label>
           </q-item-section>
-          <!--          <q-badge v-if="role == 4" color="green">22</q-badge>-->
+          <q-badge
+            v-if="$store.state.utils.Alertas.length != 0"
+            color="green"
+            >{{ $store.state.utils.Alertas.length }}</q-badge
+          >
         </q-item>
         <EssentialLink
           v-if="role == 1"
@@ -429,6 +435,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions("utils", ["callAlertas"]),
     Alertas() {
       this.$router.push("/notificaciones");
     },
@@ -468,10 +475,13 @@ export default {
       // }, 2000);
     }
   },
-  created() {
+  async created() {
     this.userdatil = LocalStorage.getAll().UserDetalle;
     this.role = LocalStorage.getAll().role;
     this.infoUrl = process.env.Imagen_URL;
+    const dataUser = this.$q.localStorage.getAll().UserDetalle;
+    console.log("adsasd");
+    await this.callAlertas(dataUser.dni);
   }
 };
 </script>
