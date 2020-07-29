@@ -11,25 +11,18 @@
           <q-td key="name" :props="props">
             {{ props.row.name }}
           </q-td>
-          <q-td key="calories" :props="props">
-            <q-badge color="green">
-              {{ props.row.calories }}
-            </q-badge>
-          </q-td>
-          <q-td key="fecha" :props="props">
-            <!--            <q-btn-->
-            <!--              @click="eliminar(props.row)"-->
-            <!--              icon="delete"-->
-            <!--              color="red"-->
-            <!--              round-->
-            <!--              size="xs"-->
-            <!--            ></q-btn>-->
-            {{ formatFecha(props.row.created_at.$date) }}
-          </q-td>
           <!--          <q-td key="fecha" :props="props">-->
-          <!--            <q-btn icon="delete" color="red" round size="xs"></q-btn>-->
-          <!--            {{ props.row.calories }}-->
+          <!--            {{ formatFecha(props.row.created_at.$date) }}-->
           <!--          </q-td>-->
+          <q-td key="acciones" :props="props">
+            <q-btn
+              @click="eliminar(props.row)"
+              icon="delete"
+              color="red"
+              round
+              size="xs"
+            ></q-btn>
+          </q-td>
         </q-tr>
       </template>
     </q-table>
@@ -62,14 +55,24 @@ export default {
           align: "left",
           field: row => row.name,
           format: val => `${val}`,
-          sortable: true
+          sortable: true,
+          style: "width: 100px"
         },
+        // {
+        //   name: "fecha",
+        //   label: "Fecha",
+        //   field: row => row.registro,
+        //   format: val => `${val}`,
+        //   sortable: true,
+        //   style: "width: 100px"
+        // },
         {
-          name: "fecha",
-          label: "Fecha",
+          name: "acciones",
+          label: "Acciones",
           field: row => row.registro,
           format: val => `${val}`,
-          sortable: true
+          sortable: true,
+          style: "width: 100px"
         }
       ]
     };
@@ -77,7 +80,7 @@ export default {
   methods: {
     eliminar(val) {
       this.$emit("click", val);
-      // console.log(val);
+      console.log(val);
     }
   }
 };

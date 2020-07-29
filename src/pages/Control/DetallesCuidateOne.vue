@@ -24,31 +24,13 @@
           <q-icon name="archive" />
         </q-item-section>
       </q-item>
-      <!--        <q-item dense v-else class="native-mobile-only" clickable v-ripple>-->
-      <!--          <q-item-section-->
-      <!--            class="text-red text-bold"-->
-      <!--            side-->
-      <!--            top-->
-      <!--            left-->
-      <!--          ></q-item-section>-->
-      <!--          <q-item-section>-->
-      <!--            <q-item-label class="text-center text-h6">Cuidate</q-item-label>-->
-      <!--            <q-separator color="indigo-4" inset />-->
-      <!--          </q-item-section>-->
-      <!--          <q-item-section-->
-      <!--            class="text-indigo text-bold"-->
-      <!--            side-->
-      <!--            top-->
-      <!--            right-->
-      <!--          ></q-item-section>-->
-      <!--        </q-item>-->
       <q-item>
         <q-item-section>
           <q-input
-            borderless
             dense
-            debounce="300"
-            color="primary"
+            standout="bg-indigo-4 text-white"
+            type="search"
+            placeholder="Buscar"
             v-model="filter"
           >
             <template v-slot:append>
@@ -151,6 +133,8 @@ import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { date, exportFile, LocalStorage } from "quasar";
 import { myMixin } from "../../mixins/mixin.js";
+let timeStamp = Date.now();
+let formattedString = date.formatDate(timeStamp, "DD/MM/YYYY");
 function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0 ? formatFn(val) : val;
 
@@ -183,6 +167,8 @@ export default {
       role: null,
       userData: [],
       tab: "mails",
+      fi: formattedString,
+      ff: formattedString,
       pagination: {
         sortBy: "created_at.$date",
         descending: false,

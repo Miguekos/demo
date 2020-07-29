@@ -100,9 +100,9 @@ const actions = {
     commit("setClientesCSUser", response.data);
     // return response.data;
   },
-  async callClienteS({ commit }) {
+  async callClienteS({ commit }, payload) {
     // console.log("callCliente");
-    const response = await axiosInstance.get(`/clientesS`);
+    const response = await axiosInstance.get(`/clientesS?fi=${payload.fi}&ff=${payload.ff}`);
     // console.log(response.data);
     commit("setClientesS", response.data);
     // return response.data;

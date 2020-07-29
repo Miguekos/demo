@@ -49,7 +49,6 @@
                   disable
                   dense
                   color="red-5"
-                  disabled
                   filled
                   v-model="usersDetalle.dni"
                   label="DNI/C.E"
@@ -62,7 +61,7 @@
                   dense
                   color="red-5"
                   filled
-                  disabled
+                  :disable="roleUser == 2"
                   v-model="usersDetalle.telefono"
                   label="Celular"
                 />
@@ -74,7 +73,7 @@
                   dense
                   color="red-5"
                   filled
-                  disabled
+                  :disable="roleUser == 2"
                   v-model="usersDetalle.edad"
                   label="Edad"
                 />
@@ -85,6 +84,7 @@
                 <q-select
                   filled
                   dense
+                  :disable="roleUser == 2"
                   options-dense
                   v-model="usersDetalle.sexo"
                   :options="optionsSexo"
@@ -100,7 +100,7 @@
                   dense
                   color="red-5"
                   filled
-                  disabled
+                  :disable="roleUser == 2"
                   v-model="usersDetalle.departamento"
                   label="Departamento"
                 />
@@ -168,6 +168,7 @@
                 <q-select
                   filled
                   dense
+                  :disable="roleUser == 2"
                   options-dense
                   v-model="usersDetalle.jefeDirecto"
                   :options="getUsers"

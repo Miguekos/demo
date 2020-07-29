@@ -58,6 +58,48 @@
         </q-item-section>
       </q-item>
     </q-list>
+    <q-list>
+      <q-item>
+        <q-item-section>
+          <q-input dense filled v-model="fi">
+            <template v-slot:append>
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy
+                  ref="qDateProxyIni"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
+                  <q-date
+                    mask="DD/MM/YYYY"
+                    v-model="fi"
+                    @input="() => cargarIniDate()"
+                  />
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+        </q-item-section>
+        <q-item-section>
+          <q-input dense filled v-model="ff">
+            <template v-slot:append>
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy
+                  ref="qDateProxyFin"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
+                  <q-date
+                    mask="DD/MM/YYYY"
+                    v-model="ff"
+                    @input="() => cargarFinDate()"
+                  />
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+        </q-item-section>
+      </q-item>
+    </q-list>
 
     <!--     {{ getClientesS }}-->
     <!--    {{ columnsexport }}-->
@@ -123,6 +165,8 @@ import { Fechas } from "src/directives/formatFecha";
 import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { date, exportFile, LocalStorage } from "quasar";
+let timeStamp = Date.now();
+let formattedString = date.formatDate(timeStamp, "DD/MM/YYYY");
 var normalize = (function() {
   var from = "ÂÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
     to = "AAAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
@@ -177,6 +221,8 @@ export default {
   },
   data() {
     return {
+      fi: formattedString,
+      ff: formattedString,
       pagination: {
         sortBy: "created_at.$date",
         descending: false,
@@ -305,6 +351,23 @@ export default {
   },
   methods: {
     ...mapActions("client", ["callClienteS"]),
+    cargarIniDate() {
+      this.$refs.qDateProxyIni.hide();
+      this.obtenerRegistros();
+    },
+    cargarFinDate() {
+      this.$refs.qDateProxyFin.hide();
+      this.obtenerRegistros();
+    },
+    obtenerRegistros() {
+      // console.log(`Se cargara el estado: ${arg}`);
+      // console.log(arg);
+      // this.tabNumber = arg;
+      this.callClienteS({
+        fi: this.fi,
+        ff: this.ff
+      });
+    },
     crearDataExport() {
       const arraysJson = this.getClientesS[0];
       let keys = [];
@@ -380,7 +443,10 @@ export default {
     //   spinnerSize: 100,
     //   backgroundColor: "grey-4"
     // });
-    await this.callClienteS();
+    await this.callClienteS({
+      fi: this.fi,
+      ff: this.ff
+    });
     // await this.crearDataExport();
     // this.dataexport = this.getClientesS();
     // this.$store.commit("general/setAtras", false);

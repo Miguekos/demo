@@ -68,6 +68,8 @@ export default {
           textColor: "red-5",
           position: "top"
         });
+        await this.callArea();
+        this.seeTable = true;
       } catch (e) {
         console.log(e);
         this.$q.notify({

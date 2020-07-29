@@ -61,6 +61,48 @@
         </q-item-section>
       </q-item>
     </q-list>
+    <!--    <q-list>-->
+    <!--      <q-item>-->
+    <!--        <q-item-section>-->
+    <!--          <q-input dense filled v-model="fechaIncio">-->
+    <!--            <template v-slot:append>-->
+    <!--              <q-icon name="event" class="cursor-pointer">-->
+    <!--                <q-popup-proxy-->
+    <!--                  ref="qDateProxyIni"-->
+    <!--                  transition-show="scale"-->
+    <!--                  transition-hide="scale"-->
+    <!--                >-->
+    <!--                  <q-date-->
+    <!--                    mask="DD/MM/YYYY"-->
+    <!--                    v-model="fechaIncio"-->
+    <!--                    @input="() => cargarIniDate()"-->
+    <!--                  />-->
+    <!--                </q-popup-proxy>-->
+    <!--              </q-icon>-->
+    <!--            </template>-->
+    <!--          </q-input>-->
+    <!--        </q-item-section>-->
+    <!--        <q-item-section>-->
+    <!--          <q-input dense filled v-model="fechaFin">-->
+    <!--            <template v-slot:append>-->
+    <!--              <q-icon name="event" class="cursor-pointer">-->
+    <!--                <q-popup-proxy-->
+    <!--                  ref="qDateProxyFin"-->
+    <!--                  transition-show="scale"-->
+    <!--                  transition-hide="scale"-->
+    <!--                >-->
+    <!--                  <q-date-->
+    <!--                    mask="DD/MM/YYYY"-->
+    <!--                    v-model="fechaFin"-->
+    <!--                    @input="() => cargarFinDate()"-->
+    <!--                  />-->
+    <!--                </q-popup-proxy>-->
+    <!--              </q-icon>-->
+    <!--            </template>-->
+    <!--          </q-input>-->
+    <!--        </q-item-section>-->
+    <!--      </q-item>-->
+    <!--    </q-list>-->
     <q-table
       hide-bottom
       hide-header
@@ -113,6 +155,8 @@ import { Fechas } from "src/directives/formatFecha";
 import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { date, exportFile, LocalStorage } from "quasar";
+let timeStamp = Date.now();
+let formattedString = date.formatDate(timeStamp, "DD/MM/YYYY");
 var normalize = (function() {
   var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
     to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
@@ -166,6 +210,8 @@ export default {
   },
   data() {
     return {
+      fi: formattedString,
+      ff: formattedString,
       pagination: {
         sortBy: "created_at.$date",
         descending: false,

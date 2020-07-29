@@ -56,9 +56,9 @@ export default {
   methods: {
     ...mapActions("utils", ["callCargo", "addCargo", "delCargo"]),
     async eliminar(val) {
-      console.log("eliinar", val.registro);
+      console.log("eliinar", val._id.$oid);
       try {
-        const resp = await this.delCargo(val.registro);
+        const resp = await this.delCargo(val._id.$oid);
         this.$q.notify({
           // progress: true,
           message: "¡Se elimino correctamente!",
@@ -68,6 +68,8 @@ export default {
           textColor: "red-5",
           position: "top"
         });
+        await this.callCargo();
+        this.seeTable = true;
       } catch (e) {
         console.log(e);
         this.$q.notify({

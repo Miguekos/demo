@@ -117,6 +117,7 @@
 </template>
 
 <script>
+import { MixinDefault } from "../../mixins/mixin";
 import { Fechas } from "src/directives/formatFecha";
 import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
@@ -157,6 +158,7 @@ export default {
     // Registro: () => import("src/components/dielogRegistro"),
     // registarCuidate: () => import("../../components/RegistrarCuidateDoc")
   },
+  mixins: [MixinDefault],
   data() {
     return {
       filter: "",
@@ -188,7 +190,7 @@ export default {
           field: row => row,
           format: val =>
             val.asistenciaEntrada
-              ? val.asistenciaEntrada.created_at
+              ? this.formatFecha(val.asistenciaEntrada.created_at)
               : "No marco asistencia"
         },
         {
@@ -197,7 +199,7 @@ export default {
           field: row => row,
           format: val =>
             val.asistenciaSalida
-              ? val.asistenciaSalida.created_at
+              ? this.formatFecha(val.asistenciaSalida.created_at)
               : "No marco asistencia"
         }
       ],

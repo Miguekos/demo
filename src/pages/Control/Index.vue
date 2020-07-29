@@ -113,7 +113,7 @@
       <q-item-section>Reportes por estados (Última semana)</q-item-section>
     </q-item>
     <q-separator />
-    <q-list class="row" style="height: 280px;">
+    <q-list style="height: 280px;">
       <q-item>
         <q-item-section>
           <Graficas :info="getClienteReport" />

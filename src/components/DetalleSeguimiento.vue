@@ -89,7 +89,7 @@
           <q-item-section>
             <q-btn flat @click="cerrarDialog()" color="red-5">Cerrar</q-btn>
           </q-item-section>
-          <q-item-section>
+          <q-item-section v-if="role != 2">
             <q-btn flat @click="llamar()" color="green">Llamar</q-btn>
           </q-item-section>
           <q-item-section v-if="getDialogDetalleSeguiData.seguimiento == 1">
@@ -121,6 +121,7 @@ export default {
   },
   data() {
     return {
+      role: null,
       infoUrl: "",
       basic: false,
       fixed: false,
@@ -154,6 +155,7 @@ export default {
   },
   mounted() {
     this.infoUrl = process.env.Imagen_URL;
+    this.role = this.$q.localStorage.getAll().role;
   }
 };
 </script>
