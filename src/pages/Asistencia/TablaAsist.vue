@@ -24,7 +24,7 @@
             dense
             standout="bg-red-4 text-white"
             type="search"
-            placeholder="Buscar por nombre"
+            placeholder="Buscar"
             v-model="filter"
           >
             <!--      <template v-slot:before>-->
@@ -43,6 +43,7 @@
         </q-item-section>
       </q-item>
     </q-list>
+    <FiltroFechas @click="obtenerRegistros" />
     <q-table
       v-if="DetalleMapsLoad"
       hide-bottom
@@ -153,7 +154,8 @@ export default {
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
-    DetalleMaps: () => import("../../components/DetalleAsist")
+    DetalleMaps: () => import("../../components/DetalleAsist"),
+    FiltroFechas: () => import("components/FiltroFechas")
     // Search: () => import("./Search"),
     // Registro: () => import("src/components/dielogRegistro"),
     // registarCuidate: () => import("../../components/RegistrarCuidateDoc")
@@ -364,6 +366,13 @@ export default {
       // console.log("Formateando Fecha");
       return Fechas.larga(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
+    },
+    async obtenerRegistros(val) {
+      console.log("val", val);
+      await this.callAsist({
+        fi: val.fi,
+        ff: val.ff
+      });
     }
   },
   async created() {
@@ -380,7 +389,10 @@ export default {
     //   spinnerSize: 100,
     //   backgroundColor: "grey-4"
     // });
-    await this.callAsist();
+    await this.callAsist({
+      fi: this.$store.state.utils.fi,
+      ff: this.$store.state.utils.ff
+    });
     this.DetalleMapsLoad = true;
     // this.$store.commit("general/setAtras", false);
     // this.$store.commit("general/setSearch", true);

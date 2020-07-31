@@ -102,7 +102,9 @@ const actions = {
   },
   async callClienteS({ commit }, payload) {
     // console.log("callCliente");
-    const response = await axiosInstance.get(`/clientesS?fi=${payload.fi}&ff=${payload.ff}`);
+    const response = await axiosInstance.get(
+      `/clientesS?es=${payload.es}&fi=${payload.fi}&ff=${payload.ff}`
+    );
     // console.log(response.data);
     commit("setClientesS", response.data);
     // return response.data;
@@ -116,7 +118,9 @@ const actions = {
   },
   async callClienteOne({ commit }, payload) {
     // console.log("callClienteOne");
-    const response = await axiosInstance.get(`/cliente/${payload}`);
+    const response = await axiosInstance.get(
+      `/cliente?dni=${payload.dni}&fi=${payload.fi}&ff=${payload.ff}`
+    );
     commit("setClienteOne", response.data);
     // return response.data;
   },

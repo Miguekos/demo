@@ -53,9 +53,9 @@ const actions = {
   async callRegistroSegui({ commit }, payload) {
     // console.log("Login");
     // console.log(payload);
-    const response = await axiosInstance.get(`/seguimiento/${payload}`);
+    const response = await axiosInstance.get(`/seguimiento/${payload.id}?fi=${payload.fi}&ff=${payload.ff}`);
     // console.log(response.data);
-    if (payload == "all") {
+    if (payload.id == "all") {
       commit("setSeguimientos", response.data);
     } else {
       commit("setSeguimientosFilter", response.data);

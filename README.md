@@ -34,3 +34,25 @@ docker build -t cuidateappg4s:1.0 .
 docker-compose up -d
 
 
+
+agregar filtros por fecha
+componentes 
+FiltroFechas
+<FiltroFechas @click="obtenerRegistros" />
+components: {
+    // Search: () => import("./SearchCU")
+    FiltroFechas: () => import("components/FiltroFechas")
+  },
+
+    async obtenerRegistros(val) {
+      console.log("val", val);
+      await this.callRegistroSegui({
+        id: "all",
+        fi: val.fi,
+        ff: val.ff
+      });
+    }
+    
+    
+
+

@@ -58,7 +58,6 @@
         </q-item-section>
       </q-item>
     </q-list>
-
     <!--     {{ getClientesCSUser }}-->
     <!--    {{ columnsexport }}-->
     <q-table

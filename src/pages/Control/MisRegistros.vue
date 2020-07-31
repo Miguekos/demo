@@ -133,6 +133,8 @@
               </q-item>
             </q-list>
 
+            <FiltroFechas @click="obtenerRegistros" />
+
             <!--      {{ getClienteOne }}-->
             <q-table
               hide-bottom
@@ -306,7 +308,8 @@ export default {
     DetallesCuidateUser: () => import("./DetallesCuidateUser"),
     DetallesCuidateOne: () => import("./DetallesCuidateOne"),
     Seguimiento: () => import("../Seguimiento/Seguimiento"),
-    DeAlta: () => import("../Seguimiento/DeAlta")
+    DeAlta: () => import("../Seguimiento/DeAlta"),
+    FiltroFechas: () => import("components/FiltroFechas")
   },
   data() {
     return {
@@ -455,6 +458,14 @@ export default {
       // console.log("Formateando Fecha");
       return Fechas.Custom(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
+    },
+    async obtenerRegistros(val) {
+      console.log("val", val);
+      await this.callClienteOne({
+        dni: this.$q.localStorage.getAll().UserDetalle.dni,
+        fi: val.fi,
+        ff: val.ff
+      });
     }
   },
   async created() {
@@ -462,7 +473,11 @@ export default {
     const userData = LocalStorage.getAll().UserDetalle;
     this.role = LocalStorage.getAll().role;
     // console.log(userData.id.$oid);
-    await this.callClienteOne(userData.dni);
+    await this.callClienteOne({
+      dni: this.$q.localStorage.getAll().UserDetalle.dni,
+      fi: this.$store.state.utils.fi,
+      ff: this.$store.state.utils.ff
+    });
     // await this.callOneRegistroSegui(userData.id.$oid);
     this.$q.loading.hide();
   }

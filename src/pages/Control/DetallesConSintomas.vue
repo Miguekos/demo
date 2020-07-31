@@ -61,53 +61,13 @@
         </q-item-section>
       </q-item>
     </q-list>
-    <!--    <q-list>-->
-    <!--      <q-item>-->
-    <!--        <q-item-section>-->
-    <!--          <q-input dense filled v-model="fechaIncio">-->
-    <!--            <template v-slot:append>-->
-    <!--              <q-icon name="event" class="cursor-pointer">-->
-    <!--                <q-popup-proxy-->
-    <!--                  ref="qDateProxyIni"-->
-    <!--                  transition-show="scale"-->
-    <!--                  transition-hide="scale"-->
-    <!--                >-->
-    <!--                  <q-date-->
-    <!--                    mask="DD/MM/YYYY"-->
-    <!--                    v-model="fechaIncio"-->
-    <!--                    @input="() => cargarIniDate()"-->
-    <!--                  />-->
-    <!--                </q-popup-proxy>-->
-    <!--              </q-icon>-->
-    <!--            </template>-->
-    <!--          </q-input>-->
-    <!--        </q-item-section>-->
-    <!--        <q-item-section>-->
-    <!--          <q-input dense filled v-model="fechaFin">-->
-    <!--            <template v-slot:append>-->
-    <!--              <q-icon name="event" class="cursor-pointer">-->
-    <!--                <q-popup-proxy-->
-    <!--                  ref="qDateProxyFin"-->
-    <!--                  transition-show="scale"-->
-    <!--                  transition-hide="scale"-->
-    <!--                >-->
-    <!--                  <q-date-->
-    <!--                    mask="DD/MM/YYYY"-->
-    <!--                    v-model="fechaFin"-->
-    <!--                    @input="() => cargarFinDate()"-->
-    <!--                  />-->
-    <!--                </q-popup-proxy>-->
-    <!--              </q-icon>-->
-    <!--            </template>-->
-    <!--          </q-input>-->
-    <!--        </q-item-section>-->
-    <!--      </q-item>-->
-    <!--    </q-list>-->
+    <FiltroFechas @click="obtenerRegistros" />
     <q-table
+      :loading="loadtable"
       hide-bottom
       hide-header
       flat
-      :data="getClientesCS"
+      :data="getClientesS"
       :columns="columns"
       row-key="created_at.$date"
       :pagination.sync="pagination"
@@ -131,7 +91,7 @@
     </q-table>
     <!-- <q-list separator>
       <q-item
-        v-for="(item, index) in getClientesCS"
+        v-for="(item, index) in getClientesS"
         :key="index"
         clickable
         v-ripple
@@ -202,14 +162,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("client", ["getClientesCS"])
+    ...mapGetters("client", ["getClientesS"])
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
-    Search: () => import("./SearchCS")
+    Search: () => import("./SearchCS"),
+    FiltroFechas: () => import("components/FiltroFechas")
   },
   data() {
     return {
+      loadtable: false,
       fi: formattedString,
       ff: formattedString,
       pagination: {
@@ -334,9 +296,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions("client", ["callClienteCS"]),
+    ...mapActions("client", ["callClienteS"]),
     crearDataExport() {
-      const arraysJson = this.getClientesCS[0];
+      const arraysJson = this.callClienteS[0];
       let keys = [];
       let values = [];
       keys.push(Object.keys(arraysJson));
@@ -360,7 +322,7 @@ export default {
       // naive encoding to csv format
       const content = [this.columnsexport.map(col => wrapCsvValue(col.label))]
         .concat(
-          this.getClientesCS.map(row =>
+          this.getClientesS.map(row =>
             this.columnsexport
               .map(col =>
                 wrapCsvValue(
@@ -398,9 +360,18 @@ export default {
       // console.log("Formateando Fecha");
       return Fechas.larga(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
+    },
+    obtenerRegistros(val) {
+      console.log("val", val);
+      this.callClienteS({
+        es: "01",
+        fi: val.fi,
+        ff: val.ff
+      });
     }
   },
   async created() {
+    this.loadtable = true;
     // this.$q.loading.show();
     // console.log("created - Cliente");
     // this.$q.loading.show({
@@ -409,13 +380,12 @@ export default {
     //   spinnerSize: 100,
     //   backgroundColor: "grey-4"
     // });
-    await this.callClienteCS();
-    // await this.crearDataExport();
-    // this.$store.commit("general/setAtras", false);
-    // this.$store.commit("general/setSearch", true);
-    // this.$q.addressbarColor.set("#0056a1");
-    // this.$q.loading.hide();
-    // this.$q.loading.hide();
+    await this.callClienteS({
+      es: "01",
+      fi: this.$store.state.utils.fi,
+      ff: this.$store.state.utils.ff
+    });
+    this.loadtable = false;
   }
 };
 </script>

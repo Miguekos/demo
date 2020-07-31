@@ -1,11 +1,16 @@
 import { axiosInstance } from "boot/axios";
+import { date } from "quasar";
+let timeStamp = Date.now();
+let formattedString = date.formatDate(timeStamp, "DD/MM/YYYY");
 
 const state = {
   Cargo: null,
   Area: null,
   NotiCS: [],
   NotiCuidate: [],
-  Alertas: []
+  Alertas: [],
+  fi: formattedString,
+  ff: formattedString
 };
 
 const mutations = {

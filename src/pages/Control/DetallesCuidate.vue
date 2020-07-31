@@ -80,6 +80,8 @@
       </q-item>
     </q-list>
 
+    <FiltroFechas @click="obtenerRegistros" />
+
     <!--       {{ getSeguimientos }}-->
     <q-table
       hide-bottom
@@ -189,6 +191,7 @@ export default {
   },
   components: {
     // Search: () => import("./SearchCU")
+    FiltroFechas: () => import("components/FiltroFechas")
   },
   data() {
     return {
@@ -390,14 +393,22 @@ export default {
       // console.log("Formateando Fecha");
       return Fechas.Custom(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
+    },
+    async obtenerRegistros(val) {
+      console.log("val", val);
+      await this.callRegistroSegui({
+        id: "all",
+        fi: val.fi,
+        ff: val.ff
+      });
     }
   },
   async created() {
-    // this.$q.loading.show();
-    // const userData = LocalStorage.getAll().UserDetalle;
-    // console.log(userData.id.$oid);
-    await this.callRegistroSegui("all");
-    // this.$q.loading.hide();
+    await this.callRegistroSegui({
+      id: "all",
+      fi: this.$store.state.utils.fi,
+      ff: this.$store.state.utils.ff
+    });
   }
 };
 </script>

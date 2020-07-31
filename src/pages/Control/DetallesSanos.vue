@@ -364,6 +364,7 @@ export default {
       // console.log(arg);
       // this.tabNumber = arg;
       this.callClienteS({
+        es: "00",
         fi: this.fi,
         ff: this.ff
       });
@@ -434,25 +435,12 @@ export default {
     }
   },
   async created() {
-    // this.$q.loading.show();
     this.loading = true;
-    // console.log("created - Cliente");
-    // this.$q.loading.show({
-    //   spinner: QSpinnerGears,
-    //   spinnerColor: "blue",
-    //   spinnerSize: 100,
-    //   backgroundColor: "grey-4"
-    // });
     await this.callClienteS({
+      es: "00",
       fi: this.fi,
       ff: this.ff
     });
-    // await this.crearDataExport();
-    // this.dataexport = this.getClientesS();
-    // this.$store.commit("general/setAtras", false);
-    // this.$store.commit("general/setSearch", true);
-    // this.$q.addressbarColor.set("#0056a1");
-    // this.$q.loading.hide();
   }
 };
 </script>

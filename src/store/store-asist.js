@@ -25,9 +25,11 @@ const mutations = {
 };
 
 const actions = {
-  async callAsist({ commit }) {
+  async callAsist({ commit }, payload) {
     // console.log("callUser");
-    const response = await axiosInstance.get(`/asistencia`);
+    const response = await axiosInstance.get(
+      `/asistencia?fi=${payload.fi}&ff=${payload.ff}`
+    );
     // console.log(response.data);
     commit("setAsist", response.data);
     // return response.data;
