@@ -53,11 +53,16 @@ const actions = {
   async callRegistroSegui({ commit }, payload) {
     // console.log("Login");
     // console.log(payload);
-    const response = await axiosInstance.get(`/seguimiento/${payload.id}?fi=${payload.fi}&ff=${payload.ff}`);
     // console.log(response.data);
     if (payload.id == "all") {
+      const response = await axiosInstance.get(
+        `/seguimiento/${payload.id}?fi=${payload.fi}&ff=${payload.ff}`
+      );
       commit("setSeguimientos", response.data);
     } else {
+      const response = await axiosInstance.get(
+        `/seguimiento/${payload}`
+      );
       commit("setSeguimientosFilter", response.data);
     }
     // return response.data;
@@ -88,7 +93,7 @@ const actions = {
   },
   async callOneRegistroSegui({ commit }, payload) {
     // console.log("Login");
-    console.log(payload);
+    console.log("callOneRegistroSegui", payload);
     const response = await axiosInstance.get(`/seguimientoOne/${payload}`);
     // console.log(response.data);
     commit("setSeguimientosOne", response.data);

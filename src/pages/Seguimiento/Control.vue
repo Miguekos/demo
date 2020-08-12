@@ -223,7 +223,7 @@ export default {
     }
   },
   async created() {
-    console.log(this.$route.params.id);
+    console.log("Control", this.$route.params.id);
     await this.callRegistroSegui(this.$route.params.id);
     // this.$store.commit("segui/addSeguiObserva", this.getSeguiFilter);
     this.role = this.$q.localStorage.getAll().role;
