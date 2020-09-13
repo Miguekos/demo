@@ -24,18 +24,22 @@
       </q-item>
     </q-list>
     <q-table
-      hide-bottom
       hide-header
       flat
       :data="getUsers"
       :columns="columns"
       row-key="created_at.$date"
       :pagination="pagination"
+      rows-per-page-label="Cant. P/P"
     >
       <template v-slot:body="props">
         <q-tr :props="props" clickable>
           <q-td key="name" :props="props">
-            <q-item-section clickable @click="detalleCliente(props.row)">
+            <q-item-section v-if="role == 1" clickable @click="detalleCliente(props.row)">
+              <q-item-label>{{ props.row.name }}</q-item-label>
+              <q-item-label caption> {{ props.row.email }}</q-item-label>
+            </q-item-section>
+            <q-item-section v-if="role == 2 || role == 3" clickable>
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption> {{ props.row.email }}</q-item-label>
             </q-item-section>
@@ -54,6 +58,7 @@
                 @click="abrirDialogReg(props.row)"
               />
               <q-btn
+                v-if="role == 1"
                 size="xs"
                 round
                 color="red-5"
@@ -84,15 +89,18 @@
         </q-item-section>
       </q-item>
     </q-list> -->
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-page-sticky v-if="role == 1" position="bottom-right" :offset="[18, 18]">
       <q-btn @click="registro()" fab icon="add" color="green" />
     </q-page-sticky>
     <q-dialog persistent v-model="dialogRegistro">
       <Registro @cerrarDialog="dialogRegistro = false" />
     </q-dialog>
-    <q-dialog v-model="registarCuidate">
+    <q-dialog persistent full-width v-model="registarCuidate">
       <q-card>
-        <registarCuidate :id="this.idRegitro" @cerrarDialogCu="registarCuidate = false"/>
+        <registarCuidate
+          :id="this.idRegitro"
+          @cerrarDialogCu="registarCuidate = false"
+        />
       </q-card>
     </q-dialog>
   </q-page>
@@ -107,7 +115,7 @@ export default {
   preFetch({ store, redirect }) {
     let logginIn = LocalStorage.getAll().loggin;
     let role = LocalStorage.getAll().role;
-    if (logginIn && role == 1) {
+    if (logginIn && (role == 1 || role == 3)) {
       // console.log("WELCOME");
     } else {
       redirect("/");
@@ -124,13 +132,14 @@ export default {
   },
   data() {
     return {
+      role: null,
       idRegitro: null,
       registarCuidate: false,
       pagination: {
         sortBy: "created_at.$date",
         descending: false,
         page: 1,
-        rowsPerPage: 0
+        rowsPerPage: 8
         // rowsNumber: xx if getting data from a server
       },
       dialogRegistro: false,
@@ -255,6 +264,7 @@ export default {
     // this.$q.loading.show({
     //   spinner: QSpinnerGears,
     //   spinnerColor: "blue",
+    this.role = this.$q.localStorage.getAll().role;
     //   spinnerSize: 100,
     //   backgroundColor: "grey-4"
     // });

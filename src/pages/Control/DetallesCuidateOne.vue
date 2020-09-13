@@ -24,26 +24,19 @@
           <q-icon name="archive" />
         </q-item-section>
       </q-item>
-      <!--        <q-item dense v-else class="native-mobile-only" clickable v-ripple>-->
-      <!--          <q-item-section-->
-      <!--            class="text-red text-bold"-->
-      <!--            side-->
-      <!--            top-->
-      <!--            left-->
-      <!--          ></q-item-section>-->
-      <!--          <q-item-section>-->
-      <!--            <q-item-label class="text-center text-h6">Cuidate</q-item-label>-->
-      <!--            <q-separator color="indigo-4" inset />-->
-      <!--          </q-item-section>-->
-      <!--          <q-item-section-->
-      <!--            class="text-indigo text-bold"-->
-      <!--            side-->
-      <!--            top-->
-      <!--            right-->
-      <!--          ></q-item-section>-->
-      <!--        </q-item>-->
       <q-item>
         <q-item-section>
+          <q-input
+            dense
+            standout="bg-indigo-4 text-white"
+            type="search"
+            placeholder="Buscar"
+            v-model="filter"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
           <!-- <q-input
           v-model="search"
           dense
@@ -55,7 +48,7 @@
             <q-icon name="search" />
           </template>
         </q-input>-->
-          <Search />
+          <!--          <Search />-->
         </q-item-section>
       </q-item>
     </q-list>
@@ -69,6 +62,7 @@
       :columns="columnsOne"
       row-key="created_at.$date"
       :pagination.sync="pagination"
+      :filter="filter"
     >
       <!-- <template v-slot:top-right>
       <q-btn
@@ -94,7 +88,12 @@
                 {{ props.row.temp }}°
               </q-item-label>
             </q-item-section>
-            <q-item-section v-if="role == 2" v-ripple:white clickable>
+            <q-item-section
+              v-if="role == 2"
+              v-ripple:white
+              clickable
+              @click="detalleSeguimientoOne(props.row)"
+            >
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
                 <b class="text-red-5">temp:</b>
@@ -134,6 +133,8 @@ import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { date, exportFile, LocalStorage } from "quasar";
 import { myMixin } from "../../mixins/mixin.js";
+let timeStamp = Date.now();
+let formattedString = date.formatDate(timeStamp, "DD/MM/YYYY");
 function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0 ? formatFn(val) : val;
 
@@ -162,9 +163,12 @@ export default {
   },
   data() {
     return {
+      filter: "",
       role: null,
       userData: [],
       tab: "mails",
+      fi: formattedString,
+      ff: formattedString,
       pagination: {
         sortBy: "created_at.$date",
         descending: false,
@@ -202,6 +206,34 @@ export default {
           name: "email",
           label: "Correo",
           field: "email"
+        },
+        {
+          name: "sexo",
+          label: "Sexo",
+          field: "sexo"
+        },
+        {
+          name: "area",
+          label: "Area",
+          field: "area"
+        },
+        {
+          name: "edad",
+          label: "Edad",
+          field: "edad"
+        },
+        {
+          name: "departamento",
+          label: "Departamento",
+          field: "departamento"
+        },
+        {
+          name: "sueldo",
+          label: "Sueldo",
+          field: row =>
+            this.$q.localStorage.getAll().idUser == 1
+              ? row.sueldo
+              : "No permitido"
         },
         {
           name: "observa",

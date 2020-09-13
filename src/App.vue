@@ -19,12 +19,20 @@ export default {
     };
   },
   methods: {
-    // ...mapActions("client", ["callClienteReport"])
+    ...mapActions("utils", [
+      "notificacionesConSintomas",
+      "notificacionesCuidate",
+      "callAlertas"
+    ])
   },
   async created() {
     console.log("App - 4");
     this.$q.addressbarColor.set("#FFFFFF");
-    console.log("CuidAPPte CAYMAN");
+    console.log("CuidAPPte v2.1");
+    if (this.$q.localStorage.getAll().role == 3) {
+      // await this.notificacionesConSintomas();
+      // await this.notificacionesCuidate();
+    }
     // await this.callClienteReport();
     // #004d40
   }

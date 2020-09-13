@@ -9,12 +9,7 @@
 
         <q-item dense class="q-pb-xs">
           <q-item-section>
-            <q-input
-              borderless
-              v-model="dateDiag"
-              label="Fecha de diagnóstico"
-              mask="date"
-            >
+            <q-input borderless v-model="dateDiag" label="Fecha de diagnóstico">
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                   <q-popup-proxy
@@ -23,6 +18,8 @@
                     transition-hide="scale"
                   >
                     <q-date
+                      mask="DD/MM/YYYY"
+                      :locale="myLocale"
                       v-model="dateDiag"
                       @input="() => $refs.qDateProxyDiag.hide()"
                     />
@@ -42,7 +39,6 @@
               borderless
               v-model="dateReport"
               label="Fecha de reporte"
-              mask="date"
             >
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
@@ -52,6 +48,8 @@
                     transition-hide="scale"
                   >
                     <q-date
+                      mask="DD/MM/YYYY"
+                      :locale="myLocale"
                       v-model="dateReport"
                       @input="() => $refs.qDateProxyRep.hide()"
                     />
@@ -107,6 +105,9 @@
               color="red-5"
               borderless
               label="Temperatura"
+              mask="#.##"
+              fill-mask="0"
+              reverse-fill-mask
             />
           </q-item-section>
         </q-item>
@@ -155,28 +156,47 @@
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
 import { LocalStorage } from "quasar";
+import { date } from "quasar";
+let timeStamp = Date.now();
+let formattedString = date.formatDate(timeStamp, "DD/MM/YYYY");
 
 export default {
+  computed: {
+    ...mapGetters("users", ["getUserOne"])
+  },
   data() {
     return {
+      role: null,
       infoUser: null,
       temp: null,
       observa: [],
       sintomas: null,
       medicacion: null,
-      dateDiag: new Date().toISOString().substr(0, 10),
-      dateReport: new Date().toISOString().substr(0, 10)
+      dateDiag: null,
+      dateReport: formattedString,
+      myLocale: {
+        /* starting with Sunday */
+        days: "Domingo_Lunes_Martes_Miércoles_Jueves_Viernes_Sábado".split("_"),
+        daysShort: "Dom_Lun_Mar_Mié_Jue_Vie_Sáb".split("_"),
+        months: "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
+          "_"
+        ),
+        monthsShort: "Ene_Feb_Mar_Abr_May_Jun_Jul_Ago_Sep_Oct_Nov_Dic".split(
+          "_"
+        )
+      }
     };
   },
   methods: {
     ...mapActions("segui", ["addRegistroSegui"]),
+    ...mapActions("users", ["callUserOne"]),
     reset() {
       this.temp = null;
       this.observa = null;
       this.sintomas = null;
       this.medicacion = null;
-      this.dateDiag = new Date().toISOString().substr(0, 10);
-      this.dateReport = new Date().toISOString().substr(0, 10);
+      this.dateDiag = formattedString;
+      this.dateReport = formattedString;
     },
     async onSubmit() {
       // console.log(this.observa.length);
@@ -186,22 +206,23 @@ export default {
       if (
         this.observa.length > 0 &&
         this.sintomas != null &&
-        this.temp != null &&
+        this.dateDiag != null &&
         this.medicacion != null
       ) {
         this.$q.loading.show();
         // let validacion = this.valdairEstados();
         // console.log(validacion);
         const JsonEnviar = {
-          ...this.infoUser,
+          ...this.getUserOne,
           observa: [
             {
-              nombre: this.infoUser.name,
+              nombre: this.getUserOne.name,
               fecha: new Date(),
               detalle: this.observa,
               temp: this.temp,
               sintomas: this.sintomas,
-              medicacion: this.medicacion
+              medicacion: this.medicacion,
+              role: this.role
             }
           ],
           temp: this.temp,
@@ -271,10 +292,11 @@ export default {
     }
   },
   async created() {
-    console.log(new Date());
+    console.log(formattedString);
     this.$q.loading.show();
     const infoUser = await LocalStorage.getAll().UserDetalle;
     this.infoUser = infoUser;
+    this.role = this.$q.localStorage.getAll().role;
     // console.log(infoUser.name);
     // this.nombre = infoUser.name;
     // this.dni = infoUser.dni;
@@ -291,6 +313,7 @@ export default {
     // } else {
     //   this.datosPersonales = false;
     // }
+    this.callUserOne(this.$q.localStorage.getAll().idUser);
     this.$q.loading.hide();
   }
 };

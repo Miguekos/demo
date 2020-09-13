@@ -6,7 +6,7 @@
         color="grey"
         style="height: 170px; max-width: 180px;"
         alt="Roseline logo"
-        src="~assets/17899-hand-sanitizer.gif"
+        src="~assets/5144-copied.gif"
       />
     </div>
     <div class="full-width">

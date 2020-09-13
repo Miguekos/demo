@@ -13,27 +13,27 @@ const myMixin = {
       columnsexport: [
         {
           name: "notif1",
-          label: "¿Sensación de alza térmica o fiebre?",
+          label: "Sensacion de alza termica o fiebre?",
           field: row => (row.notif1 ? "Si" : "No")
         },
         {
           name: "notif2",
-          label: "¿Tos, estornudos o dificultad para respirar?",
+          label: "Tos, estornudos o dificultad para respirar?",
           field: row => (row.notif2 ? "Si" : "No")
         },
         {
           name: "notif3",
-          label: "¿Expectoración o flema amarilla o verdosa?",
+          label: "Expectoracion o flema amarilla o verdosa?",
           field: row => (row.notif3 ? "Si" : "No")
         },
         {
           name: "notif4",
-          label: "¿Contacto con persona(s) con un caso confirmado de COVID-19?",
+          label: "Contacto con persona(s) con un caso confirmado de COVID-19?",
           field: row => (row.notif4 ? "Si" : "No")
         },
         {
           name: "notif5",
-          label: "¿Estás tomando alguna medicación?",
+          label: "Estas tomando alguna medicacion?",
           field: row => (row.notif5 ? "Si" : "No")
         },
         {
@@ -42,9 +42,9 @@ const myMixin = {
           field: row => (row.estados === "00" ? "Sano" : "Con Sintomas")
         },
         {
-          name: "nombre",
+          name: "name",
           label: "Nombre",
-          field: row => row.nombre
+          field: row => row.name
         },
         {
           name: "dni",
@@ -52,14 +52,14 @@ const myMixin = {
           field: "dni"
         },
         {
-          name: "telf",
+          name: "telefono",
           label: "Celular",
-          field: "telf"
+          field: "telefono"
         },
         {
           name: "area",
           label: "Area",
-          field: "area"
+          field: row => row.area
         },
         {
           name: "temp",
@@ -67,9 +67,37 @@ const myMixin = {
           field: "temp"
         },
         {
-          name: "correo",
+          name: "email",
           label: "Correo",
-          field: "correo"
+          field: "email"
+        },
+        {
+          name: "sexo",
+          label: "Sexo",
+          field: "sexo"
+        },
+        {
+          name: "area",
+          label: "Area",
+          field: "area"
+        },
+        {
+          name: "edad",
+          label: "Edad",
+          field: "edad"
+        },
+        {
+          name: "departamento",
+          label: "Departamento",
+          field: "departamento"
+        },
+        {
+          name: "sueldo",
+          label: "Sueldo",
+          field: row =>
+            this.$q.localStorage.getAll().idUser == 1
+              ? row.sueldo
+              : "No permitido"
         },
         {
           name: "created_at.$date",
@@ -80,11 +108,11 @@ const myMixin = {
       ],
       columns: [
         {
-          name: "nombre",
+          name: "name",
           required: true,
           label: "Nombre",
           align: "left",
-          field: row => row.nombre,
+          field: row => row.name,
           format: val => `${val}`,
           sortable: true
         },
@@ -142,8 +170,7 @@ const myMixin = {
 
 const MixinDefault = {
   data() {
-    return {
-    };
+    return {};
   },
   created: function() {
     // this.hello();
@@ -185,6 +212,12 @@ const MixinDefault = {
     },
     formatFecha(val) {
       return Fechas.larga(val);
+    },
+    formatFechaCorta(val) {
+      return Fechas.Corta(val);
+    },
+    formatFechaCustom(val) {
+      return Fechas.Custom(val);
     }
   }
 };

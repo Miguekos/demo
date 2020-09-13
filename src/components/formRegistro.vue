@@ -52,15 +52,93 @@
         ]"
       />
 
+      <q-input
+        dense
+        v-model="edad"
+        label="Edad *"
+        lazy-rules
+        counter
+        :rules="[
+          val => (val && val.length > 0) || 'Por favor no puede estar vacio'
+        ]"
+      />
+
+      <q-select
+        dense
+        options-dense
+        v-model="sexo"
+        :options="optionsSexo"
+        label="Sexo"
+        emit-value
+        map-options
+        :rules="[val => !!val || 'Campo obligatorio']"
+      />
+
+      <q-input
+        dense
+        v-model="departamento"
+        label="Departamento *"
+        lazy-rules
+        counter
+        :rules="[
+          val => (val && val.length > 0) || 'Por favor no puede estar vacio'
+        ]"
+      />
+
+      <q-select
+        color="red-5"
+        name="cargo"
+        dense
+        v-model="cargo"
+        :options="getCargo"
+        option-label="name"
+        option-value="registro"
+        emit-value
+        map-options
+        label="Cargo"
+        :rules="[val => !!val || 'Campo obligatorio']"
+      />
+
+      <q-input
+        dense
+        v-model="sueldo"
+        label="Sueldo *"
+        lazy-rules
+        counter
+        :rules="[
+          val => (val && val.length > 0) || 'Por favor no puede estar vacio'
+        ]"
+      />
+
       <q-select
         color="red-5"
         name="area"
         dense
         v-model="area"
-        :options="options"
+        :options="getArea"
+        option-label="name"
+        option-value="registro"
+        emit-value
+        map-options
         label="Área"
-        :rules="[val => !!val || 'Compo obligatorio']"
+        :rules="[val => !!val || 'Campo obligatorio']"
       />
+
+      <q-select
+        color="red-5"
+        name="jefeDirecto"
+        dense
+        v-model="jefeDirecto"
+        :options="getUsers"
+        option-label="name"
+        option-value="dni"
+        emit-value
+        map-options
+        label="Jefe Directo"
+        :rules="[val => !!val || 'Campo obligatorio']"
+      />
+
+<!--      {{ jefeDirecto }}-->
 
       <q-separator />
 
@@ -92,22 +170,43 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
+  computed: {
+    ...mapGetters("users", ["getUsers"]),
+    ...mapGetters("utils", ["getArea", "getCargo"])
+  },
   data() {
     return {
+      jefeDirecto: null,
       loadBoton: false,
       name: null,
       dni: null,
       email: null,
+      edad: null,
+      sexo: null,
+      departamento: null,
+      cargo: null,
+      sueldo: null,
       telefono: null,
       area: "",
-      options: ["Producción", "Ventas", "Administración", "Gerencia"]
+      options: ["Producción", "Ventas", "Administración", "Gerencia"],
+      optionsSexo: [
+        {
+          label: "MASCULINO",
+          value: 1
+        },
+        {
+          label: "FEMENINO",
+          value: 2
+        }
+      ]
     };
   },
   methods: {
     ...mapActions("users", ["addUser", "callUser"]),
+    ...mapActions("utils", ["callCargo", "callArea"]),
     cerrar() {
       // console.log("Se preciono Cerrar");
     },
@@ -117,9 +216,15 @@ export default {
         name: this.name,
         dni: this.dni,
         email: this.email,
+        edad: this.edad,
+        sexo: this.sexo,
+        departamento: this.departamento,
+        cargo: this.cargo,
+        sueldo: this.sueldo,
         telefono: this.telefono,
         area: this.area,
         temp: "00",
+        jefeDirecto: this.jefeDirecto,
         role: 2
       })
         .then(resp => {
@@ -161,7 +266,18 @@ export default {
       this.dni = null;
       this.email = null;
       this.telefono = null;
+      this.edad = null;
+      this.sexo = null;
+      this.departamento = null;
+      this.cargo = null;
+      this.sueldo = null;
+      this.jefeDirecto = null;
     }
+  },
+  async created() {
+    await this.callCargo();
+    await this.callArea();
+    await this.callUser();
   }
 };
 </script>

@@ -49,7 +49,6 @@
                   disable
                   dense
                   color="red-5"
-                  disabled
                   filled
                   v-model="usersDetalle.dni"
                   label="DNI/C.E"
@@ -62,7 +61,7 @@
                   dense
                   color="red-5"
                   filled
-                  disabled
+                  :disable="roleUser == 2"
                   v-model="usersDetalle.telefono"
                   label="Celular"
                 />
@@ -74,10 +73,124 @@
                   dense
                   color="red-5"
                   filled
+                  :disable="roleUser == 2"
+                  v-model="usersDetalle.edad"
+                  label="Edad"
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-select
+                  filled
+                  dense
+                  :disable="roleUser == 2"
+                  options-dense
+                  v-model="usersDetalle.sexo"
+                  :options="optionsSexo"
+                  label="Sexo"
+                  emit-value
+                  map-options
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-input
+                  dense
+                  color="red-5"
+                  filled
+                  :disable="roleUser == 2"
+                  v-model="usersDetalle.departamento"
+                  label="Departamento"
+                />
+              </q-item-section>
+            </q-item>
+            <q-item v-if="roleUser == 1" class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-input
+                  dense
+                  color="red-5"
+                  filled
+                  disabled
+                  v-model="usersDetalle.sueldo"
+                  label="Sueldo"
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-input
+                  disable
+                  dense
+                  color="red-5"
+                  filled
                   disabled
                   v-model="usersDetalle.email"
-                  value="miguekos1233@gmail.com"
                   label="Correo"
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-select
+                  filled
+                  dense
+                  options-dense
+                  v-model="usersDetalle.cargo"
+                  :options="getCargo"
+                  option-label="name"
+                  option-value="registro"
+                  label="Cargo"
+                  emit-value
+                  map-options
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-select
+                  filled
+                  dense
+                  options-dense
+                  v-model="usersDetalle.area"
+                  :options="getArea"
+                  option-label="name"
+                  option-value="registro"
+                  label="Área"
+                  emit-value
+                  map-options
+                />
+              </q-item-section>
+            </q-item>
+            <q-item class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-select
+                  filled
+                  dense
+                  :disable="roleUser == 2"
+                  options-dense
+                  v-model="usersDetalle.jefeDirecto"
+                  :options="getUsers"
+                  option-label="name"
+                  option-value="dni"
+                  label="Jefe Directo"
+                  emit-value
+                  map-options
+                />
+              </q-item-section>
+            </q-item>
+            <q-item v-if="roleUser === 1" class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-select
+                  filled
+                  dense
+                  options-dense
+                  v-model="usersDetalle.role"
+                  :options="options"
+                  label="Role"
+                  emit-value
+                  map-options
                 />
               </q-item-section>
             </q-item>
@@ -92,12 +205,17 @@
                 />
               </q-item-section>
             </q-item>
-            <q-item class="justify-center">
+            <q-item v-if="roleUser == 1" class="justify-center">
               <q-item-section class="text-center text-bold">
                 <q-btn color="red-5" @click="Salir()" label="Salir" />
               </q-item-section>
               <q-item-section class="text-center text-bold">
                 <q-btn color="green-5" type="submit" label="Actualizar" />
+              </q-item-section>
+            </q-item>
+            <q-item v-if="roleUser == 3" class="justify-center">
+              <q-item-section class="text-center text-bold">
+                <q-btn color="red-5" @click="Salir()" label="Salir" />
               </q-item-section>
             </q-item>
           </q-list>
@@ -137,7 +255,8 @@ export default {
     registarCuidate: () => import("../../components/RegistrarCuidateDoc")
   },
   computed: {
-    ...mapGetters("users", ["getUserOne"]),
+    ...mapGetters("users", ["getUserOne", "getUsers"]),
+    ...mapGetters("utils", ["getArea", "getCargo"]),
     urlImagen() {
       // return `${this.infoUrl}/uploads/${profile}`;
       // return `https://api.apps.com.pe/fileserver/uploads/${this.$store.state.users.UsersOne.profile}`;
@@ -151,9 +270,37 @@ export default {
   },
   data() {
     return {
+      options: [
+        {
+          label: "Admin",
+          value: 1
+        },
+        {
+          label: "User",
+          value: 2
+        },
+        {
+          label: "Medico",
+          value: 3
+        },
+        {
+          label: "Jefe",
+          value: 4
+        }
+      ],
+      optionsSexo: [
+        {
+          label: "MASCULINO",
+          value: 1
+        },
+        {
+          label: "FEMENINO",
+          value: 2
+        }
+      ],
       idRegitro: null,
       registarCuidate: false,
-      role: null,
+      roleUser: null,
       files: null,
       uploadProgress: [],
       uploading: null,
@@ -176,78 +323,17 @@ export default {
     };
   },
   methods: {
-    ...mapActions("users", ["callUserOne", "updateUser", "updateImage"]),
+    ...mapActions("users", [
+      "callUserOne",
+      "updateUser",
+      "updateImage",
+      "callUser"
+    ]),
+    ...mapActions("utils", ["callCargo", "callArea"]),
     abrirDialogReg() {
       console.log(this.usersDetalle._id.$oid);
       this.idRegitro = this.usersDetalle._id.$oid;
       this.registarCuidate = true;
-    },
-    cancelFile(index) {
-      this.uploadProgress[index] = {
-        ...this.uploadProgress[index],
-        error: true,
-        color: "orange-2"
-      };
-    },
-    updateFiles(files) {
-      this.files = files;
-      this.uploadProgress = (files || []).map(file => ({
-        error: false,
-        color: "green-2",
-        percent: 0,
-        icon:
-          file.type.indexOf("video/") === 0
-            ? "movie"
-            : file.type.indexOf("image/") === 0
-            ? "photo"
-            : file.type.indexOf("audio/") === 0
-            ? "audiotrack"
-            : "insert_drive_file"
-      }));
-    },
-
-    upload() {
-      clearTimeout(this.uploading);
-
-      const allDone = this.uploadProgress.every(
-        progress => progress.percent === 1
-      );
-
-      this.uploadProgress = this.uploadProgress.map(progress => ({
-        ...progress,
-        error: false,
-        color: "green-2",
-        percent: allDone === true ? 0 : progress.percent
-      }));
-
-      this.__updateUploadProgress();
-    },
-
-    __updateUploadProgress() {
-      let done = true;
-
-      this.uploadProgress = this.uploadProgress.map(progress => {
-        if (progress.percent === 1 || progress.error === true) {
-          return progress;
-        }
-
-        const percent = Math.min(1, progress.percent + Math.random() / 10);
-        const error = percent < 1 && Math.random() > 0.95;
-
-        if (error === false && percent < 1 && done === true) {
-          done = false;
-        }
-
-        return {
-          ...progress,
-          error,
-          color: error === true ? "red-2" : "green-2",
-          percent
-        };
-      });
-
-      this.uploading =
-        done !== true ? setTimeout(this.__updateUploadProgress, 300) : null;
     },
     Salir() {
       this.$router.push("/usuarios");
@@ -255,7 +341,8 @@ export default {
     async onSubmit() {
       let jsonUpdate = {
         ...this.usersDetalle,
-        pwd: this.pwd ? this.pwd : ""
+        pwd: this.pwd ? this.pwd : "",
+        role: this.role ? this.role : this.usersDetalle.role
       };
       // console.log(jsonUpdate);
       await this.updateUser(jsonUpdate)
@@ -347,9 +434,12 @@ export default {
     this._id = this.$route.params.id;
     // console.log(this.$route.params.id);
     await this.callUserOne(this.$route.params.id);
-    this.role = LocalStorage.getAll().role;
+    this.roleUser = LocalStorage.getAll().role;
     await this.ordenarCampos();
     this.infoUrl = process.env.Imagen_URL;
+    await this.callCargo();
+    await this.callArea();
+    await this.callUser();
   },
   beforeDestroy() {
     clearTimeout(this.uploading);

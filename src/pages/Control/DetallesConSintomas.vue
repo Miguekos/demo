@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <div>
     <q-list>
       <q-item
         @click="exportTable()"
@@ -61,23 +61,25 @@
         </q-item-section>
       </q-item>
     </q-list>
+    <FiltroFechas @click="obtenerRegistros" />
     <q-table
+      :loading="loadtable"
       hide-bottom
       hide-header
       flat
-      :data="getClientesCS"
+      :data="getClientesS"
       :columns="columns"
       row-key="created_at.$date"
       :pagination.sync="pagination"
     >
       <template v-slot:body="props">
         <q-tr :props="props" clickable @click="detalleCliente(props.row)">
-          <q-td key="nombre" v-ripple:white :props="props">
+          <q-td key="name" v-ripple:white :props="props">
             <q-item-section>
-              <q-item-label>{{ props.row.nombre }}</q-item-label>
+              <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
                 <b class="text-green-5">Cel:</b>
-                {{ props.row.telf }}
+                {{ props.row.telefono }}
               </q-item-label>
             </q-item-section>
           </q-td>
@@ -89,15 +91,15 @@
     </q-table>
     <!-- <q-list separator>
       <q-item
-        v-for="(item, index) in getClientesCS"
+        v-for="(item, index) in getClientesS"
         :key="index"
         clickable
         v-ripple
       >
         <q-item-section>
-          <q-item-label>{{ item.nombre }}</q-item-label>
+          <q-item-label>{{ item.name }}</q-item-label>
           <q-item-label caption>
-            <b class="text-red-5">Cel:</b> {{ item.telf }}</q-item-label
+            <b class="text-red-5">Cel:</b> {{ item.telefono }}</q-item-label
           >
         </q-item-section>
         <q-item-section side right>
@@ -105,7 +107,7 @@
         </q-item-section>
       </q-item>
     </q-list>-->
-  </q-page>
+  </div>
 </template>
 
 <script>
@@ -113,7 +115,26 @@ import { Fechas } from "src/directives/formatFecha";
 import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { date, exportFile, LocalStorage } from "quasar";
+let timeStamp = Date.now();
+let formattedString = date.formatDate(timeStamp, "DD/MM/YYYY");
+var normalize = (function() {
+  var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
+    to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+    mapping = {};
 
+  for (var i = 0, j = from.length; i < j; i++)
+    mapping[from.charAt(i)] = to.charAt(i);
+
+  return function(str) {
+    var ret = [];
+    for (var i = 0, j = str.length; i < j; i++) {
+      var c = str.charAt(i);
+      if (mapping.hasOwnProperty(str.charAt(i))) ret.push(mapping[c]);
+      else ret.push(c);
+    }
+    return ret.join("");
+  };
+})();
 function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0 ? formatFn(val) : val;
 
@@ -128,7 +149,7 @@ function wrapCsvValue(val, formatFn) {
   // .split('\n').join('\\n')
   // .split('\r').join('\\r')
 
-  return `"${formatted}"`;
+  return `"${normalize(formatted)}"`;
 }
 export default {
   preFetch({ store, redirect }) {
@@ -141,14 +162,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("client", ["getClientesCS"])
+    ...mapGetters("client", ["getClientesS"])
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
-    Search: () => import("./SearchCS")
+    Search: () => import("./SearchCS"),
+    FiltroFechas: () => import("components/FiltroFechas")
   },
   data() {
     return {
+      loadtable: false,
+      fi: formattedString,
+      ff: formattedString,
       pagination: {
         sortBy: "created_at.$date",
         descending: false,
@@ -159,27 +184,27 @@ export default {
       columnsexport: [
         {
           name: "notif1",
-          label: "¿Sensación de alza térmica o fiebre?",
+          label: "Sensación de alza térmica o fiebre?",
           field: row => (row.notif1 ? "Si" : "No")
         },
         {
           name: "notif2",
-          label: "¿Tos, estornudos o dificultad para respirar?",
+          label: "Tos, estornudos o dificultad para respirar?",
           field: row => (row.notif2 ? "Si" : "No")
         },
         {
           name: "notif3",
-          label: "¿Expectoración o flema amarilla o verdosa?",
+          label: "Expectoración o flema amarilla o verdosa?",
           field: row => (row.notif3 ? "Si" : "No")
         },
         {
           name: "notif4",
-          label: "¿Contacto con persona(s) con un caso confirmado de COVID-19?",
+          label: "Contacto con persona(s) con un caso confirmado de COVID-19?",
           field: row => (row.notif4 ? "Si" : "No")
         },
         {
           name: "notif5",
-          label: "¿Estás tomando alguna medicación?",
+          label: "Estás tomando alguna medicación?",
           field: row => (row.notif5 ? "Si" : "No")
         },
         {
@@ -190,7 +215,7 @@ export default {
         {
           name: "nombre",
           label: "Nombre",
-          field: row => row.nombre
+          field: row => row.name
         },
         {
           name: "dni",
@@ -198,14 +223,9 @@ export default {
           field: "dni"
         },
         {
-          name: "telf",
+          name: "telefono",
           label: "Celular",
-          field: "telf"
-        },
-        {
-          name: "area",
-          label: "Area",
-          field: "area"
+          field: "telefono"
         },
         {
           name: "temp",
@@ -213,9 +233,37 @@ export default {
           field: "temp"
         },
         {
-          name: "correo",
+          name: "email",
           label: "Correo",
-          field: "correo"
+          field: "email"
+        },
+        {
+          name: "sexo",
+          label: "Sexo",
+          field: "sexo"
+        },
+        {
+          name: "area",
+          label: "Area",
+          field: "area"
+        },
+        {
+          name: "edad",
+          label: "Edad",
+          field: "edad"
+        },
+        {
+          name: "departamento",
+          label: "Departamento",
+          field: "departamento"
+        },
+        {
+          name: "sueldo",
+          label: "Sueldo",
+          field: row =>
+            this.$q.localStorage.getAll().idUser == 1
+              ? row.sueldo
+              : "No permitido"
         },
         {
           name: "created_at.$date",
@@ -226,11 +274,11 @@ export default {
       ],
       columns: [
         {
-          name: "nombre",
+          name: "name",
           required: true,
           label: "Nombre",
           align: "left",
-          field: row => row.nombre,
+          field: row => row.name,
           format: val => `${val}`,
           sortable: true
         },
@@ -248,9 +296,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions("client", ["callClienteCS"]),
+    ...mapActions("client", ["callClienteS"]),
     crearDataExport() {
-      const arraysJson = this.getClientesCS[0];
+      const arraysJson = this.callClienteS[0];
       let keys = [];
       let values = [];
       keys.push(Object.keys(arraysJson));
@@ -274,7 +322,7 @@ export default {
       // naive encoding to csv format
       const content = [this.columnsexport.map(col => wrapCsvValue(col.label))]
         .concat(
-          this.getClientesCS.map(row =>
+          this.getClientesS.map(row =>
             this.columnsexport
               .map(col =>
                 wrapCsvValue(
@@ -312,9 +360,18 @@ export default {
       // console.log("Formateando Fecha");
       return Fechas.larga(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
+    },
+    obtenerRegistros(val) {
+      console.log("val", val);
+      this.callClienteS({
+        es: "01",
+        fi: val.fi,
+        ff: val.ff
+      });
     }
   },
   async created() {
+    this.loadtable = true;
     // this.$q.loading.show();
     // console.log("created - Cliente");
     // this.$q.loading.show({
@@ -323,13 +380,12 @@ export default {
     //   spinnerSize: 100,
     //   backgroundColor: "grey-4"
     // });
-    await this.callClienteCS();
-    // await this.crearDataExport();
-    // this.$store.commit("general/setAtras", false);
-    // this.$store.commit("general/setSearch", true);
-    // this.$q.addressbarColor.set("#0056a1");
-    // this.$q.loading.hide();
-    // this.$q.loading.hide();
+    await this.callClienteS({
+      es: "01",
+      fi: this.$store.state.utils.fi,
+      ff: this.$store.state.utils.ff
+    });
+    this.loadtable = false;
   }
 };
 </script>

@@ -1,61 +1,123 @@
 <template>
   <div class="q-pa-md">
-    <q-list>
-      <q-item align="center">
+    <q-list v-if="$q.screen.lt.md">
+      <q-item>
         <q-item-section>
-          <q-uploader
-            label="Sube el certificado"
-            color="green-5"
-            :factory="factoryFn"
-          />
+          <q-input v-model="comentario" label="Comentario"></q-input>
         </q-item-section>
       </q-item>
-      <q-item align="center">
-        <q-item-section v-if="certificadoCheck">
-          <embed
-            :src="`https://api.apps.com.pe/fileserver/uploads/${certificado}`"
-            type="application/pdf"
-            width="100%"
-            height="600px"
-          />
-
-          <!--          <q-uploader :factory="factoryFn" class="full-width"/>-->
+      <q-item>
+        <q-item-section>
+          <UploadFile />
+        </q-item-section>
+        <q-item-section side>
+          <q-btn
+            :loading="fileload"
+            color="green"
+            rounded
+            @click="uploadDoc()"
+            label="guardar"
+          ></q-btn>
         </q-item-section>
       </q-item>
     </q-list>
-    <div></div>
+    <q-list v-else>
+      <q-item>
+        <q-item-section>
+          <q-input v-model="comentario" label="Comentario"></q-input>
+        </q-item-section>
+        <q-item-section>
+          <UploadFile />
+        </q-item-section>
+        <q-item-section side>
+          <q-btn
+            size="sm"
+            :loading="fileload"
+            color="green"
+            rounded
+            @click="uploadDoc()"
+            label="guardar"
+          ></q-btn>
+        </q-item-section>
+      </q-item>
+    </q-list>
+    <q-list>
+      <q-item>
+        <q-item-section>
+          <TablaDocs v-if="getDocs" :info="getDocs" />
+        </q-item-section>
+      </q-item>
+    </q-list>
   </div>
 </template>
 
 <script>
 import { axiosInstanceImagen } from "boot/axios";
 import { LocalStorage } from "quasar";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
+
 export default {
   name: "Certificado",
+  components: {
+    UploadFile: () => import("components/uploadFile"),
+    TablaDocs: () => import("./TablaDocs")
+  },
   computed: {
-    ...mapGetters("users", ["getUserOne"])
+    ...mapGetters("users", ["getUserOne"]),
+    ...mapGetters("doc", ["getDocs", "getFile"]),
+    ...mapState("doc", ["fileload"])
   },
   data() {
     return {
+      pagination: {
+        sortBy: "desc",
+        descending: false,
+        page: 1,
+        rowsPerPage: 0
+        // rowsNumber: xx if getting data from a server
+      },
+      getDocsVisible: false,
+      infoUser: "",
+      comentario: "",
       certificadoCheck: false,
       certificado: null,
       userData: null,
-      idUser: null
+      idUser: null,
+      columns: [
+        {
+          name: "documento",
+          required: true,
+          label: "Nombre del documento",
+          align: "left",
+          field: row => row.documento,
+          format: val => `${val}`,
+          sortable: true
+        },
+        {
+          name: "calories",
+          align: "center",
+          label: "Nombre del archivo",
+          field: row => row.comentario,
+          format: val => `${val}`,
+          sortable: true
+        },
+        { name: "fat", label: "Archivo", field: "fat", sortable: true },
+        { name: "carbs", label: "Acciones", field: "carbs" }
+      ]
     };
   },
   methods: {
-    ...mapActions("users", ["callUserOne", "updateCertificado"]),
-    async updateFoto(arg) {
+    ...mapActions("doc", ["addDoc", "callDocs", "addFiles"]),
+    async uploadDoc() {
       // console.log("NOmbre de la imagen", arg);
-      this.certificado = arg;
-      let idUser = LocalStorage.getAll().idUser;
+      // let idUser = LocalStorage.getAll().idUser;
       let jsonUpdate = {
-        certificado: arg,
-        _id: this.idUser
+        comentario: this.comentario,
+        docs: this.getFile,
+        ...this.infoUser
       };
       // console.log(jsonUpdate);
-      this.updateCertificado(jsonUpdate)
+      this.addDoc(jsonUpdate)
         .then(async resp => {
           // console.log("antes de actualizar");
           // this.alert = false;
@@ -68,7 +130,11 @@ export default {
             textColor: "green-5",
             position: "top"
           });
-          await this.callUserOne(this.idUser);
+          await this.callDocs(this.idUser);
+          this.$store.commit("doc/setFile", "");
+          this.comentario = "";
+          this.addFiles([]);
+          this.$store.commit("doc/setFileload", false);
           // this.callUserOne(this.$route.params.id);
           // await this.ordenarCampos();
           // if (idUser == this.$route.params.id) {
@@ -88,49 +154,53 @@ export default {
             color: "red-5"
           });
         });
-    },
-    factoryFn(file) {
-      // console.log(file);
-      let total;
-      var formData = new FormData();
-      // var imagefile = document.querySelector("#file");
-      formData.append("file", file[0]);
-      // console.log(formData);
-      axiosInstanceImagen
-        .post("/fileupload", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        })
-        .then(resp => {
-          // console.log(resp.data);
-          total = resp.data;
-          this.updateFoto(total);
-        })
-        .catch(err => {
-          // console.log(err);
-          total = err;
-        });
-      return total;
     }
   },
+
   async created() {
+    // console.log(formattedString);
     this.$q.loading.show();
+    const infoUser = await LocalStorage.getAll().UserDetalle;
+    this.infoUser = infoUser;
     this.idUser = LocalStorage.getAll().idUser;
-    console.log(this.idUser);
-    await this.callUserOne(this.idUser);
-    this.userData = await this.getUserOne;
+    await this.callDocs(this.idUser);
+    // console.log(infoUser.name);
+    // this.nombre = infoUser.name;
+    // this.dni = infoUser.dni;
+    // this.telf = infoUser.telefono;
+    // this.area = infoUser.area;
+    // this.correo = infoUser.email;
+    // this.url = infoUser.url;
+    // this.profile = infoUser.profile;
+    // console.log("infoUser", infoUser);
+    const role = LocalStorage.getAll().role;
+    // console.log(role);
+    // if (role == 1) {
+    //   this.datosPersonales = true;
+    // } else {
+    //   this.datosPersonales = false;
+    if (this.getDocs) {
+    } else {
+    }
+    // }
+    this.$q.loading.hide();
+
+    // this.$q.loading.show();
+    // this.idUser = LocalStorage.getAll().idUser;
+    // console.log(this.idUser);
+    // await this.callUserOne(this.idUser);
+    // this.userData = await this.getUserOne;
     // console.log("this.userData");
     // console.log(this.userData.certificado);
     // console.log(this.userData);
-    this.certificado = (await this.userData.certificado)
-      ? this.userData.certificado
-      : "BrochueCuidAPPtebyPandoraTI.pdf";
-    await setTimeout(async () => {
-      console.log("luego de 2 segundos");
-      this.certificadoCheck = true;
-      this.$q.loading.hide();
-    }, 2000);
+    // this.certificado = (await this.userData.certificado)
+    //   ? this.userData.certificado
+    //   : "BrochueCuidAPPtebyPandoraTI.pdf";
+    // await setTimeout(async () => {
+    //   console.log("luego de 2 segundos");
+    //   this.certificadoCheck = true;
+    //   this.$q.loading.hide();
+    // }, 2000);
   }
 };
 </script>

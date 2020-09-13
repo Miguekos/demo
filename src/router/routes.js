@@ -42,8 +42,16 @@ const routes = [
         component: () => import("pages/Asistencia/TablaAsist.vue")
       },
       {
+        path: "/asistenciaUser",
+        component: () => import("pages/Asistencia/TablaAsistUser.vue")
+      },
+      {
         path: "/profile/:id",
         component: () => import("pages/Users/Profile.vue")
+      },
+      {
+        path: "/comunicados",
+        component: () => import("pages/Comunicados/Index")
       },
       {
         path: "/dashboard",
@@ -53,7 +61,9 @@ const routes = [
         path: "/certificado",
         component: () => import("pages/Documentos/Index.vue")
       },
-      { path: "/grafica", component: () => import("components/ApexCharts") }
+      { path: "/grafica", component: () => import("components/ApexCharts") },
+      { path: "/cargo", component: () => import("pages/Mantenimiento/Index") },
+      { path: "/notificaciones", component: () => import("pages/Notificaciones/Index") }
     ]
   },
   {

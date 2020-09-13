@@ -11,5 +11,6 @@
   },
   "geolocation": {
     "installVueGoogleMaps": true
-  }
+  },
+  "@quasar/qpdfviewer": {}
 }

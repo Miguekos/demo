@@ -2,9 +2,16 @@
   <div class="q-pa-xs">
     <q-list>
       <q-item bordered>
-        <q-item-label class="text-left text-h6 q-pa-xs text-bold text-black"
-          >Reportes</q-item-label
-        >
+        <q-item-section>
+          <q-item-label class="text-left text-h6 q-pa-xs text-bold text-black"
+            >Sintomatologia COVID (Acumulado)</q-item-label
+          >
+        </q-item-section>
+        <q-item-section>
+          <q-item-label class="text-left text-h6 q-pa-xs text-bold text-black"
+            >Pacientes COVID (Acumulado)</q-item-label
+          >
+        </q-item-section>
       </q-item>
       <q-separator />
       <q-item class="justify-around" style="height: 150px;">
@@ -42,6 +49,20 @@
             >{{ getClienteReport.clientesCS }} %</q-circular-progress
           >
         </q-item-section>
+        <q-separator vertical />
+        <q-item-section style="align-items: center;" class="text-grey" side>
+          <q-item-label class="q-pb-md">Pacientes</q-item-label>
+          <q-circular-progress
+            show-value
+            :value="parseInt(getClienteReport.seguimiento)"
+            size="80px"
+            :thickness="0.13"
+            color="green"
+            track-color="grey-3"
+            class="q-ma-xs"
+            >{{ getClienteReport.seguimiento }}</q-circular-progress
+          >
+        </q-item-section>
         <q-item-section
           style="align-items: center; font-size: 10px; text-align: center"
           class="text-grey"
@@ -49,29 +70,59 @@
         >
           <q-item-label class="q-pb-md">
             Personal
-            <br />con síntomas
+            <br />recuperado
           </q-item-label>
           <q-circular-progress
-            @click="URL('/detallecs')"
+            @click="URL('/detalles')"
             show-value
-            :value="getClienteReport.clientesS"
+            :value="getClienteReport.seguimientoCAlta"
             size="80px"
             :thickness="0.13"
-            color="red"
+            color="indigo"
             track-color="grey-3"
             class="q-ma-xs"
-            >{{ getClienteReport.clientesS }} %</q-circular-progress
+            >{{ getClienteReport.seguimientoCAlta }} %</q-circular-progress
           >
         </q-item-section>
+        <!--        <q-item-section-->
+        <!--          style="align-items: center; font-size: 10px; text-align: center"-->
+        <!--          class="text-grey"-->
+        <!--          side-->
+        <!--        >-->
+        <!--          <q-item-label class="q-pb-md">-->
+        <!--            Personal-->
+        <!--            <br />con síntomas-->
+        <!--          </q-item-label>-->
+        <!--          <q-circular-progress-->
+        <!--            @click="URL('/detallecs')"-->
+        <!--            show-value-->
+        <!--            :value="getClienteReport.clientesS"-->
+        <!--            size="80px"-->
+        <!--            :thickness="0.13"-->
+        <!--            color="red"-->
+        <!--            track-color="grey-3"-->
+        <!--            class="q-ma-xs"-->
+        <!--            >{{ getClienteReport.clientesS }} %</q-circular-progress-->
+        <!--          >-->
+        <!--        </q-item-section>-->
       </q-item>
     </q-list>
-
+    <!--    <q-separator />-->
     <q-item>
-      <q-item-section>Reportes por estados</q-item-section>
+      <q-item-section>Reportes por estados (Última semana)</q-item-section>
+      <q-item-section>Reportes por estados (Última semana)</q-item-section>
     </q-item>
     <q-separator />
     <q-list style="height: 280px;">
-      <Graficas :info="getClienteReport" />
+      <q-item>
+        <q-item-section>
+          <Graficas :info="getClienteReport" />
+        </q-item-section>
+        <q-separator vertical />
+        <q-item-section>
+          <GraficasSegui :info="getClienteReport" />
+        </q-item-section>
+      </q-item>
     </q-list>
 
     <q-list separator>
@@ -91,9 +142,9 @@
       >
         <template v-slot:body="props">
           <q-tr :props="props" clickable>
-            <q-td key="nombre" v-ripple:white :props="props">
+            <q-td key="name" v-ripple:white :props="props">
               <q-item-section>
-                <q-item-label>{{ props.row.nombre }}</q-item-label>
+                <q-item-label>{{ props.row.name }}</q-item-label>
                 <q-item-label caption>
                   <b class="text-grey-5">Cantidad:</b>
                   {{ props.row.count }}
@@ -139,11 +190,11 @@ export default {
       },
       columns: [
         {
-          name: "nombre",
+          name: "name",
           required: true,
           label: "Nombre",
           align: "left",
-          field: row => row.nombre,
+          field: row => row.name,
           format: val => `${val}`,
           sortable: true
         },
@@ -184,7 +235,7 @@ export default {
     },
     formatDate(arg) {
       // console.log("Formateando Fecha");
-      return Fechas.larga(arg);
+      return Fechas.Corta(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
     },
     onLeft() {},
@@ -200,7 +251,8 @@ export default {
     }
   },
   components: {
-    Graficas: () => import("components/ApexCharts")
+    Graficas: () => import("components/ApexCharts"),
+    GraficasSegui: () => import("components/ApexChartsSegui")
     // Graficas: () => import("components/Charts")
   },
   beforeDestroy() {

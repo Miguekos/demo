@@ -44,21 +44,43 @@
       <!--        </q-item>-->
       <q-item>
         <q-item-section>
-          <!-- <q-input
-          v-model="search"
-          dense
-          standout="bg-amber-4 text-white"
-          type="search"
-          placeholder="Buscar"
-        >
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>-->
-          <Search />
+          <!--          <q-input-->
+          <!--            v-model="search"-->
+          <!--            dense-->
+          <!--            standout="bg-amber-4 text-white"-->
+          <!--            type="search"-->
+          <!--            placeholder="Buscar"-->
+          <!--          >-->
+          <!--            <template v-slot:append>-->
+          <!--              <q-icon name="search" />-->
+          <!--            </template>-->
+          <!--          </q-input>-->
+          <q-input
+            dense
+            standout="bg-indigo-4 text-white"
+            type="search"
+            placeholder="Buscar por name"
+            v-model="filter"
+          >
+            <!--      <template v-slot:before>-->
+            <!--        <q-icon name="search" />-->
+            <!--      </template>-->
+            <template v-slot:append>
+              <q-icon
+                v-if="filter !== ''"
+                name="close"
+                @click="filter = ''"
+                class="cursor-pointer"
+              />
+              <q-icon name="search" />
+            </template>
+          </q-input>
+          <!--          <Search />-->
         </q-item-section>
       </q-item>
     </q-list>
+
+    <FiltroFechas @click="obtenerRegistros" />
 
     <!--       {{ getSeguimientos }}-->
     <q-table
@@ -69,6 +91,7 @@
       :columns="columnsOne"
       row-key="created_at.$date"
       :pagination.sync="pagination"
+      :filter="filter"
     >
       <!-- <template v-slot:top-right>
       <q-btn
@@ -125,6 +148,24 @@ import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { date, exportFile, LocalStorage } from "quasar";
 import { myMixin } from "../../mixins/mixin.js";
+var normalize = (function() {
+  var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
+    to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+    mapping = {};
+
+  for (var i = 0, j = from.length; i < j; i++)
+    mapping[from.charAt(i)] = to.charAt(i);
+
+  return function(str) {
+    var ret = [];
+    for (var i = 0, j = str.length; i < j; i++) {
+      var c = str.charAt(i);
+      if (mapping.hasOwnProperty(str.charAt(i))) ret.push(mapping[c]);
+      else ret.push(c);
+    }
+    return ret.join("");
+  };
+})();
 function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0 ? formatFn(val) : val;
 
@@ -139,7 +180,7 @@ function wrapCsvValue(val, formatFn) {
   // .split('\n').join('\\n')
   // .split('\r').join('\\r')
 
-  return `"${formatted}"`;
+  return `"${normalize(formatted)}"`;
 }
 export default {
   name: "DetallesCuidate",
@@ -149,10 +190,12 @@ export default {
     // ...mapState("general", ["formatearFecha"])
   },
   components: {
-    Search: () => import("./SearchCU")
+    // Search: () => import("./SearchCU")
+    FiltroFechas: () => import("components/FiltroFechas")
   },
   data() {
     return {
+      filter: "",
       tab: "mails",
       pagination: {
         sortBy: "created_at.$date",
@@ -191,6 +234,34 @@ export default {
           name: "email",
           label: "Correo",
           field: "email"
+        },
+        {
+          name: "sexo",
+          label: "Sexo",
+          field: "sexo"
+        },
+        {
+          name: "area",
+          label: "Area",
+          field: "area"
+        },
+        {
+          name: "edad",
+          label: "Edad",
+          field: "edad"
+        },
+        {
+          name: "departamento",
+          label: "Departamento",
+          field: "departamento"
+        },
+        {
+          name: "sueldo",
+          label: "Sueldo",
+          field: row =>
+            this.$q.localStorage.getAll().idUser == 1
+              ? row.sueldo
+              : "No permitido"
         },
         {
           name: "observa",
@@ -322,14 +393,22 @@ export default {
       // console.log("Formateando Fecha");
       return Fechas.Custom(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
+    },
+    async obtenerRegistros(val) {
+      console.log("val", val);
+      await this.callRegistroSegui({
+        id: "all",
+        fi: val.fi,
+        ff: val.ff
+      });
     }
   },
   async created() {
-    // this.$q.loading.show();
-    // const userData = LocalStorage.getAll().UserDetalle;
-    // console.log(userData.id.$oid);
-    await this.callRegistroSegui("all");
-    // this.$q.loading.hide();
+    await this.callRegistroSegui({
+      id: "all",
+      fi: this.$store.state.utils.fi,
+      ff: this.$store.state.utils.ff
+    });
   }
 };
 </script>

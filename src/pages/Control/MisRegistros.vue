@@ -4,15 +4,27 @@
       <q-tabs v-model="tab" dense align="justify">
         <q-tab class="text-amber-5" name="mails" label="Mis evaluaciones" />
         <q-tab
-          v-if="role === 1"
+          v-if="role === 1 || role === 3"
           class="text-green-5"
           name="alarms"
           label="Sanos"
         />
         <q-tab
-          v-if="role === 1"
+          v-if="role === 4"
+          class="text-green-5"
+          name="sanosUser"
+          label="Sanos"
+        />
+        <q-tab
+          v-if="role === 1 || role === 3"
           class="text-red-5"
           name="movies"
+          label="Con sintomas"
+        />
+        <q-tab
+          v-if="role === 4"
+          class="text-red-5"
+          name="conSintomasUser"
           label="Con sintomas"
         />
         <q-tab
@@ -21,11 +33,30 @@
           name="otro"
           label="En cuidate"
         />
+
+        <q-tab
+          v-if="role === 4"
+          class="text-indigo-5"
+          name="otroUser"
+          label="En cuidate"
+        />
         <q-tab
           v-if="role === 2"
           class="text-indigo-5"
           name="otro_user"
           label="Mi cuidado"
+        />
+        <q-tab
+          v-if="role === 3"
+          class="text-red-5"
+          name="seguimiento"
+          label="Seguimiento"
+        />
+        <q-tab
+          v-if="role === 3"
+          class="text-green-5"
+          name="dealta"
+          label="De Alta"
         />
       </q-tabs>
 
@@ -86,21 +117,23 @@
               </q-item>
               <q-item>
                 <q-item-section>
-                  <!-- <q-input
-                  v-model="search"
-                  dense
-                  standout="bg-amber-4 text-white"
-                  type="search"
-                  placeholder="Buscar"
-                >
-                  <template v-slot:append>
-                    <q-icon name="search" />
-                  </template>
-                </q-input>-->
-                  <Search />
+                  <q-input
+                    v-model="filter"
+                    dense
+                    standout="bg-amber-4 text-white"
+                    type="search"
+                    placeholder="Buscar"
+                  >
+                    <template v-slot:append>
+                      <q-icon name="search" />
+                    </template>
+                  </q-input>
+                  <!--                  <Search />-->
                 </q-item-section>
               </q-item>
             </q-list>
+
+            <FiltroFechas @click="obtenerRegistros" />
 
             <!--      {{ getClienteOne }}-->
             <q-table
@@ -111,6 +144,7 @@
               :columns="columns"
               row-key="created_at.$date"
               :pagination.sync="pagination"
+              :filter="filter"
             >
               <!-- <template v-slot:top-right>
               <q-btn
@@ -123,13 +157,13 @@
             </template>-->
               <template v-slot:body="props">
                 <q-tr :props="props">
-                  <q-td key="nombre" :props="props">
+                  <q-td key="name" :props="props">
                     <q-item-section
                       v-ripple:white
                       clickable
                       @click="detalleCliente(props.row)"
                     >
-                      <q-item-label>{{ props.row.nombre }}</q-item-label>
+                      <q-item-label>{{ props.row.name }}</q-item-label>
                       <q-item-label caption>
                         <b class="text-red-5">temp:</b>
                         {{ props.row.temp }}°
@@ -160,6 +194,14 @@
           </div>
         </q-tab-panel>
 
+        <q-tab-panel name="sanosUser">
+          <DetallesSanosUser />
+        </q-tab-panel>
+
+        <q-tab-panel name="conSintomasUser">
+          <DetallesConSintomasUser />
+        </q-tab-panel>
+
         <q-tab-panel name="alarms">
           <DetallesSanos />
         </q-tab-panel>
@@ -172,8 +214,20 @@
           <DetallesCuidate />
         </q-tab-panel>
 
+        <q-tab-panel v-if="role === 4" name="otroUser">
+          <DetallesCuidateUser />
+        </q-tab-panel>
+
         <q-tab-panel v-if="role === 2" name="otro_user">
           <DetallesCuidateOne />
+        </q-tab-panel>
+
+        <q-tab-panel name="seguimiento">
+          <Seguimiento />
+        </q-tab-panel>
+
+        <q-tab-panel name="dealta">
+          <DeAlta />
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
@@ -186,21 +240,46 @@ import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { date, exportFile, LocalStorage } from "quasar";
 import { myMixin } from "../../mixins/mixin.js";
+var normalize = (function() {
+  var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
+    to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+    mapping = {};
+
+  for (var i = 0, j = from.length; i < j; i++)
+    mapping[from.charAt(i)] = to.charAt(i);
+
+  return function(str) {
+    var ret = [];
+    for (var i = 0, j = str.length; i < j; i++) {
+      var c = str.charAt(i);
+      if (mapping.hasOwnProperty(str.charAt(i))) ret.push(mapping[c]);
+      else ret.push(c);
+    }
+    return ret.join("");
+  };
+})();
 function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0 ? formatFn(val) : val;
 
   formatted =
     formatted === void 0 || formatted === null ? "" : String(formatted);
 
-  formatted = formatted.split('"').join('""');
-  /**
-   * Excel accepts \n and \r in strings, but some other CSV parsers do not
-   * Uncomment the next two lines to escape new lines
-   */
-  // .split('\n').join('\\n')
-  // .split('\r').join('\\r')
+  formatted = formatted
+    .split('"')
+    .join('""')
+    /**
+     * Excel accepts \n and \r in strings, but some other CSV parsers do not
+     * Uncomment the next two lines to escape new lines
+     */
 
-  return `"${formatted}"`;
+    .split("\n")
+    .join("\\n")
+    .split("\r")
+    .join("\\r");
+
+  // console.log(normalize(formatted));
+
+  return `"${normalize(formatted)}"`;
 }
 
 export default {
@@ -223,11 +302,18 @@ export default {
     Search: () => import("./SearchMR"),
     DetallesConSintomas: () => import("./DetallesConSintomas"),
     DetallesSanos: () => import("./DetallesSanos"),
+    DetallesSanosUser: () => import("./DetallesSanosUser"),
+    DetallesConSintomasUser: () => import("./DetallesConSintomasUser"),
     DetallesCuidate: () => import("./DetallesCuidate"),
-    DetallesCuidateOne: () => import("./DetallesCuidateOne")
+    DetallesCuidateUser: () => import("./DetallesCuidateUser"),
+    DetallesCuidateOne: () => import("./DetallesCuidateOne"),
+    Seguimiento: () => import("../Seguimiento/Seguimiento"),
+    DeAlta: () => import("../Seguimiento/DeAlta"),
+    FiltroFechas: () => import("components/FiltroFechas")
   },
   data() {
     return {
+      filter: "",
       role: null,
       tab: "mails",
       pagination: {
@@ -334,6 +420,8 @@ export default {
         )
         .join("\r\n");
 
+      // console.log(content);
+
       const status = exportFile(
         "table-misevaluaciones.csv",
         content,
@@ -370,6 +458,14 @@ export default {
       // console.log("Formateando Fecha");
       return Fechas.Custom(arg);
       // return date.formatDate(arg, "DD-MM-YYYY");
+    },
+    async obtenerRegistros(val) {
+      console.log("val", val);
+      await this.callClienteOne({
+        dni: this.$q.localStorage.getAll().UserDetalle.dni,
+        fi: val.fi,
+        ff: val.ff
+      });
     }
   },
   async created() {
@@ -377,7 +473,11 @@ export default {
     const userData = LocalStorage.getAll().UserDetalle;
     this.role = LocalStorage.getAll().role;
     // console.log(userData.id.$oid);
-    await this.callClienteOne(userData.dni);
+    await this.callClienteOne({
+      dni: this.$q.localStorage.getAll().UserDetalle.dni,
+      fi: this.$store.state.utils.fi,
+      ff: this.$store.state.utils.ff
+    });
     // await this.callOneRegistroSegui(userData.id.$oid);
     this.$q.loading.hide();
   }

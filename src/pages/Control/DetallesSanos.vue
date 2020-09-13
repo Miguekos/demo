@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <div>
     <q-list>
       <q-item
         @click="exportTable()"
@@ -58,6 +58,48 @@
         </q-item-section>
       </q-item>
     </q-list>
+    <q-list>
+      <q-item>
+        <q-item-section>
+          <q-input dense filled v-model="fi">
+            <template v-slot:append>
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy
+                  ref="qDateProxyIni"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
+                  <q-date
+                    mask="DD/MM/YYYY"
+                    v-model="fi"
+                    @input="() => cargarIniDate()"
+                  />
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+        </q-item-section>
+        <q-item-section>
+          <q-input dense filled v-model="ff">
+            <template v-slot:append>
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy
+                  ref="qDateProxyFin"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
+                  <q-date
+                    mask="DD/MM/YYYY"
+                    v-model="ff"
+                    @input="() => cargarFinDate()"
+                  />
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+        </q-item-section>
+      </q-item>
+    </q-list>
 
     <!--     {{ getClientesS }}-->
     <!--    {{ columnsexport }}-->
@@ -81,12 +123,12 @@
       </template>-->
       <template v-slot:body="props">
         <q-tr :props="props" clickable @click="detalleCliente(props.row)">
-          <q-td key="nombre" v-ripple:white :props="props">
+          <q-td key="name" v-ripple:white :props="props">
             <q-item-section>
-              <q-item-label>{{ props.row.nombre }}</q-item-label>
+              <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
                 <b class="text-green-5">Cel:</b>
-                {{ props.row.telf }}
+                {{ props.row.telefono }}
               </q-item-label>
             </q-item-section>
           </q-td>
@@ -105,9 +147,9 @@
         v-ripple
       >
         <q-item-section>
-          <q-item-label>{{ item.nombre }}</q-item-label>
+          <q-item-label>{{ item.name }}</q-item-label>
           <q-item-label caption>
-            <b class="text-green-5">Cel:</b> {{ item.telf }}</q-item-label
+            <b class="text-green-5">Cel:</b> {{ item.telefono }}</q-item-label
           >
         </q-item-section>
         <q-item-section side right>
@@ -115,7 +157,7 @@
         </q-item-section>
       </q-item>
     </q-list>-->
-  </q-page>
+  </div>
 </template>
 
 <script>
@@ -123,7 +165,26 @@ import { Fechas } from "src/directives/formatFecha";
 import { QSpinnerGears } from "quasar";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { date, exportFile, LocalStorage } from "quasar";
+let timeStamp = Date.now();
+let formattedString = date.formatDate(timeStamp, "DD/MM/YYYY");
+var normalize = (function() {
+  var from = "ÂÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
+    to = "AAAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+    mapping = {};
 
+  for (var i = 0, j = from.length; i < j; i++)
+    mapping[from.charAt(i)] = to.charAt(i);
+
+  return function(str) {
+    var ret = [];
+    for (var i = 0, j = str.length; i < j; i++) {
+      var c = str.charAt(i);
+      if (mapping.hasOwnProperty(str.charAt(i))) ret.push(mapping[c]);
+      else ret.push(c);
+    }
+    return ret.join("");
+  };
+})();
 function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0 ? formatFn(val) : val;
 
@@ -138,7 +199,7 @@ function wrapCsvValue(val, formatFn) {
   // .split('\n').join('\\n')
   // .split('\r').join('\\r')
 
-  return `"${formatted}"`;
+  return `"${normalize(formatted)}"`;
 }
 
 export default {
@@ -160,6 +221,8 @@ export default {
   },
   data() {
     return {
+      fi: formattedString,
+      ff: formattedString,
       pagination: {
         sortBy: "created_at.$date",
         descending: false,
@@ -170,27 +233,27 @@ export default {
       columnsexport: [
         {
           name: "notif1",
-          label: "¿Sensación de alza térmica o fiebre?",
+          label: "Sensación de alza térmica o fiebre?",
           field: row => (row.notif1 ? "Si" : "No")
         },
         {
           name: "notif2",
-          label: "¿Tos, estornudos o dificultad para respirar?",
+          label: "Tos, estornudos o dificultad para respirar?",
           field: row => (row.notif2 ? "Si" : "No")
         },
         {
           name: "notif3",
-          label: "¿Expectoración o flema amarilla o verdosa?",
+          label: "Expectoración o flema amarilla o verdosa?",
           field: row => (row.notif3 ? "Si" : "No")
         },
         {
           name: "notif4",
-          label: "¿Contacto con persona(s) con un caso confirmado de COVID-19?",
+          label: "Contacto con persona(s) con un caso confirmado de COVID-19?",
           field: row => (row.notif4 ? "Si" : "No")
         },
         {
           name: "notif5",
-          label: "¿Estás tomando alguna medicación?",
+          label: "Estás tomando alguna medicación?",
           field: row => (row.notif5 ? "Si" : "No")
         },
         {
@@ -199,9 +262,9 @@ export default {
           field: row => (row.estados === "00" ? "Sano" : "Con Sintomas")
         },
         {
-          name: "nombre",
+          name: "name",
           label: "Nombre",
-          field: row => row.nombre
+          field: row => row.name
         },
         {
           name: "dni",
@@ -209,9 +272,9 @@ export default {
           field: "dni"
         },
         {
-          name: "telf",
+          name: "telefono",
           label: "Celular",
-          field: "telf"
+          field: "telefono"
         },
         {
           name: "area",
@@ -224,9 +287,37 @@ export default {
           field: "temp"
         },
         {
-          name: "correo",
+          name: "email",
           label: "Correo",
-          field: "correo"
+          field: "email"
+        },
+        {
+          name: "sexo",
+          label: "Sexo",
+          field: "sexo"
+        },
+        {
+          name: "area",
+          label: "Area",
+          field: "area"
+        },
+        {
+          name: "edad",
+          label: "Edad",
+          field: "edad"
+        },
+        {
+          name: "departamento",
+          label: "Departamento",
+          field: "departamento"
+        },
+        {
+          name: "sueldo",
+          label: "Sueldo",
+          field: row =>
+            this.$q.localStorage.getAll().idUser == 1
+              ? row.sueldo
+              : "No permitido"
         },
         {
           name: "created_at.$date",
@@ -237,11 +328,11 @@ export default {
       ],
       columns: [
         {
-          name: "nombre",
+          name: "name",
           required: true,
           label: "Nombre",
           align: "left",
-          field: row => row.nombre,
+          field: row => row.name,
           format: val => `${val}`,
           sortable: true
         },
@@ -260,6 +351,24 @@ export default {
   },
   methods: {
     ...mapActions("client", ["callClienteS"]),
+    cargarIniDate() {
+      this.$refs.qDateProxyIni.hide();
+      this.obtenerRegistros();
+    },
+    cargarFinDate() {
+      this.$refs.qDateProxyFin.hide();
+      this.obtenerRegistros();
+    },
+    obtenerRegistros() {
+      // console.log(`Se cargara el estado: ${arg}`);
+      // console.log(arg);
+      // this.tabNumber = arg;
+      this.callClienteS({
+        es: "00",
+        fi: this.fi,
+        ff: this.ff
+      });
+    },
     crearDataExport() {
       const arraysJson = this.getClientesS[0];
       let keys = [];
@@ -326,22 +435,12 @@ export default {
     }
   },
   async created() {
-    // this.$q.loading.show();
     this.loading = true;
-    // console.log("created - Cliente");
-    // this.$q.loading.show({
-    //   spinner: QSpinnerGears,
-    //   spinnerColor: "blue",
-    //   spinnerSize: 100,
-    //   backgroundColor: "grey-4"
-    // });
-    await this.callClienteS();
-    // await this.crearDataExport();
-    // this.dataexport = this.getClientesS();
-    // this.$store.commit("general/setAtras", false);
-    // this.$store.commit("general/setSearch", true);
-    // this.$q.addressbarColor.set("#0056a1");
-    // this.$q.loading.hide();
+    await this.callClienteS({
+      es: "00",
+      fi: this.fi,
+      ff: this.ff
+    });
   }
 };
 </script>

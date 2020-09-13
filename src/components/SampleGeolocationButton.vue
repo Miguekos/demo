@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-btn
+      :disable="activo"
       class="full-width"
       size="lg"
       v-bind="{ color, disable, label }"
@@ -17,6 +18,9 @@ import {
   mapGeolocationGetters
 } from "quasar-app-extension-geolocation/src/store";
 import { mapActions, mapGetters } from "vuex";
+import { date } from "quasar";
+let timeStamp = Date.now();
+let formattedString = date.formatDate(timeStamp, "YYYY-MM-DDTHH:mm:ss.SSSZ");
 export default {
   props: {
     label: {
@@ -26,6 +30,7 @@ export default {
   },
   data() {
     return {
+      activo: false,
       pollingTimer: null,
       Varcoords: null,
       Varlatitude: null,
@@ -37,6 +42,8 @@ export default {
   },
   computed: {
     ...mapGetters("users", ["getUserOne"]),
+    ...mapGetters("asist", ["getAsistOne"]),
+    ...mapGetters("client", ["getClienteValidar"]),
     fullWidth() {
       return true;
     },
@@ -69,15 +76,80 @@ export default {
     ])
   },
   async created() {
+    this.$q.loading.show();
     this.queryPermission();
     this.idUser = this.$q.localStorage.getItem("idUser");
     console.log(this.idUser);
     await this.callUserOne(this.idUser);
     this.dataUser = await this.getUserOne;
+    console.log("dataUser", this.dataUser);
+    await this.callAsistOne(this.idUser);
+    await this.callClienteValidar(this.dataUser.dni);
+    const evaluate = this.getClienteValidar;
+    console.log("evaluate", evaluate.length);
+    const asistencia = this.getAsistOne;
+    if (evaluate.length > 0) {
+      if (asistencia != null) {
+        if (asistencia.asistenciaEntrada) {
+          const fechaEntrada = asistencia.asistenciaEntrada.created_at;
+          const fechaSalida = formattedString;
+          let unit = "hours";
+          let diff = date.getDateDiff(fechaSalida, fechaEntrada, unit);
+          console.log("diff", diff);
+          if (diff < 4) {
+            this.activo = true;
+            this.$q.notify({
+              // progress: true,
+              message: "¡Deben pasar al menos 4 horas!",
+              // icon: "favorite_border",
+              icon: "insert_emoticon",
+              color: "white",
+              textColor: "blue-5",
+              position: "top"
+            });
+          } else {
+            if (asistencia.asistenciaSalida) {
+              this.$q.notify({
+                // progress: true,
+                message: "¡Asistencias completadas!",
+                // icon: "favorite_border",
+                icon: "insert_emoticon",
+                color: "white",
+                textColor: "green-5",
+                position: "top"
+              });
+              this.activo = true;
+            } else {
+              this.activo = false;
+            }
+          }
+          // console.log(diff);
+          // console.log(fechaEntrada);
+          // console.log(fechaSalida);
+        } else {
+          console.log("asistencia");
+        }
+      } else {
+        console.log("No pasa nada");
+      }
+    } else {
+      this.activo = true;
+      this.$q.notify({
+        // progress: true,
+        message: "¡Debes registrar tu evaluacion primero!",
+        // icon: "favorite_border",
+        icon: "insert_emoticon",
+        color: "white",
+        textColor: "red-5",
+        position: "top"
+      });
+    }
+    this.$q.loading.hide();
   },
   methods: {
     ...mapActions("users", ["callUserOne"]),
-    ...mapActions("asist", ["addAsist"]),
+    ...mapActions("asist", ["addAsist", "callAsistOne"]),
+    ...mapActions("client", ["callClienteValidar"]),
     doQueryPermission() {
       this.queryPermission().then(() => {
         if (this.isPermissionDenied) {
@@ -100,10 +172,13 @@ export default {
           this.Varaccuracy = this.accuracy;
           this.addAsist({
             ...this.dataUser,
-            coords: this.coords,
-            latitude: this.latitude,
-            longitude: this.longitude,
-            accuracy: this.accuracy
+            asistencia: {
+              coords: this.coords,
+              latitude: this.latitude,
+              longitude: this.longitude,
+              accuracy: this.accuracy,
+              created_at: new Date()
+            }
           })
             .then(() => {
               this.$q.notify({

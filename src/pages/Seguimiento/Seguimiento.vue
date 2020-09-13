@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <div>
     <q-list>
       <q-item
         @click="exportTable()"
@@ -41,18 +41,17 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <!-- <q-input
-            v-model="search"
+          <q-input
+            v-model="filter"
             dense
-            standout="bg-red-4 text-white"
+            standout="bg-amber-4 text-white"
             type="search"
             placeholder="Buscar"
           >
             <template v-slot:append>
               <q-icon name="search" />
             </template>
-          </q-input>-->
-          <Search />
+          </q-input>
         </q-item-section>
       </q-item>
     </q-list>
@@ -67,6 +66,7 @@
       :columns="columns"
       row-key="created_at.$date"
       :pagination.sync="pagination"
+      :filter="filter"
     >
       <!-- <template v-slot:top-right>
         <q-btn
@@ -79,7 +79,7 @@
       </template>-->
       <template v-slot:body="props">
         <q-tr :props="props" clickable @click="detalleCliente(props.row)">
-          <q-td key="nombre" v-ripple:white :props="props">
+          <q-td key="name" v-ripple:white :props="props">
             <q-item-section>
               <q-item-label>{{ props.row.name }}</q-item-label>
               <q-item-label caption>
@@ -113,7 +113,7 @@
         </q-item-section>
       </q-item>
     </q-list>-->
-  </q-page>
+  </div>
 </template>
 
 <script>
@@ -158,6 +158,7 @@ export default {
   },
   data() {
     return {
+      filter: "",
       pagination: {
         sortBy: "created_at.$date",
         descending: false,
@@ -231,11 +232,11 @@ export default {
       ],
       columns: [
         {
-          name: "nombre",
+          name: "name",
           required: true,
           label: "Nombre",
           align: "left",
-          field: row => row.nombre,
+          field: row => row.name,
           format: val => `${val}`,
           sortable: true
         },

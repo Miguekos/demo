@@ -1,8 +1,8 @@
 # docker-compose.yml
 version: "2"
 services:
-  cuidappte_cayman:
-#    image: cuidateappcayman:1.0
+  cuidapptedemo:
+    #    image: cuidapptedemo:1.0
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,8 +13,8 @@ services:
       # - /Users/kbs/git/peladonerd/varios/1/www:/usr/share/nginx/html:ro
       # - //d/storeDocker/html:/usr/share/nginx/html:ro
     environment:
-      - VIRTUAL_HOST=cayman.apps.com.pe,www.cayman.apps.com.pe
-      - LETSENCRYPT_HOST=cayman.apps.com.pe,www.cayman.apps.com.pe
+      - VIRTUAL_HOST=demo.apps.com.pe,www.demo.apps.com.pe
+      - LETSENCRYPT_HOST=demo.apps.com.pe,www.demo.apps.com.pe
       - LETSENCRYPT_EMAIL=kevin.silva.095@gmail.com
 networks:
   default:
